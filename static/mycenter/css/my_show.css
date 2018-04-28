@@ -1,0 +1,225 @@
+#header{
+    background:#FF4081;
+}
+#header>span,#header>.lf{
+    color:#fff;
+}
+#header>.cancel{
+    font-size:12px;
+    display:inline-block;
+    float:right;
+    margin-right:20px;
+}
+.info{
+    width:100%;
+    height:165px;
+    background:#FC4482;
+}
+.info img{
+    width:80px;
+    height:80px;
+    border-radius: 50%;
+    display:block;
+    margin:0 auto;
+}
+.info ul{
+    color:#fff;
+    font-size:12px;
+    text-align: center;
+    width:70%;
+    float:left;
+    margin-top:20px;
+}
+.info li{
+    float:left;
+    width:50%;
+    height:20px;
+    line-height: 29px;
+}
+.info li.self{
+    text-align: left;
+}
+.info .sign_in{
+    width:30%;
+    float:left;
+}
+.info .sign_in>span{
+    display:block;
+    width:70%;
+    height:40px;
+    line-height:40px;
+    text-align: center;
+    font-size:14px;
+    border:1px solid #fff;
+    margin-top:30px;
+    color:#fff;
+    border-radius: 5px;
+}
+.show .mine{
+    width:100%;
+    height:70px;
+    line-height:50px;
+    text-align: center;
+    padding-top:10px;
+    border-bottom: 1px solid #EEEEEE;
+}
+.show .mine li{
+    width:33%;
+    /* height:30px; */
+    float:left;
+}
+#myTab .active{
+    border-bottom:2px solid #FF9800;
+    
+}
+#myTabContent li{
+    width:100%;
+    padding: 20px;
+}
+#myTabContent .title{
+    text-align:left;
+    color:#999;
+}
+p{
+    padding:0;
+    margin:0;
+}
+
+#myTabContent .contents{
+    display:flex;
+    /* justify-content: space-between; */
+    flex-wrap:wrap;
+}
+#myTabContent .item{
+    width:30%;
+    height:120px;
+    margin:10px 1.6%;
+    float:left;
+}
+li{
+    list-style: none;
+}
+.ope{
+    color:#d7d8d9;
+    margin-top:10px;
+}
+.delete{
+    float:right;
+    font-size:12px;
+    
+}
+.article{
+    text-align: justify;
+    width:100%;
+    height:120px;
+    overflow: hidden;
+    text-indent:2em;
+}
+.cont{
+    display: none;
+}
+.wait_check,.all{
+    float:right;
+    color:#1577d1;
+    font-size:12px;
+}
+.all{
+    width:100%;
+    text-align:right;
+    margin-bottom:10px;
+}
+#clan ul{
+    padding:10px auto;
+}
+#clan img{
+    width:60px;
+    height:60px;
+    border-radius: 5px;
+    float:left;
+    margin-right:10px;
+}
+#clan .name{
+    font-size: 16px;
+    margin-top:10px;
+}
+#clan .num{
+    font-size:12px;
+    color:#bbb;
+    margin-top:10px;
+}
+
+.list{
+    padding:0px;
+    margin:0px;
+}
+.info{
+    color:#A0A0A0;
+}
+.border{
+    border-top:1px solid #DEDEDE;
+}
+.content{
+    width:100%;
+    padding:10px 20px;
+    list-style: none;
+}
+.img_view{
+    width:36%;
+    height:90px;
+    float:left;
+}
+.infor{
+    width:64%; 
+    float:left;
+}
+.infor ul{
+    list-style:none;
+    float:left;
+    width:100%;
+    padding-left:10px;
+    margin-bottom:0px;
+}
+#acts .infor li{
+    padding:0;
+    margin:0;
+}
+.time{
+    color:lawngreen;
+}
+.user{
+    color:#3B9DFF;
+}
+.gelo{
+    color:#FD3539;
+}
+.act_name{
+    font-size:14px;
+}
+.infor .lis{
+    font-size:10px;
+}
+
+.small{
+    margin-top:6px;
+}
+.clear{
+    clear:both;
+}
+#footer ul{
+    width:100%;
+    text-align: center;
+    color:#666666;
+}
+#footer li{
+    width:20%;
+    float:left;
+}
+#footer li .glyphicon{
+    font-size:18px;
+    height:28px;
+    line-height:28px;
+}
+#footer li.txt{
+    font-size:12px;
+    height:17px;
+}

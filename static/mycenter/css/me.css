@@ -1,0 +1,123 @@
+/*#header{*/
+    /*background:#FF4081;*/
+/*}*/
+#header>span{
+    color:#fff;
+}
+.info{
+    width:100%;
+    height:165px;
+    background:#FC4482;
+}
+.info img{
+    width:80px;
+    height:80px;
+    border-radius: 50%;
+    display:block;
+    margin:0 auto;
+}
+.info ul{
+    color:#fff;
+    font-size:12px;
+    text-align: center;
+    width:70%;
+    float:left;
+    margin-top:20px;
+}
+.info li{
+    float:left;
+    width:50%;
+    height:29px;
+    line-height: 29px;
+}
+.info li.self{
+    text-align: left;
+}
+.info .sign_in{
+    width:30%;
+    float:left;
+}
+.info .sign_in>span{
+    display:block;
+    width:70%;
+    height:40px;
+    line-height:40px;
+    text-align: center;
+    font-size:14px;
+    border:1px solid #fff;
+    margin-top:30px;
+    color:#fff;
+    border-radius: 5px;
+}
+.content{
+    width:100%;
+    margin-top:15px;
+}
+.content li{
+    width:100%;
+    height:63px;
+    line-height:63px;
+    font-size:18px;
+    padding-left:20px;
+    position:relative;
+}
+.content .glyphicon{
+    margin-right:0.5em;
+}
+a{
+    color:#000;
+}
+a:hover{
+    color:#000;
+    text-decoration: none;
+}
+.content .detail{
+    color:#A4A4A4;
+    float:right;
+    margin-right:20px;
+    margin-top:21px;
+}
+.content .red_cir{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    border-radius: 50%;
+    background: red;
+    position:absolute;
+    left:7em;
+    top:1em;
+}
+.loginout{
+    width:100%;
+    height:55px;
+}
+.loginout>button{
+    display:block;
+    width:40%;
+    height:35px;
+    font-size: 14px;
+    color:#fff;
+    text-align: center;
+    line-height:35px;
+    border-radius: 5px;
+    border:none;
+    margin:30px auto 100px;
+}
+#footer ul{
+    width:100%;
+    text-align: center;
+    color:#666666;
+}
+#footer li{
+    width:20%;
+    float:left;
+}
+#footer li .glyphicon{
+    font-size:18px;
+    height:28px;
+    line-height:28px;
+}
+#footer li.txt{
+    font-size:12px;
+    height:17px;
+}

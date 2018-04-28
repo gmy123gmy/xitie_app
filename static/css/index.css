@@ -1,0 +1,90 @@
+/*轮播*/
+.flexslider .slides img{
+    width:100%;
+    height:210px;
+}
+.nav{
+     margin-top: 20px;
+     text-align: center;
+ }
+.nav .row{
+    text-align: center;
+}
+.nav .row a p{
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    color: rgba(0,0,0,1);
+    padding: 5px 0;
+}
+.col-xs-3 img{
+    height: 50px;
+}
+.col-xs-4 img{
+    width:100%;
+}
+.nav .col-xs-3 {
+    padding-bottom: 16px;
+}
+/*分割线*/
+.border{
+	margin-top: 4px;
+    border-top: 10px solid #FAFAFA;
+}
+/*图文*/
+.p_cont{
+    margin: 10px 0;
+
+}
+.p_cont img{
+    height:76px;
+}
+.p_cont .text{
+    color: #000;
+    margin-bottom: 10px;
+    font-size: 1.26em;
+}
+.p_cont .text1{
+    color: #000;
+    font-size: 1.2em;
+}
+.border_01{
+	margin-top: 2px;
+    border-top: 1px solid #EFEFEF;
+}
+.p_cont .data{
+    font-size: 12px;
+	line-height: 24px;
+    color: #bbb;
+}
+.data .cont div{
+    line-height: 1.85em;
+}
+.data{
+    font-size: 12px;
+    line-height: 24px;
+    color: #bbb;
+}
+.btn{
+    margin-left: 15px;
+}
+
+a .grade_img{
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+}
+a .grade_img img{
+    display: block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: left;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+#more{
+    text-align: center;
+}

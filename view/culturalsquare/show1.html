@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>文化广场</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/culture.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/flexslider.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/navigation_first.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/css/styles.css" />
+    <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.css" />
+    <style>
+        .header{
+            color: #fff;
+            background: url(../../static/img/header.png) no-repeat;
+            background-size:100%;
+        }
+        .border{
+            border-bottom:1px solid #F8F8F8;
+       }
+    </style>
+</head>
+<body onload="loaded()">
+    <!--页头-->
+    <div class="header">
+        <div class="lf">
+            文化广场
+        </div>
+        <a href="#(ctx)/app/news/toSearch/?columnId=CULTURALSQUARE&tokenCode=#(tokenCode)" class="glyphicon glyphicon-search search_box rt"></a>
+    </div>
+    <div id="wrapper">
+        <div id="scroller">
+            <div class="container">
+                <!--导航-->
+                <div class="nav">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <a href="tpl/interest.html">
+                                <span class="glyphicon glyphicon-globe knowledge2" style="color: #36990C;"></span>
+                                <p>兴趣部落</p>
+                            </a>
+                        </div>
+                        <div class="col-xs-4">
+                            <a href="#(ctx)/app/party?tokenCode=#(tokenCode)&cmd=appHidenMenu">
+                                <span class="glyphicon glyphicon-fire knowledge2" style="color: #F4986F;"></span>
+                                <p>发起活动</p>
+                            </a>
+                        </div>
+                        <div class="col-xs-4">
+                            <a href="#(ctx)/publishInfo">
+                                <span class="glyphicon glyphicon-edit knowledge2" style="color: #C2367D;"></span>
+                                <p>风采投稿</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--分割线-->
+            <div class="border"></div>
+            <div class="title">
+                <div class="title_01 lf">最新风采</div>
+                <div class="page rt">
+                    <a id="recommend" href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=recommend">推荐</a>
+                    <a id="follow" href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=follow">关注</a>
+                    <a id="all" href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=all">全部</a>
+                </div>
+            </div>
+            <div class="border_01"></div>
+            #for(style :styleList)
+                #if(style.showType == '3')
+                    <div class="container show">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <a href="#" class="face">
+                                    <img src="#(fs)#(style.memberlogo)" alt="">
+                                </a>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="view-title"> <a href="#">#(style.memberName)</a></p>
+                                <p class="view-text">发表作品《#(style.styleTitle)》</p>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-2">
+                                <div class="row">
+                                    #(style.styleContent)
+                                    <!--<a href="#">展开</a>-->
+                                </div>
+                                <div class="row time_text">
+                                    <div class="col-xs-6 time">
+                                        <div  class="lf">
+                                            #(style.showTime)
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 time">
+                                        #if(style.isPraise == 'true')
+                                            <div style="top:0;color: #FC7F23;font-size: 14px;" class=" glyphicon glyphicon-heart rt">#(style.praiseCount)</div>
+                                        #end
+                                        #if(style.isPraise == 'false')
+                                            <div onclick="clickPraise('#(style.styleId)', this)" style="top:0;" class=" glyphicon glyphicon-heart rt">#(style.praiseCount)</div>
+                                        #end
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                #end
+                #if(style.showType == '2')
+                    <div class="container show">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <a href="#" class="face">
+                                    <img src="#(fs)#(style.memberlogo)" alt="">
+                                </a>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="view-title">#(style.memberName)</p>
+                                <p class="view-text">发表作品《#(style.styleTitle)》</p>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-2" >
+                                <div class="row">
+                                    #for(impath : style.imagePaths)
+                                        <div class="col-xs-4 showimageclass" >
+                                            <a href="#(fs)#(impath)" group="#(style.styleId)" style="background-image:url(#(fs)#(impath))"></a>
+                                        </div>
+                                    #end
+                                </div>
+                                <div class="row time_text">
+                                    <div class="col-xs-6 time">
+                                        <div  class="lf">
+                                            #(style.showTime)
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 time">
+                                        #if(style.isPraise == 'true')
+                                            <div style="top:0;color: #FC7F23;font-size: 14px;" class="glyphicon  glyphicon glyphicon-heart rt">#(style.praiseCount)</div>
+                                        #end
+                                        #if(style.isPraise == 'false')
+                                            <div onclick="clickPraise('#(style.styleId)', this)" style="top:0;" class="glyphicon  glyphicon glyphicon-heart rt">#(style.praiseCount)</div>
+                                        #end
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                #end
+                #if(style.showType == '1')
+                    <div class="container show">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <a href="#" class="face">
+                                    <img src="#(fs)#(style.memberlogo)" alt="">
+                                </a>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="view-title">#(style.memberName)</p>
+                                <p class="view-text">发表作品《#(style.styleTitle)》</p>
+                            </div>
+                            <div class="col-xs-1">
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-2" >
+                                <div class="row" onclick="showvideo('#(fs)#(style.videourl)','#(style.memberName)发表作品')">
+                                    <img src="#(ctx)/static/img/play.jpg" width="30%" height="28%" style="border: 1px solid #F8F8F8;" >
+                                </div>
+                                <div class="row time_text">
+                                    <div class="col-xs-6 time">
+                                        <div  class="lf">
+                                            #(style.showTime)
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 time">
+                                        #if(style.isPraise == 'true')
+                                            <div style="top:0;color: #FC7F23;font-size: 14px;" class=" glyphicon glyphicon-heart rt">#(style.praiseCount)</div>
+                                        #end
+                                        #if(style.isPraise == 'false')
+                                            <div onclick="clickPraise('#(style.styleId)', this)" style="top:0;" class=" glyphicon glyphicon-heart rt">#(style.praiseCount)</div>
+                                        #end
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                #end
+                #if(style.showType == '0')
+                    <div class="container show">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <a href="#" class="face">
+                                <img src="#(fs)#(style.memberlogo)" alt="">
+                            </a>
+                        </div>
+                        <div class="col-xs-9">
+                            <p class="view-title">#(style.memberName)</p>
+                            <p class="view-text">发表作品《#(style.styleTitle)》</p>
+                        </div>
+                        <div class="col-xs-1">
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-2" >
+                            <div class="row" onclick="showvideo('#(style.fileUrl)','#(style.memberName)发表作品')">
+                                <img src="#(ctx)/static/img/play.jpg" width="30%" height="28%" style="border: 1px solid #F8F8F8;" >
+                            </div>
+                            <div class="row time_text">
+                                <div class="col-xs-6 time">
+                                    <div  class="lf">
+                                        #(style.showTime)
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 time">
+                                    #if(style.isPraise == 'true')
+                                    <div style="top:0;color: #FC7F23;font-size: 14px;" class=" glyphicon glyphicon-heart rt">#(style.praiseCount)</div>
+                                    #end
+                                    #if(style.isPraise == 'false')
+                                    <div onclick="clickPraise('#(style.styleId)', this)" style="top:0;" class=" glyphicon glyphicon-heart rt">#(style.praiseCount)</div>
+                                    #end
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                #end
+                <div class="border_01"></div>
+            #end
+            <div id="more" data-status="1">加载更多……</div>
+            <input type="hidden" id="page" value="2">
+        </div>
+    </div>
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script src="#(ctx)/static/js/bootstrap.js"></script>
+<script src="#(ctx)/static/js/jquery.flexslider.js"></script>
+<script src="#(ctx)/static/js/index.js"></script>
+<script src="#(ctx)/static/js/iscroll.js"></script>
+<script src="#(ctx)/static/lib/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.jquery.js"></script>
+<script type="text/javascript">
+    var myScroll;
+    function loaded() {
+        myScroll = new IScroll('#wrapper', {mouseWheel: true, click: true});
+    }
+
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+
+    $(document).ready(function () {
+        $(".title").find("a").each(function (index, item) {
+            $(item).removeClass("page_present");
+        });
+        $("#" + '#(customShowType)').addClass("page_present");
+    });
+
+    function clickPraise(styleId, div) {
+        //点击之后就不能再点了
+        $(div).removeAttr('onclick');
+        //进行点赞请求后台
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/culturalsquare/clickPraise?styleId=" + styleId + "&tokenCode=#(tokenCode)" ,
+            contentType: "application/json",
+            data: {styleId: styleId},
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    $(div).html(Number($(div).html()) + 1);
+                    $(div).css("color", "#FC7F23").css("font-size", "14px"); //点赞成功后.添加样式
+                }
+            },
+            error: function () {
+                alert("请求服务器失败！");
+            }
+        });
+    }
+    //解除关注
+    function clickUnFollow(userUnFollowId, div){
+        $(div).removeAttr('onclick');
+        $(div).removeClass("browse");
+        //进行点赞请求后台
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/culturalsquare/clickUnFollow?tokenCode=#(tokenCode)&userUnFollowId=" + userUnFollowId,
+            contentType: "application/json",
+            data: {},
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    $(".customFollowClass_" + userUnFollowId).each(function (index, item) {
+                        $(item).removeAttr("onclick");
+                        $(item).addClass("browse");
+                        $(item).addClass("customNotFollowClass_" + userUnFollowId);
+                        $(item).removeClass("customFollowClass_" + userUnFollowId);
+                        $(item).attr("onclick", "clickFollow(\"" + userUnFollowId + "\", this)");
+                    });
+                }
+            },
+            error: function () {
+                alert("操作失败！");
+            }
+        });
+    }
+
+    //关注
+    function clickFollow(userFollowId, div) {
+        //点击之后就不能再点了
+        $(div).removeAttr('onclick');
+        $(div).removeClass("browse");
+        //进行关注请求后台
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/culturalsquare/clickFollow?tokenCode=#(tokenCode)&userFollowId="+userFollowId,
+            contentType: "application/json",
+            data: {},
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    $(".customNotFollowClass_" + userFollowId).each(function (index, item) {
+                        $(item).removeAttr("onclick");
+                        $(item).removeClass("browse");
+                        $(item).removeClass("customNotFollowClass_"+userFollowId);
+                        $(item).addClass("customFollowClass_"+userFollowId);
+                        $(item).attr("onclick", "clickUnFollow(\"" + userFollowId + "\", this)");
+                    });
+                }
+            },
+            error: function () {
+                alert("加载失败！");
+            }
+        });
+    }
+    //显示视频
+    function showvideo(url, title){
+        var index = layer.open({
+            type: 1,
+            title: title,
+            area: ['100%', '100%'],
+            maxmin: false,
+            fix: false, //不固定
+            shade:0.4,
+            content : "<div width='100%' height='100%' style='margin-top: 35%'><video autoplay=\"autoplay\" src=\""+url+"\" controls=\"controls\" width=\"100%\" height=\"240\" /></div>"
+        });
+        layer.full(index);
+    }
+</script>
+<script>
+    $(function(){
+        $('.showimageclass a').touchTouch();
+    });
+</script>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/send.css">
+    <style>
+        html,body{height:100%}
+    </style>
+</head>
+<body onload="loaded()">
+<div id="header" style="background: #F8F8F8;">
+    <a href="javascript:;" id="goback" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf" style="color: #484448;"></a>
+    <span style="color: #000000;">修改密码</span>
+</div>
+<div id="wrapper">
+    <div id="scroller" >
+        <div style="padding-top: 30px;">
+            <input type="password" id="oldpassword" name="oldpassword" class="act_name" placeholder="原始密码" maxlength="30" />
+            <input type="password" id="newpassword" name="newpassword" class="act_name" placeholder="新密码" maxlength="30" />
+            <input type="password" id="newpassword2" name="newpassword2" class="act_name" placeholder="再次输入新密码" maxlength="30" />
+        </div>
+    </div>
+    <div id="footer">
+        #if(currentUser.sex == 1)
+        <div class="send" style="background: #3FA7B5;"><a href="#" onclick="changePasswd();">修改密码</a></div>
+        #end
+        #if(currentUser.sex == 0)
+        <div class="send" style="background: #FC4482;"><a href="#" onclick="changePasswd();">修改密码</a></div>
+        #end
+    </div>
+</div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/iscroll.js"></script>
+<script src="#(ctx)/static/js/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script>
+     var wContact=$('body').height()-$('#scroller').outerHeight();
+    var w=wContact+180;
+    $('#footer').css('top',w);
+</script>
+<script type="text/javascript">
+    var myScroll;
+    function loaded () {
+        myScroll = new IScroll('#wrapper', { mouseWheel:true,click:true});
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+    //表单验证
+    function changePasswd(){
+        var oldpassword = $("#oldpassword").val();
+        var newpassword = $("#newpassword").val();
+        var newpassword2 = $("#newpassword2").val();
+        if(Public.isEmptyVal(oldpassword)){
+            Public.notice("旧密码不能为空");
+            return;
+        }
+        if(oldpassword.length < 6 || oldpassword.length > 30){
+            Public.notice("密码长度为6-30位字符");
+            return;
+        }
+        if(Public.isEmptyVal(newpassword)){
+            Public.notice("新密码不能为空");
+            return;
+        }
+        if(newpassword.length < 6 || newpassword.length > 30){
+            Public.notice("新密码长度为6-30位字符");
+            return;
+        }
+        if(Public.isEmptyVal(newpassword2)){
+            Public.notice("确认密码不能为空");
+            return;
+        }
+        if(newpassword2.length < 6 || newpassword2.length > 30){
+            Public.notice("确认密码长度为6-30位字符");
+            return;
+        }
+        if(newpassword2 != newpassword){
+            Public.notice("两次输入的密码不一致");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/member/changePasswd/",
+            data: {
+                tokenCode : '#(tokenCode)',
+                oldpassword : oldpassword,
+                newpassword : newpassword,
+                newpassword2 : newpassword2
+            },
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    Public.notice("修改密码成功");
+                    setTimeout(function(){
+                        document.location.href = '#(ctx)/app/member/myInfo?tokenCode=#(tokenCode)';
+                    }, 1000);
+                }else{
+                    Public.notice(res.result_msg);
+                    $("#oldpassword").val("");
+                    $("#newpassword").val("");
+                    $("#newpassword2").val("");
+                }
+            },
+            error: function () {
+                Public.notice("修改密码失败");
+            }
+        });
+    }
+    #(msgTips)
+</script>
+
+</body>
+</html>

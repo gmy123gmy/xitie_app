@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>#(questionPaper.paperTitle)</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/navigation_second.css"/>
+    
+    <style type="text/css">
+        .container{margin-top:50px;}
+        .questionPaperItem{padding: 5px 15px;}
+        h4.tesTitle{color: #00B895;}
+        .questionPaper-form-box{max-height: 660px;overflow: auto;}
+        .assignment{margin: 30px 0 60px;text-align: center;}
+        .assignment .btn{background: #00B895;width: 120px;font-size: 18px;border-color: #00B895;}
+        label{font-weight: normal;}
+        .jxz-title{text-align: justify;}
+        .topic-answer{display: none;}
+        .header a{float:left}
+        .header a:active{text-decoration: none}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="javascript:;" onClick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+        </a>
+        
+    </div>
+<div class="container">
+    <div class="row clearfix" id="content">
+        <div class="page-header">
+            <h3 class="text-center">#(questionPaper.paperTitle)</h3>
+            <div style="height: 30px;">
+                #if(record == null)
+                    <div style="float: left;margin-left: 5px;">
+                        剩余时间:<span id="laveTime">#(questionPaper.testTime):00</span>
+                    </div>
+                #end
+                #if(record != null)
+                <div style="float: left;margin-left: 5px;">
+                    <div style="float: left;margin-left: 5px;">
+                        已完成考试
+                    </div>
+                </div>
+                #end
+                <div style="float: right;margin-right: 5px;">
+                    共#(questionItems.size())题
+                </div>
+            </div>
+        </div>
+        <form class="" method="POST" action="#(ctx)/app/knowledge/assignment?tokenCode=#(tokenCode)" id="questionPaperForm">
+            <input type="hidden" name="paperId" value="#(paperId)">
+            <div class="questionPaper-form-box">
+                <input type="hidden" name="questionIds" value="#(allQuestionIds)">
+                <div class="jxz-box col-md-12">
+                    #for(item :questionItems)
+                        #if(record == null)
+                            <div class="questionPaperItem" data-type="#(item.type)" qid="#(item.questionId)">
+                            <div class="jxz-title">#(for.index + 1).#(item.questionTitle)</div>
+                        #else
+                            #if(item.right == "yes")
+                                <div class="questionPaperItem" data-type="#(item.type)" qid="#(item.questionId)">
+                            #else
+                                <div class="questionPaperItem" data-type="#(item.type)" style="background-color: #ffCCCC;" qid="#(item.questionId)">
+                            #end
+                            <div class="jxz-title">#(for.index + 1).#(item.questionTitle)<span style="color: green;font-size: 12px;">&nbsp;&nbsp;&nbsp;&nbsp;(正确答案：#(item.answer))</span></sp></div>
+                        #end
+                        #if(item.type == 0)
+                            #for(option: item.options)
+                                <div class="jxz-option radio">
+                                    <label>
+                                        #if(item.userAnswer != null)
+                                            #if(item.userAnswer.contains(option.optionIndex))
+                                                <input name="question_#(item.questionId)" type="radio" checked value="#(option.optionIndex)"> #(option.optionIndex)：#(option.optionName)
+                                            #end
+                                            #if(!item.userAnswer.contains(option.optionIndex))
+                                                <input name="question_#(item.questionId)" type="radio" value="#(option.optionIndex)"> #(option.optionIndex)：#(option.optionName)
+                                            #end
+                                        #else
+                                            <input name="question_#(item.questionId)" type="radio" value="#(option.optionIndex)"> #(option.optionIndex)：#(option.optionName)
+                                        #end
+                                    </label>
+                                </div>
+                            #end
+                        #end
+                        #if(item.type == 1)
+                            <input type="hidden" name="question_#(item.questionId)" id="question_#(item.questionId)" value="">
+                            #for(option: item.options)
+                                <div class="jxz-option checkbox">
+                                    <label>
+                                        #if(item.userAnswer != null)
+                                            #if(item.userAnswer.contains(option.optionIndex))
+                                                <input name="question_#(item.questionId)_#(for.index)" checked type="checkbox" value="#(option.optionIndex)"> #(option.optionIndex)：#(option.optionName)
+                                            #end
+                                            #if(!item.userAnswer.contains(option.optionIndex))
+                                                <input name="question_#(item.questionId)_#(for.index)" type="checkbox" value="#(option.optionIndex)"> #(option.optionIndex)：#(option.optionName)
+                                            #end
+                                        #else
+                                            <input name="question_#(item.questionId)_#(for.index)" type="checkbox" value="#(option.optionIndex)"> #(option.optionIndex)：#(option.optionName)
+                                        #end
+                                    </label>
+                                </div>
+                            #end
+                        #end
+                        </div>
+                        #end
+                    </div>
+                </div>
+                #if(record == null)
+                    <div class="form-group assignment">
+                        <button type="button" class="btn btn-primary" onclick="assignment()">交卷</button>
+                    </div>
+                #end
+                #if(record != null)
+                    <div class="form-group assignment">
+                        <button type="button" class="btn btn-primary" onclick="gobak()">返回</button>
+                    </div>
+                #end
+
+            </form>
+        </div>
+    </div>
+    <script src="#(ctx)/static/js/jquery-1.11.3.min.js"></script>
+    <script src="#(ctx)/static/js/layer/2.4/layer.js"></script>
+    <script src="#(ctx)/static/js/common.js"></script>
+    <script type="text/javascript">
+        var interval = 1000;
+        function assignment(){
+            var temp_tip = "yes";
+            $(".questionPaperItem").each(function(i) {
+                var type = $(this).attr("data-type");
+                var questionId = $(this).attr("qid");
+            if (type == 1) {
+                var ckAarray = $(this).find('input[type="checkbox"]:checked');
+                var ans = new Array();
+                ckAarray.each(function (i,item) {
+                    ans.push(item.value);
+                });
+                $("#question_"+questionId).val(ans.join(","));
+                if ($(this).find('input[type="checkbox"]:checked').val() == undefined) {
+                    temp_tip = "no";
+                    $(this).find("h4").css("color", "#00B895");
+                }else{
+                    $(this).find("h4").css("color","#333");
+                }
+            }else if(type == 0){
+                if($(this).find('input[type="radio"]:checked').val() == undefined){
+                    temp_tip = "no";
+                    $(this).find("h4").css("color","#00B895");
+                }else{
+                    $(this).find("h4").css("color","#333");
+                }
+            }
+        });
+        if(temp_tip == "no"){
+            Public.notice("还有题目没做完");
+            return;
+        }
+        $("#questionPaperForm").submit();
+    }
+
+    /**
+     * 回到试卷列表
+     * */
+    function gobak(){
+        location.href = '#(ctx)/app/knowledge/toQuestionPaperList?columnId=49&columnName=在线答题&pageSize=10&tokenCode=#(tokenCode)';
+    }
+
+
+    /**
+     * 系统倒计时
+     */
+    function showCountDown(endTime,divname){
+        var now = new Date();
+        var endDate = new Date(Number(endTime));
+        var leftTime=endDate.getTime()-now.getTime();
+        var leaveTime = parseInt(leftTime/1000);
+        var day=Math.floor(leaveTime/(60*60*24));
+        var hour=Math.floor((leaveTime-day*24*60*60)/3600);
+        var minute=Math.floor((leaveTime-day*24*60*60-hour*3600)/60);
+        var second=Math.floor(leaveTime-day*24*60*60-hour*3600-minute*60);
+        if(minute == 0 && second == 0){
+            //如果倒计时为0，默认自动提交试卷
+            $("#questionPaperForm").submit();
+        }
+        if(minute < 10){
+            minute = "0" + minute;
+        }
+        if(second < 10){
+            second = "0" + second;
+        }
+        $("#"+ divname).html(minute+":"+second);
+    }
+    $(document).ready(function(){
+        var t = '#(endTime)';
+        if(t.length > 0){
+            setInterval(function(){showCountDown(t,'laveTime');}, interval);
+        }
+    });
+    #(msgTips)
+</script>
+</body>
+</html>

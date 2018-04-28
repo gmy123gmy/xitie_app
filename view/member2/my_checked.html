@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的审核</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/check.css">
+    <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/css/styles.css" />
+    <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.css" />
+    <style>
+        .contents img{
+            width:120px;
+            height:120px;
+        }
+        .showimageclass {
+           width:33%;
+           /* height:80px; */
+           text-align:center;
+       }
+       .showimageclass a{
+           display: block;
+           width:100px;
+           height:100px;
+           float:left;
+           /* margin:10px 1.6%; */
+           margin-top:10px;
+       }
+    </style>
+</head>
+<body  onload="loaded()">
+    <div id="header">
+        <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+        <span>审核</span>
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            <ul class="my_content">
+                #if(hasVerifyAuthority == "0")
+                    <div style="margin-top: 15px;">
+                        没有要审核的内容呢~~~
+                    </div>
+                #end
+                #if(hasVerifyAuthority == "1")
+                    #for(verify :verifyList)
+                        #if(verify.flagType == "style")
+                            <li id="item_style_#(verify.styleId)">
+                            <img src="#(fs)#(verify.memberlogo)"  class="hed" >
+                            <p class="name">#(verify.memberName)</p>
+                            <p class="add">#(verify.orgName)</p>
+                            <p class="title">
+                                #(verify.styleTitle)
+                            </p>
+                            #if(verify.showType == "3")
+                            <div class="contents">
+                                #(verify.styleContent)
+                            </div>
+                            #end
+                            #if(verify.showType == "2")
+                            <div class="contents">
+                                <div>
+                                #for(impath : verify.imagePaths)
+                                <!-- <img class="item" src="#(fs)#(impath)"> -->
+                                <div class="col-xs-4 showimageclass" ><a href="#(fs)#(impath)" group="#(style.styleId)" style="background-image:url('#(fs)#(impath)')"></a></div>
+                                #end
+                                </div>
+                            </div>
+                            #end
+                            #if(verify.showType == "1")
+                            <div class="contents" title="">
+                                <img src="#(ctx)/static/img/play.jpg" width="60%" height="68" style="border: 1px solid gray;" onclick=showvideo('#(fs)#(verify.videourl)','#(verify.styleTitle)') >
+                            </div>
+                            #end
+                            #if(verify.showType == "0")
+                            <div class="contents">
+                                <img src="#(ctx)/static/img/play.jpg" width="60%" height="68" style="border: 1px solid gray;" >
+                            </div>
+                            #end
+                            <p class="ope">
+                                <span class="time">#(verify.showTime)</span>
+                                <ul class="checked" id="ul_#(verify.flagType)_#(verify.styleId)">
+                                    <li onclick="checkStatus('#(verify.styleId)','#(verify.flagType)', '1');">同意</li>
+                                    <li onclick="checkStatus('#(verify.styleId)','#(verify.flagType)', '0');">拒绝</li>
+                                    <li onclick="checkStatus('#(verify.styleId)','#(verify.flagType)', '-1');">放弃</li>
+                                </ul>
+                            </p>
+                        </li>
+                        #end
+                        #if(verify.flagType == "bbs")
+                            <li id="item_bbs_#(verify.plateInfoId)">
+                                <img src="#(fs)#(verify.logo)"  class="hed">
+                                <p class="name">#(verify.ownerName)</p>
+                                <p class="add">#(verify.ownerOrgName)</p>
+                                <p class="title">
+                                    我在《#(verify.plateTypeName)》创建了一个板块叫:#(verify.plateName)
+                                </p>
+                                <div class="contents">
+                                    <img class="item" src="#(verify.logoUrl)">
+                                    <div style="margin-left: 3px;width: 60%;display: inline;">
+                                        #(verify.plateDesc)
+                                    </div>
+                                </div>
+                                <p class="ope">
+                                    <span class="time">#(verify.showTime)</span>
+                                <ul class="checked" id="ul_#(verify.flagType)_#(verify.plateInfoId)">
+                                    <li onclick="checkStatus('#(verify.plateInfoId)','#(verify.flagType)', '1');">同意</li>
+                                    <li onclick="checkStatus('#(verify.plateInfoId)','#(verify.flagType)', '0');">拒绝</li>
+                                    <li onclick="checkStatus('#(verify.plateInfoId)','#(verify.flagType)', '-1');">放弃</li>
+                                </ul>
+                                </p>
+                            </li>
+                        #end
+                        #if(verify.flagType == "article")
+                        <li id="item_article_#(verify.articleId)">
+                            <img src="#(fs)#(verify.logo)"  class="hed">
+                            <p class="name">#(verify.memberName)</p>
+                            <p class="add">#(verify.orgName)</p>
+                            <p class="title">
+                                我在家园美给#(verify.managerLineName)->#(verify.stationName)站投稿了
+                            </p>
+                            <div class="contents">
+                                #for(impath : verify.imList)
+                                    <img class="item" src="#(fs)#(impath)">
+                                #end
+                            </div>
+                            <p class="ope">
+                                <span class="time">#(verify.showTime)</span>
+                            <ul class="checked" id="ul_#(verify.flagType)_#(verify.articleId)">
+                                <li onclick="checkStatus('#(verify.articleId)','#(verify.flagType)', '1');">同意</li>
+                                <li onclick="checkStatus('#(verify.articleId)','#(verify.flagType)', '0');">拒绝</li>
+                                <li onclick="checkStatus('#(verify.articleId)','#(verify.flagType)', '-1');">放弃</li>
+                            </ul>
+                            </p>
+                        </li>
+                        #end
+                    <div class="border"></div>
+                    #end
+                #end
+                <div class="border"></div>
+            </ul>
+        </div>
+    </div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/iscroll.js"></script>
+<script src="#(ctx)/static/js/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.jquery.js"></script>
+
+<script src="#(ctx)/static/js/common.js"></script>
+<script type="text/javascript">
+    var myScroll;
+
+    function loaded() {
+        myScroll = new IScroll('#wrapper', {mouseWheel: true, click: true});
+    }
+
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+
+    //审批
+    function checkStatus(messageId, messageType, checkStatus) {
+        var temp = $("#ul_" + messageType + "_" + messageId).html();
+        $(this).removeAttr("onclick");
+        $("#ul_" + messageType + "_" + messageId).html("审批中...");
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/member/checkMessage/",
+            data: {
+                tokenCode : '#(tokenCode)',
+                messageId : messageId,
+                messageType : messageType,
+                checkStatus : checkStatus
+            },
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") {
+                    $("#ul_" + messageType + "_" + messageId).html("已审批");
+                    Public.notice("已审批");
+                    setTimeout(function () {
+                        $("#item_" + messageType + "_" + messageId).fadeOut(1000);
+                    }, 1000);
+                } else {
+                    Public.notice("审批失败");
+                    $("#ul_" + messageType + "_" + messageId).html(temp);
+                }
+            },
+            error: function () {
+                Public.notice("审批失败");
+            }
+        });
+    }
+
+    $('.showimageclass a').touchTouch();
+    //显示视频
+  
+    function showvideo(url, title){
+        var index = layer.open({
+            type: 1,
+            title: title,
+            area: ['100%', '100%'],
+            maxmin: false,
+            fix: false, //不固定
+            shade:0.4,
+            content : "<div width='100%' height='100%' style='margin-top:20px;'><video autoplay=\"autoplay\" src=\""+url+"\" controls=\"controls\" width=\"100%\" height=\"500px\" /></div>"
+        });
+        layer.full(index);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+#for(bbsInfo : infoPage.list)
+<div class="chat">
+    <div class="tribe_title1 lf">
+        <div class="row">
+            <span class="glyphicon glyphicon-comment lf comment col-xs-1"></span>
+            <p class="tribe_text2 lf col-xs-10" style="font-size: 15px;">
+                <a href="#(ctx)/app/bbs/showBbsInfo/?tokenCode=#(tokenCode)&bbsInfoId=#(bbsInfo.bbsInfoId)&plateInfoName=#(bbsPlateInfo.plateName)&plateInfoLogo=#(bbsPlateInfo.logoUrl)&plateInfoId=#(bbsPlateInfo.plateInfoId)" style="font-size: 17px">#(bbsInfo.title)</a>
+            </p>
+            #if(bbsInfo.info != null)
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-2" >
+                    <div class="row">
+                        #set(array = bbsInfo.info.split(","))
+                        #for(path : array)
+                        <div class="col-xs-4 sh">
+                            <a href="#(ctx)/app/bbs/showBbsInfo/?tokenCode=#(tokenCode)&bbsInfoId=#(bbsInfo.bbsInfoId)&plateInfoName=#(bbsPlateInfo.plateName)&plateInfoLogo=#(bbsPlateInfo.logoUrl)&plateInfoId=#(bbsPlateInfo.plateInfoId)" style="background:url('#(fs+path)')">
+                                <!-- <img src="#(fs+path)" alt=""> -->
+                            </a>
+                        </div>
+                        #end
+                    </div>
+                </div>
+            </div>
+            #end
+        </div>
+        <a href="#(ctx)/app/member/myShow?userId=#(bbsInfo.memberId)&tokenCode=#(tokenCode)" class="img col-xs-2 col-xs-offset-1">
+            <img src="#(fs+bbsInfo.logo)" alt="">
+        </a>
+        <div class="lf col-xs-7" style="margin-top: 12px;">
+            <p class="title2">#(bbsInfo.memberName) #(bbsInfo.orgName)</p>
+            <span class="title3">#(bbsInfo.reTime)</span>
+            #if(memberId == bbsInfo.memberId)
+            <a href="javaScript:doDel('#(bbsInfo.bbsInfoId)');" class="title2 rt">删除</a>
+            #end
+        </div>
+
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="border_01"></div>
+#end

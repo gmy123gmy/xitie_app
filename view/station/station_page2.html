@@ -1,0 +1,11 @@
+<div class="container">
+    #for(newTemp :newsList)
+        #for(im :newTemp.imList)
+        <div class="pics">
+            <a href="#(fs)#(im)" class="example-image-link" data-lightbox="example-set" data-title="#(newTemp.title)">
+                <img class="example-image" src="#(fs)#(im)" alt="#(newTemp.title)"/>
+            </a>
+        </div>
+        #end
+    #end
+</div>

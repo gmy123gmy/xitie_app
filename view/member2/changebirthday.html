@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改生日</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/send.css">
+</head>
+<body  onload="loaded()">
+<div id="header" style="background: #F8F8F8;">
+    <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf" style="color: #484448;"></a>
+    <span style="color: #000000;">修改生日</span>
+</div>
+<div id="wrapper">
+    <div id="scroller" >
+        <div style="padding-top: 7%;">
+            <input class="act_name" type="text" id="birthday" name="birthday" readonly placeholder="选择填写生日日期">
+        </div>
+    </div>
+    <div id="footer">
+        #if(currentUser.sex == 1)
+        <div class="send" style="background: #3FA7B5;"><a href="#" onclick="changeBirthday();">修改生日</a></div>
+        #end
+        #if(currentUser.sex == 0)
+        <div class="send" style="background: #FC4482;"><a href="#" onclick="changeBirthday();">修改生日</a></div>
+        #end
+    </div>
+</div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/iscroll.js"></script>
+<script src="#(ctx)/static/js/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/js/laydate/laydate.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script type="text/javascript">
+    var myScroll;
+    function loaded () {
+        myScroll = new IScroll('#wrapper', { mouseWheel:true,click:true});
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    $(function () {
+        laydate.render({
+            elem: '#birthday',
+            format: 'yyyy-MM-dd',
+            max : 0
+        });
+    });
+    //表单验证
+    function changeBirthday(){
+        var birthday = $("#birthday").val();
+        if(Public.isEmptyVal(birthday)){
+            Public.notice("旧密码不能为空");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/member/changeBirthday/",
+            data: {
+                tokenCode : '#(tokenCode)',
+                birthday : birthday
+            },
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    Public.notice("修改生日成功");
+                    $("#birthday").val("");
+                    setTimeout(function(){
+                        document.location.href = '#(ctx)/app/member/myInfo?tokenCode=#(tokenCode)';
+                    }, 1000);
+                }else{
+                    Public.notice(res.result_msg);
+                    $("#birthday").val("");
+                }
+            },
+            error: function () {
+                Public.notice("修改生日失败");
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

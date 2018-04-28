@@ -1,0 +1,38 @@
+#for(bbsInfo : infoPage.list)
+<div class="row interest_cont">
+    <div class="col-xs-2">
+        <a href="#(ctx)/app/member/myShow?userId=#(bbsInfo.memberId)&tokenCode=#(tokenCode)" class="face">
+            <img src="#(fs+bbsInfo.logo)" alt="">
+        </a>
+    </div>
+    <div class="col-xs-10">
+        <a href="#(ctx)/app/member/myShow?userId=#(bbsInfo.memberId)&tokenCode=#(tokenCode)"><p>#(bbsInfo.plateName)</p>
+        <p class="view-title" style="font-size: 12px">#(bbsInfo.memberName) #(bbsInfo.orgName)</p>
+        <p class="view-text" style="font-size: 11px">#(bbsInfo.reTime)  #(bbsInfo.viewCount)阅</p></a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 " style="font-size: 14px">
+        <a href="#(ctx)/app/bbs/showPlateInfo?plateInfoId=#(bbsInfo.plateInfoId)&tokenCode=#(tokenCode)&cmd=appShowMenu">#(bbsInfo.title)</a>
+    </div>
+</div>
+
+#if(bbsInfo.info != null)
+<div class="row">
+    <div class="col-xs-12 " >
+        <div class="row">
+            #set(array = bbsInfo.info.split(","))
+            #for(path : array)
+            <div class="col-xs-4 imgs">
+                <a href="#(ctx)/app/bbs/showPlateInfo?plateInfoId=#(bbsInfo.plateInfoId)&tokenCode=#(tokenCode)&cmd=appShowMenu" style="background-image:url('#(fs+path)/300/300')">
+                    <!-- <img src="#(fs+path)/300/300" alt="" style="height:5.2em"> -->
+                </a>
+            </div>
+            #end
+        </div>
+    </div>
+</div>
+#end
+<div class="border"></div>
+#end

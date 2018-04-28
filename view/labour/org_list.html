@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/kind.css">
+    <title>工会单位</title>
+    <style>
+        .kind{
+            margin-top:10px;
+        }
+        .kind img{
+            background:#fff;
+        }
+        #header > .lf{
+            left:0;
+            top:2px;
+            color:#fff;
+        }
+    </style>
+</head>
+<body onload="loaded()">
+<div id="header">
+    <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+    <span style="position:absolute;left:50%;margin-left:-2em">#(descName)工会</span>
+
+</div>
+<div id="wrapper" style="padding-bottom:50px;">
+    <div id="scroller" >
+        <ul class="kind">
+            #for(org : orgList)
+            #if(org.name!='管理组')
+            <li>
+                <a href="#(ctx)/app/main?columnId=50&columnName=#(org.name)工会&tokenCode=#(tokenCode)&orgId=#(org.orgId)">
+                    <img src="#(ctx)/static/img/org_logo.png" alt="" >
+                    <p>#(org.name)工会</p>
+                </a>
+            </li>
+            #end
+            #end
+            <div class="clear"></div>
+
+        </ul>
+    </div>
+</div>
+<script src="#(ctx)/static/js/jquery.min.js"></script>
+<script src="#(ctx)/static/js/jroll.js"></script>
+<script>
+    var myScroll;
+       function loaded () {
+           myScroll = new JRoll('#wrapper');
+       }
+       document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+</script>
+</body>
+</html>

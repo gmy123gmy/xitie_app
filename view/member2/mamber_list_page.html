@@ -1,0 +1,35 @@
+#for(member : memberBaseList)
+<a href="#(ctx)/app/member/myShow?userId=#(member.memberId)&tokenCode=#(tokenCode)">
+    <input type="hidden" id="#(member.memberId)_tips" value="#(member.tips)">
+    <li>
+        <div class="pic">
+            <img src="#(fs)#(member.logo)" alt="">
+        </div>
+        <ul class="info">
+            <li class="name left">#(member.memberName)</li>
+            <li>
+                #if(member.tips == "1")
+                <span class="glyphicon glyphicon-retweet right" style="font-size:16px;color:#2D76E3"></span>
+                #end
+                #if(member.tips == "0")
+                <span class="glyphicon glyphicon-ok-circle right" style="font-size:16px"></span>
+                #end
+                #if(member.tips == "-1" || member.tips == "2")
+                <span class="glyphicon glyphicon-plus-sign right add_focus" onclick="clickFollow('#(member.memberId)', this)" style="font-size:16px;color:#FF9800"></span>
+                #end
+            </li>
+            <li class="left add">#(member.orgName)</li>
+            #if(member.tips == "1")
+            <li class="right" style="color:#2D76E3">相互关注</li>
+            #end
+            #if(member.tips == "0")
+            <li class="right">已关注</li>
+            #end
+            #if(member.tips == "-1" || member.tips == "2")
+            <li class="right" id="#(member.memberId)_text">加关注</li>
+            #end
+        </ul>
+    </li>
+</a>
+<div class="border"></div>
+#end

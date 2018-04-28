@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>平安是福</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <style>
+        .header {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            background: #efefef;
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+            padding: 0 15px;
+            border-bottom: 1px solid rgba(203, 203, 203, 1.00);
+        }
+
+        .header .search {
+            padding: 8px 0;
+            color: #6E6A6E;
+            font-size: 14px;
+        }
+
+        .header input {
+            outline: none;
+            background: #fff;
+            height: 30px;
+        }
+
+        .header .back a {
+            color: #827882;
+        }
+    </style>
+</head>
+<body>
+<!--页头-->
+<div class="header">
+    <div class="form-group has-feedback search lf">
+        <div class="col-xs-12">
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            <input type="text" class="form-control" placeholder="#(placeholder)" autofocus id="keyword">
+        </div>
+    </div>
+    <div class="back rt">
+        <a href="javascript:;" id="query" style="margin-right: 25px;">搜索</a>
+        <a href="javascript:;" onClick="javascript:history.back(-1);">取消</a>
+    </div>
+</div>
+<div id="wrapper">
+    <div id="scroller">
+    </div>
+</div>
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $("#query").on("click", function () {
+        location.href = '#(ctx)/app/bbs/search?tokenCode=#(tokenCode)&queryType=#(queryType)&plateInfoId=#(plateInfoId)&keyword=' + $('#keyword').val();
+    });
+</script>
+</html>

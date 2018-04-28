@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人展示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/my_show.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/font-awesome.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/css/styles.css" />
+    <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.css" />
+
+    <style>
+       .showimageclass {
+           width:33%;
+           /* height:80px; */
+           text-align:center;
+       }
+       .showimageclass a{
+           display: block;
+           width:100px;
+           height:100px;
+           float:left;
+           /* margin:10px 1.6%; */
+           margin-top:10px;
+       }
+    </style>
+</head>
+<body onload="loaded()">
+    #if(user.sex == 1)
+        <div id="header" style="background: #3FA7B5;">
+    #end
+    #if(user.sex == 0)
+        <div id="header" style="background: #FC4482;">
+    #end
+        <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+        <span style="position:absolute;left:50%;margin-left:-2em">个人展示</span>
+        <input type="hidden" id="tips" value="#(tips)">
+        #if(showTips == '1')
+            <span class="cancel" onclick="clickUnFollow('#(user.memberId)', this)">取消关注</span>
+        #end
+        #if(showTips == '0')
+            <span class="cancel" onclick="clickFollow('#(user.memberId)', this)">加关注</span>
+        #end
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            #if(user.sex == 1)
+                <div class="info" style="background: #3FA7B5;">
+            #end
+            #if(user.sex == 0)
+                <div class="info" style="background: #FC4482;">
+            #end
+                #if(user.memberId == currentUser.memberId)
+                    <a href="#(ctx)/app/member/myInfo?tokenCode=#(tokenCode)"><img src="#(fs)#(user.logo)" alt=""></a>
+                #end
+                #if(user.memberId != currentUser.memberId)
+                    <img src="#(fs)#(user.logo)" alt="">
+                #end
+                <ul>
+                    <li style="font-size:20px;">#(user.memberName)</li>
+                    <li class="self">
+                        <!-- <span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;
+                        #if(tips == "1" || user.memberId == currentUser.memberId)
+                            #(user.showMemberAccount)
+                        #end -->
+                    </li>
+                    <li>#(user.orgName)</li>
+                    <li class="self"><span class="fa fa-weixin"></span>&nbsp;&nbsp;
+                        #if(tips == "1" || user.memberId == currentUser.memberId )
+                            #(user.weixin)
+                        #end
+                    </li>
+                </ul>
+                <div class="sign_in">
+                    #if(user.memberId != currentUser.memberId)
+                        #if(user.refuseMessage != 0)
+                            <span><a href="#(ctx)/app/member/toLeaveComments?userId=#(user.memberId)&tokenCode=#(tokenCode)" style="color:#fff">留言</a></span>
+                        #end
+                    #end
+                    #if(user.memberId == currentUser.memberId)
+                        <span><a href="#(ctx)/app/member/myInfo?tokenCode=#(tokenCode)" style="color:#fff">我的资料</a></span>
+                    #end
+                    
+                </div>
+            </div>
+            <div class="show">
+                <ul id="myTab" class="mine">
+                    <li class="active"><a href="#product" data-toggle="tab"><span class="glyphicon glyphicon-certificate" style="color:#FF9800;font-size:22px;"></span><p style="margin-top:-30px;font-size:14px;color:#FF9800;height:40px;">作品</p></a></li>
+                    <li><a href="#clan" data-toggle="tab"><span class="glyphicon glyphicon-globe" style="font-size:22px;color:#259B24;"></span><p style="margin-top:-30px;color:#259B24;height:40px;">部落</p></a></li>
+                    <li><a href="#acts" data-toggle="tab"><span class="glyphicon glyphicon-fire" style="font-size:22px;color:#547CBD;"></span><p style="margin-top:-30px;color:#547CBD;height:40px;">活动</p></a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="product">
+                        <ul>
+                            #for(style :styleList)
+                            #if(style.showType == '3')
+                            <li id="li_#(style.styleId)">
+                                <p class="title">
+                                    文章《#(style.styleTitle)》
+                                    #if(style.auditState == '0')
+                                    <span class="wait_check">待审核</span>
+                                    #end
+                                </p>
+                                <p class="article">
+                                    #(style.styleContent)
+                                    #if(style.showAll == "true")
+                                <div class="cont" id="hideContent_#(style.styleId)">
+                                    #(style.hidentContent)
+                                </div>
+                                #end
+                                </p>
+                                #if(style.showAll == "true")
+                                <p class="all" onclick="showAll('#(style.styleId)')">全文</p>
+                                #end
+                                <p class="ope" >
+                                    <span class="glyphicon glyphicon-heart-empty">#(style.praiseCount)</span>&nbsp;&nbsp;&nbsp;&nbsp;#(style.showTime)
+                                    #if(user.memberId == currentUser.memberId)
+                                        <span class="delete" onclick="deleteStyle('#(style.styleId)')" >删除</span>
+                                    #end
+                                </p>
+                            </li>
+                            #end
+                            #if(style.showType == '2')
+                            <li id="li_#(style.styleId)">
+                                <p class="title">
+                                    图片《#(style.styleTitle)》
+                                    #if(style.auditState == '0')
+                                    <span class="wait_check">待审核</span>
+                                    #end
+                                </p>
+                                <div class="contents">
+                                    <div class="row">
+                                    #for(impath : style.imagePaths)
+                                    <!-- <img class="item" src="#(fs)#(impath)"> -->
+                                    <div class="col-xs-4 showimageclass" ><a href="#(fs)#(impath)" group="#(style.styleId)" style="background-image:url('#(fs)#(impath)')"></a></div>
+                                    #end
+                                </div>
+                                </div>
+                                <p class="ope" >
+                                    <span class="glyphicon glyphicon-heart-empty">#(style.praiseCount)</span>&nbsp;&nbsp;&nbsp;&nbsp;#(style.showTime)
+                                    #if(user.memberId == currentUser.memberId)
+                                        <span class="delete" onclick="deleteStyle('#(style.styleId)')" >删除</span>
+                                    #end
+                                </p>
+                            </li>
+                            #end
+                            #if(style.showType == '1')
+                            <li id="li_#(style.styleId)">
+                                <p class="title">
+                                    视频《#(style.styleTitle)》
+                                    #if(style.auditState == '0')
+                                    <span class="wait_check">待审核</span>
+                                    #end
+                                </p>
+                                <div class="contents">
+                                    <img src="#(ctx)/static/img/play.jpg" width="30%" height="28%" style="border: 1px solid gray;" onclick=showvideo('#(fs)#(style.videourl)','#(style.styleTitle)') >
+                                </div>
+                                <p class="ope" >
+                                    <span class="glyphicon glyphicon-heart-empty">#(style.praiseCount)</span>&nbsp;&nbsp;&nbsp;&nbsp;#(style.showTime)
+                                    #if(user.memberId == currentUser.memberId)
+                                        <span class="delete" onclick="deleteStyle('#(style.styleId)')" >删除</span>
+                                    #end
+                                </p>
+                            </li>
+                            #end
+                            #if(style.showType == '0')
+                            <li id="li_#(style.styleId)">
+                                <p class="title">
+                                    外链视频《#(style.styleTitle)》
+                                    #if(style.auditState == '0')
+                                    <span class="wait_check">待审核</span>
+                                    #end
+                                </p>
+                                <div class="contents">
+                                    <img src="#(ctx)/static/img/play.jpg" width="30%" height="28%" style="border: 1px solid gray;" onclick=showvideo('#(fs)#(style.videourl)','#(style.styleTitle)') >
+                                </div>
+                                <p class="ope" >
+                                    <span class="glyphicon glyphicon-heart-empty">#(style.praiseCount)</span>&nbsp;&nbsp;&nbsp;&nbsp;#(style.showTime)
+                                    #if(user.memberId == currentUser.memberId)
+                                        <span class="delete" onclick="deleteStyle('#(style.styleId)')" >删除</span>
+                                    #end
+                                </p>
+                            </li>
+                            #end
+                            <div class="border"></div>
+                            #end
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="clan">
+                        <ul>
+                            #for(bbs :bbsList)
+                                <li>
+                                    <img src="#(bbs.logoUrl)" alt="">
+                                    <p class="name">#(bbs.plateName)</p>
+                                    <p class="num">#(bbs.bbsCount)贴</p>
+                                </li>
+                            #end
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="acts">
+                        <ul class="list">
+                            #for(party :partyList)
+                            <li class="content">
+                                <a href="#(ctx)/app/party/getPartyInfo?partyId=#(party.partyId)&tokenCode=#(tokenCode)&cmd=appHidenMenu">
+                                    <img class="img_view" src="#(fs+party.filePath)" />
+                                    <div class="infor">
+                                        <ul>
+                                            <li class="act_name">#(party.partyTitle)</li>
+                                            <div class="small">
+                                                <li class="lis">
+                                                    <span class="glyphicon glyphicon-calendar time"></span>
+                                                    <span class="deta ">#(party.bTime)-#(party.eTime)</span>
+                                                </li>
+                                                <li  class="lis">
+                                                    <span class="glyphicon glyphicon-user user"></span>
+                                                    <span class="deta">#(party.realUserNum)人参与活动</span>
+                                                </li>
+                                                <li  class="lis">
+                                                    <span class="glyphicon glyphicon-map-marker gelo"></span>
+                                                    <span class="deta">#(party.partyAddress)</span>
+                                                </li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </a>
+                                <div class="clear"></div>
+                            </li>
+                            <div class="border"></div>
+                            #end
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/bootstrap.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/iscroll.js"></script>
+<script src="#(ctx)/static/lib/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.jquery.js"></script>
+<script type="text/javascript">
+       var myScroll;
+       function loaded () {
+           myScroll = new IScroll('#wrapper', { mouseWheel:true,click:true});
+       }
+       document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+       $(document).ready(function(){
+
+       });
+       $('.showimageclass a').touchTouch();
+       function deleteStyle(styleId){
+           if(confirm("确定删除个人作品?")){
+               $.post("#(ctx)/app/culturalsquare/deleteUserStyle",{styleId:styleId, tokenCode:'#(tokenCode)'},function (data) {
+                   var res = eval("(" + data + ")");
+                   if (res.result_code == "success") { //关注成功，则修改页面样式
+                       $("#li_" + styleId).fadeOut(1000);
+                   }
+               });
+           }
+       }
+
+       function showAll(divId){
+           $(this).removeAttr('onclick');
+           $("hideContent_"+ divId).show();
+           $(this).html("收起");
+           $(this).attr("onclick", "hideAll(\"" + divId + "\")");
+       }
+
+       function hideAll(divId){
+           $(this).removeAttr('onclick');
+           $("hideContent_"+ divId).hide();
+           $(this).html("全文");
+           $(this).attr("onclick", "showAll(\"" + divId + "\")");
+       }
+
+       //关注
+       function clickFollow(userFollowId, div) {
+           //点击之后就不能再点了
+           $(div).removeAttr('onclick');
+           $(div).html("正在关注...");
+           //进行关注请求后台
+           $.ajax({
+               type: "POST",
+               url: "#(ctx)/app/culturalsquare/clickFollow?tokenCode=#(tokenCode)&userFollowId="+userFollowId,
+               contentType: "application/json",
+               data: {},
+               datatype: "json",
+               //成功返回之后调用的函数
+               success: function (data) {
+                   var res = eval("(" + data + ")");
+                   if (res.result_code == "success") {
+                       //变化为取消关注
+                       $(div).html("取消关注");
+                       //绑定取消关注事件
+                       $(div).attr("onclick", "clickUnFollow(\"" + userFollowId + "\", this)");
+                   }
+               },
+               error: function () {
+               }
+           });
+       }
+
+       //关注
+       function clickUnFollow(userUnFollowId, div) {
+           //点击之后就不能再点了
+           $(div).removeAttr('onclick');
+           $(div).html("正在取消关注...");
+           //进行关注请求后台
+           $.ajax({
+               type: "POST",
+               url: "#(ctx)/app/culturalsquare/clickUnFollow?tokenCode=#(tokenCode)&userUnFollowId="+userUnFollowId,
+               contentType: "application/json",
+               data: {},
+               datatype: "json",
+               //成功返回之后调用的函数
+               success: function (data) {
+                   var res = eval("(" + data + ")");
+                   if (res.result_code == "success") {
+                       //变化为取消关注
+                       $(div).html("加关注");
+                       //绑定取消关注事件
+                       $(div).attr("onclick", "clickFollow(\"" + userUnFollowId + "\", this)");
+                   }
+               },
+               error: function () {
+               }
+           });
+       }
+        //显示视频
+  
+    function showvideo(url, title){
+        var index = layer.open({
+            type: 1,
+            title: title,
+            area: ['100%', '100%'],
+            maxmin: false,
+            fix: false, //不固定
+            shade:0.4,
+            content : "<div width='100%' height='100%' style='margin-top:20px;'><video autoplay=\"autoplay\" src=\""+url+"\" controls=\"controls\" width=\"100%\" height=\"500px\" /></div>"
+        });
+        layer.full(index);
+    }
+</script>
+</body>
+</html>

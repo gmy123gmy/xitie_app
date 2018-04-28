@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>活动类型</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/type.css">
+</head>
+<body>
+<div id="header">
+    <a href="#(ctx)/app/party?tokenCode=#(tokenCode)&cmd=appHidenMenu" onclick="javascript :;" class="glyphicon glyphicon-menu-left back lf"></a>
+    <span>选择活动类型</span>
+    <a class="next" href="javaScript:;">下一步</a>
+</div>
+<div id="wrapper">
+    <div id="scroller" >
+        <div class="kind">
+            #for(dic: dicInfoList)
+            <div class="sel" data-value="#(dic.dicId)">#(dic.dicName)<span class="glyphicon select" ></span></div>
+            #end
+        </div>
+    </div>
+</div>
+<input type="hidden" name="dicId" value="" id="dicId">
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".sel").click(function(){
+            $("span").removeClass("glyphicon-ok-sign");
+            $(this).find("span").addClass("glyphicon-ok-sign");
+            $("#dicId").val($(this).attr("data-value"));
+        });
+        $(".next").click(function () {
+            location.href = '#(ctx)/app/party/toAdd?dicId='+$("#dicId").val()+'&tokenCode=#(tokenCode)&cmd=appHidenMenu';
+        });
+    });
+    #(msgTips)
+</script>
+</body>
+</html>

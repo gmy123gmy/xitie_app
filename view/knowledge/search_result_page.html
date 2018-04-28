@@ -1,0 +1,60 @@
+#for(knowledge :knowledgeList)
+#if(knowledge.recordType == "questionpaper")
+<div style="height: 10px;"></div>
+<div class="media talk">
+    <!--<div class="media-left">
+        <a href="#" class="img1">
+            <img class="media-object img" src="#(fs)#(knowledge.paperIoc)" alt="...">
+        </a>
+    </div>-->
+    <div class="media-body">
+        <h4 class="media-heading">#(knowledge.paperTitle)</h4>
+        <div class="row">
+            <div class="col-xs-4 answer">时长:#(knowledge.testTime)分钟</div>
+            <div class="col-xs-6 answer">已有#(knowledge.answerNum)人作答</div>
+            <div class="col-xs-2 join">
+                <a href="#(ctx)/app/knowledge/questionPaperDetail?paperId=#(knowledge.paperId)&tokenCode=#(tokenCode)" style="display: block; width: 100%; height: 100%">进入</a>
+            </div>
+        </div>
+    </div>
+</div>
+#end
+#if(knowledge.recordType == "article")
+#if(knowledge.type == '0')
+<!-- 多图 -->
+#end
+#if(knowledge.type == '1')
+<!-- 单图 -->
+<div class="container p_cont">
+    <div class="row">
+        #if(knowledge.imList != null && knowledge.imList.size() > 0)
+            <div class="col-xs-4">
+                <a href="#">
+                    #for(im :knowledge.imList)
+                        <img src="#(fs)#(im)" alt="" width="100%"/>
+                    #end
+                </a>
+            </div>
+            <div class="col-xs-8">
+        #else
+            <div class="col-xs-12">
+        #end
+            <div class="row">
+                <p class="learn">
+                    <a href="#(ctx)/app/news/showDetail?newsId=#(knowledge.articleId)&tokenCode=#(tokenCode)">#(knowledge.title)</a>
+                </p>
+            </div>
+            <div class="row data">
+                <div class="col-xs-8 cont lf">
+                    <div class="glyphicon glyphicon-eye-open lf">
+                    </div>&nbsp;#(knowledge.readerNum)
+                </div>
+                <div class="rt-4">#(knowledge.showTime)</div>
+            </div>
+        </div>
+    </div>
+</div>
+#end
+#end
+<div class="border_01"></div>
+#end

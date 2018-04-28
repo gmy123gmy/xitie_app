@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>活动发起</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/succ.css">
+</head>
+<body>
+<div id="header">
+    <span>发起活动</span>
+</div>
+<div id="wrapper">
+    <div id="scroller" >
+        <div class="succ">
+            <span class="glyphicon glyphicon-#(result.state)-sign "></span>
+        </div>
+        <div class="tip">#(result.msg)</div>
+    </div>
+</div>
+<script type="text/javascript">
+    setTimeout('window.location="#(ctx)/app/party?tokenCode=#(tokenCode)"',2000)
+</script>
+</body>
+</html>

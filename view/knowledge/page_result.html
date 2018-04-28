@@ -1,0 +1,21 @@
+#for(questionPaper :questionPaperList)
+<div class="media talk" style="margin-top:20px">
+    <!--<div class="media-left">
+        <a href="#" class="img1">
+            <img class="media-object img" src="#(fs)#(questionPaper.paperIoc)" alt="">
+        </a>
+    </div>-->
+    <div class="media-body">
+        <h4 class="media-heading">#(questionPaper.paperTitle)</h4>
+        <div class="row">
+            <div class="col-xs-4 answer">时长:#(questionPaper.testTime)分钟</div>
+            <div class="col-xs-4 answer">已有#(questionPaper.answerNum)人作答</div>
+            <div class="col-xs-2">
+            </div>
+            <div class="col-xs-2 join">
+                <a href="#(ctx)/app/knowledge/questionPaperDetail?paperId=#(questionPaper.paperId)&tokenCode=#(tokenCode)" style="display: block; width: 100%; height: 100%">进入</a>
+            </div>
+        </div>
+    </div>
+</div>
+#end

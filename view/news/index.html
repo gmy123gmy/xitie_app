@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>平安是福</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/flexslider.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/navigation_first.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/home.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/pace-theme-minimal.css"/>
+    <style>
+		html, body {
+    	height: 100%
+		}
+        .slides h4{
+            height: 42px;
+            line-height:42px;
+            font-size:22px;
+            color:#fff;
+            background:rgba(0,0,0,0.5);
+            z-index:100;
+        }
+        .slides h4 a{color:#fff;}
+        .clone span{
+            color:#fff;
+        }
+		/*#wrapper {width: 10px; height: 10px;}*/
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            width: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+			/*-webkit-transform:translate3d(0,0,0);*/
+        }
+
+        #pullDown,#pullUp,.pulldown-tips{
+            height:40px;
+            line-height:40px;
+            text-align:center;
+        }
+        .pulldown-tips{
+            position:absolute;
+            top:-40px;
+            left:0;
+            width:100%;
+        }
+        .title_bg h4{
+            background: -webkit-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.8)); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.8)); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.8)); /* Firefox 3.6 - 15 */
+            background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.8)); /* 标准的语法（必须放在最后） */
+        }
+		.p_cont img{background-color: #eee;}
+    </style>
+</head>
+<body onload="loaded()">
+<!--页头-->
+<div class="header">
+    <div class="lf">
+        <img src="#(ctx)/static/img/xt_logo.png">
+    </div>
+    <a href="#(ctx)/app/news/toSearch/?flag=INDEX&tokenCode=#(tokenCode)" class="glyphicon glyphicon-search search_box rt" style="color:#827882"></a>
+</div>
+<div id="wrapper">
+    <div id="scroller">
+        <!--轮播-->
+        <div class="img_box clear" style="height: 200px; background: #eee">
+            <div class="flexslider">
+                <ul class="slides">
+                    <li>
+                        <a href="#(ctx)/app/news/showDetail?newsId=774&tokenCode=#(tokenCode)" style="width:100%;display:block;position:relative">
+                            
+                            <img src="#(ctx)/static/img/bsydh.jpg" alt=""/>
+                            <div class="title_bg" style="width:100%;background:rgba(255,255,255,.1);position:absolute;bottom:0">
+                                <h4 style="height:30px;line-height:30px;font-size:14px;color:#fff;text-align:center;">第37届巴山运动会开幕了！
+                                </h4>
+                            </div>
+                        </a>
+                    </li>
+                            
+                    <li>
+                        <a href="#(ctx)/app/news/showDetail?newsId=773&tokenCode=#(tokenCode)" style="width:100%;display:block;position:relative">
+                            
+                            <img src="#(ctx)/static/img/jzgt.jpg" alt=""/>
+                            <div class="title_bg" style="width:100%;background:rgba(255,255,255,.1);position:absolute;bottom:0">
+                                <h4 style="height:30px;line-height:30px;font-size:14px;color:#fff;text-align:center;">震撼！这不是科幻大片！这是正在建设中的智能京张高铁！</h4>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#(ctx)/app/news/showDetail?newsId=772&tokenCode=#(tokenCode)" style="width:100%;display:block;position:relative">
+                            
+                            <img src="#(ctx)/static/img/xzcc.jpg" alt=""/>
+                            <div class="title_bg" style="width:100%;background:rgba(255,255,255,.1);position:absolute;bottom:0">
+                                <h4 style="height:30px;line-height:30px;font-size:14px;color:#fff;text-align:center;">注意！5月1日起做这些事将限制乘坐火车！</h4>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <!-- <li>
+                        <a href="#(ctx)/app/basic/?columnId=57&columnName=“温暖回家路”手机摄影大赛&tokenCode=#(tokenCode)" style="width:100%;display:block;position:relative">
+                            <img src="#(ctx)/static/img/wnhjl.jpg" alt=""/>
+                            <div class="title_bg" style="width:100%;background:rgba(255,255,255,.1);position:absolute;bottom:0">
+                                <h4 style="height:30px;line-height:30px;font-size:14px;color:#fff;text-align:center;"></h4>
+                            </div>
+                        </a>
+                    </li> -->
+                   
+                   
+                    
+                    <li>
+                        <a href="#(ctx)/app/basic/?columnId=53&columnName=学习贯彻党的十九大精神专栏&tokenCode=#(tokenCode)" style="width:100%;display:block;position:relative">
+                            <img src="#(ctx)/static/img/banner_19da1.jpg" alt=""/>
+                            <div class="title_bg" style="width:100%;background:rgba(255,255,255,.1);position:absolute;bottom:0">
+                                <h4 style="height:30px;line-height:30px;font-size:14px;color:#fff;text-align:center;"></h4>
+                            </div>
+                        </a>
+                    </li>
+<!--                    <li>
+                        <a href="http://h5.iv.mo.cn/webapp/game/hj.html" style="width:100%;display:block;position:relative">
+                            
+                            <img src="#(ctx)/static/img/kjl6.gif" alt=""/>
+                            <div class="title_bg" style="width:100%;background:rgba(255,255,255,.1);position:absolute;bottom:0">
+                                <h4 style="height:30px;line-height:30px;font-size:14px;color:#fff;text-align:center;">“快来领奖”——健步走和天添福活动开奖啦！</h4>
+                            </div>
+                        </a>
+                    </li>-->
+                    <li>
+                        <a href="#(ctx)/app/basic/?columnId=54&columnName=玩转“平安是福”&tokenCode=#(tokenCode)" style="width:100%;display:block;position:relative">
+                            <img src="#(ctx)/static/img/safe.jpg" alt=""/>
+                            <div class="title_bg" style="width:100%;background:rgba(255,255,255,.1);position:absolute;bottom:0">
+                                <h4 style="height:30px;line-height:30px;font-size:14px;color:#fff;text-align:center;"></h4>
+                            </div>
+                        </a>
+                    </li>
+                    #for(imageTemp :IndexImages)
+                    <!-- <li>
+                        <a href="#(ctx)/app/news/showDetail?newsId=#(imageTemp.articleId)&tokenCode=#(tokenCode)" style="width:100%;display:block;position:relative">
+                            <img src="#(nginxurl)#(imageTemp.titleImage)" alt=""/>
+                            <div class="title_bg" style="width:100%;background:rgba(255,255,255,.1);position:absolute;bottom:0">
+                                <h4 style="height:30px;line-height:30px;font-size:14px;color:#fff;text-align:center;">#(imageTemp.title)</h4>
+                            </div>
+                        </a>
+                    </li> -->
+                    #end
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <!--导航-->
+            <div class="nav">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=18&columnName=新视点&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/viewpoint.png" alt=""/>
+                            <p>新视点</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/main/?columnId=27&columnName=主力军&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/force.png" alt=""/>
+                            <p>主力军</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=36&columnName=公告栏&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/affiche.png" alt=""/>
+                            <p>公告栏</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=29&columnName=基层风&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/level.png" alt=""/>
+                            <p>基层风</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                   <div class="col-xs-3">
+                         <a href="#(ctx)/app/station/?columnId=28&columnName=家园美&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/beauty.png" alt=""/>
+                            <p>家园美</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/knowledge/?columnId=46&columnName=知识苑&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/knowledge.png" alt=""/>
+                            <p>知识苑</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/appStartBook">
+                            <img src="#(ctx)/static/img/book.png" alt=""/>
+                            <p>读书咖</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/appStartWalk">
+                            <img src="#(ctx)/static/img/walk.png" alt=""/>
+                            <p>健步走</p>
+                        </a>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=30&columnName=专题活动&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/activity.png" alt=""/>
+                            <p>专题活动</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/toPersonStyleList?tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/show.png" alt=""/>
+                            <p>风采展示</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=888&columnName=投票调查&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/vote.png" alt=""/>
+                            <p>投票调查</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="http://xt.appio.cc/webapp/tool">
+                            <img src="#(ctx)/static/img/tool.png" alt=""/>
+                            <p>实用工具</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--分割线-->
+        <!-- <div class="border"></div> -->
+        <div class="border_01"></div>
+        <div id="list">
+
+        </div>
+        <div id="pullUp" class="">
+            <div class="pullUpLabel" id="more" data-status="1">加载更多...</div>
+        </div>
+        <div style="height: 50px;"></div>
+    </div>
+    <input type="hidden" id="page" value="1">
+    <input type="hidden" id="size" value="5">
+</div>
+<!--页尾-->
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script src="#(ctx)/static/js/bootstrap.js"></script>
+<script src="#(ctx)/static/js/jquery.flexslider.js"></script>
+<script src="#(ctx)/static/js/index.js"></script>
+<!--<script src="#(ctx)/static/js/iscroll-probe.js"></script>-->
+<script src="#(ctx)/static/js/jroll.js"></script>
+<script src="#(ctx)/static/js/jroll-pulldown1.js"></script>
+
+<script src="#(ctx)/static/js/pace.min.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script type="text/javascript">
+    $("#page").val(1);
+    var ctx = "#(ctx)";
+    var fs = "#(fs)";
+    var myScroll;
+    var pullUp = $("#pullUp"), pullUpLabel = $(".pullUpLabel"), container = $('#view'), loadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
+    function loaded () {
+        pullUp.hide();
+        /*myScroll = new IScroll('#wrapper', { scrollbars: false, mouseWheel: true, probeType: 2, click:true});*/
+		
+		myScroll = new JRoll('#wrapper');
+		
+			//100ms内滑动到0px, -100px位置
+    	//myScroll.scrollTo(-200, 0, 100);
+    		//允许超出边界
+    	//myScroll.scrollTo(600, 0, 0, true);
+    		//回调
+		
+        myScroll.pulldown({
+            refresh: function(complete) {
+
+                //完成加载数据的操作后回调执行complete方法
+                complete();
+                location.reload();
+            }
+        });
+        myScroll.on("scroll",function(){
+            if(loadingStep == 0 && !pullUp.attr("class").match('refresh')){
+                if(this.y < (this.maxScrollY - 14)){//上拉加载更多
+                    pullUp.addClass("refresh").show();
+                    pullUpLabel.html("<img src=#(ctx)/static/img/loading.gif style=width:20px><font color=#999>正在载入...</font>");
+                    myScroll.options.bounce = false;
+					loadingStep = 1;
+                    pullUpAction();
+					
+                }
+            }
+        });
+        function pullUpAction(){
+            setTimeout(function(){
+                loadNewPage(); //加载第一页
+                //myScroll.refresh();
+                loadingStep = 0;
+            },1500);
+        }
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            slideshowSpeed: 4000,
+            animationSpeed: 200,
+            touch: true
+        });
+    });
+
+    $(document).ready(function(){
+        //加载一次数据
+        loadNewPage();
+        //调用一下load方法
+        loaded();
+    });
+
+    function loadNewPage(){
+        $.post("#(ctx)/app/news/pageIndexNews/?tokenCode=#(tokenCode)",{
+            "tokenCode": '#(tokenCode)',
+            "pageNumber": $("#page").val(),
+            "pageSize": $("#size").val(),
+            "keyword" : '#(keyword)'
+        },function (html) {
+            $("#page").val(Number($("#page").val())+1);
+            html = $.trim(html);
+            if(html.length > 0){
+                $("#list").append(html);
+                pullUp.removeClass("refresh").hide();
+            }else{
+                pullUp.addClass("refresh").show(); //不在请求后台，页面显示全部加载完毕
+                pullUpLabel.html("<font color=#999>没有更多内容了</font>");
+            }
+			myScroll.options.bounce = true;
+            myScroll.refresh();  //这个是用来重新刷新容器的
+			
+        });
+    }
+</script>
+</html>

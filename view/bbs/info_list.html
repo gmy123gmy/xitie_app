@@ -1,0 +1,9 @@
+#for(re : list)
+<a href="#(ctx)/app/bbs/showPlateInfo?plateInfoId=#(re.plateInfoId)&tokenCode=#(tokenCode)&cmd=appShowMenu">
+    <li>
+        <img src="#(re.logoUrl)" alt="">
+        <p class="name">#(re.plateName)</p>
+        <p class="num">#(re.bbsCount)贴</p>
+    </li>
+</a>
+#end

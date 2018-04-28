@@ -1,0 +1,28 @@
+#for(party :partyList)
+<li class="content">
+    <a href="#(ctx)/app/party/getPartyInfo?partyId=#(party.partyId)&tokenCode=#(tokenCode)&cmd=appHidenMenu">
+        <img class="img_view" src="#(fs+party.filePath)" />
+        <div class="infor">
+            <ul>
+                <li class="act_name">#(party.partyTitle)</li>
+                <div class="small">
+                    <li class="lis">
+                        <span class="glyphicon glyphicon-calendar time"></span>
+                        <span class="deta ">#(party.bTime)-#(party.eTime)</span>
+                    </li>
+                    <li  class="lis">
+                        <span class="glyphicon glyphicon-user user"></span>
+                        <span class="deta">#(party.realUserNum)人参与活动</span>
+                    </li>
+                    <li  class="lis">
+                        <span class="glyphicon glyphicon-map-marker gelo"></span>
+                        <span class="deta">#(party.partyAddress)</span>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </a>
+    <div class="clear"></div>
+</li>
+<div class="border"></div>
+#end

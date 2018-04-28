@@ -1,0 +1,21 @@
+#header>.lf,#header>span{
+    color:#e51c23;
+}
+#header .score{
+    float:right;
+    margin-right:10px;
+    color:#e51c23;
+}
+.source{
+    width:90%;
+    margin:0px auto;
+}
+.source li{
+    height:54px;
+    line-height:54px;
+    border-bottom:1px solid #E5E5E5;
+}
+.source .add_score{
+    float:right;
+    color:#ff9800;
+}

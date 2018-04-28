@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>平安是福</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/flexslider.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/navigation_first.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/index.css"/>
+</head>
+<body onload="loaded()">
+<!--页头-->
+<div class="header">
+    <div class="lf">
+        <img src="#(ctx)/static/img/xt_logo.png">
+    </div>
+    <a href="#(ctx)/app/news/toSearch/?columnId=INDEX&tokenCode=#(tokenCode)" class="glyphicon glyphicon-search search_box rt" style="color:#827882"></a>
+</div>
+<div id="wrapper">
+    <div id="scroller">
+        <!--轮播-->
+        <div class="img_box clear">
+            <div class="flexslider">
+                <ul class="slides">
+                    #for(imageTemp :IndexImages)
+                        <li>
+                            <a href="#(ctx)/app/news/showDetail?newsId=#(imageTemp.articleId)&tokenCode=#(tokenCode)">
+                                <img src="#(nginxurl)#(imageTemp.titleImage)" alt=""/>
+                            </a>
+                        </li>
+                    #end
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <!--导航-->
+            <div class="nav">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=18&columnName=新视点&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/viewpoint.png" alt=""/>
+                            <p>新视点</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/main/?columnId=27&columnName=主力军&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/force.png" alt=""/>
+                            <p>主力军</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="http://h5.iv.mo.cn/webapp/home/station.html">
+                            <img src="#(ctx)/static/img/beauty.png" alt=""/>
+                            <p>家园美</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=29&columnName=基层风&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/level.png" alt=""/>
+                            <p>基层风</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <a href="http://h5.iv.mo.cn/webapp/knowledge">
+                            <img src="#(ctx)/static/img/knowledge.png" alt=""/>
+                            <p>知识苑</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/appStartBook">
+                            <img src="#(ctx)/static/img/book.png" alt=""/>
+                            <p>读书咖</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/appStartWalk">
+                            <img src="#(ctx)/static/img/walk.png" alt=""/>
+                            <p>健步走</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=36&columnName=公告栏&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/affiche.png" alt=""/>
+                            <p>公告栏</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=30&columnName=专题活动&tokenCode=#(tokenCode)&cmd=appHidenMenu">
+                            <img src="#(ctx)/static/img/activity.png" alt=""/>
+                            <p>专题活动</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&cmd=appShowMenu">
+                            <img src="#(ctx)/static/img/show.png" alt=""/>
+                            <p>风采展示</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="#(ctx)/app/basic/?columnId=45&columnName=投票结果&tokenCode=#(tokenCode)">
+                            <img src="#(ctx)/static/img/vote.png" alt=""/>
+                            <p>投票结果</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-3">
+                        <a href="http://h5.iv.mo.cn/webapp/tool">
+                            <img src="#(ctx)/static/img/tool.png" alt=""/>
+                            <p>实用工具</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="border"></div>
+        <div class="border_01"></div>
+            #for(newTemp :newsList)
+                #if(newTemp.type == '0')
+                    <div class="container">
+                    <!--图文-->
+                    <div class="p_cont">
+                        <a onclick="addReadCount('#(newTemp.articleId)')" href="#(ctx)/app/news/showDetail?newsId=#(newTemp.articleId)&tokenCode=#(tokenCode)">
+                            <div class="row">
+                                <div class="text">#(newTemp.title)</div>
+                            </div>
+                            <div class="row">
+                                #for(im :newTemp.imList)
+                                    <div class="col-xs-4">
+                                        <img src="#(nginxurl)#(im)" alt=""/>
+                                    </div>
+                                #end
+                            </div>
+                            <div class="row data">
+                                <div class="col-xs-8 cont lf">
+                                    <div class="glyphicon glyphicon-eye-open lf">
+                                    </div>&nbsp;<span id="news_#(newTemp.articleId)">#(newTemp.readerNum)</span>
+                                </div>
+                                <div class="rt-4">#(newTemp.showTime)</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                #end
+                #if(newTemp.type == '1')
+                    <div class="container">
+                    <div class="p_cont">
+                        <a onclick="addReadCount('#(newTemp.articleId)')" href="#(ctx)/app/news/showDetail?newsId=#(newTemp.articleId)&tokenCode=#(tokenCode)">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    #for(im :newTemp.imList)
+                                        <img src="#(nginxurl)#(im)" alt=""/>
+                                    #end
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <p class="text1">#(newTemp.title)</p>
+                                    </div>
+                                    <div class="row data">
+                                        <div class="col-xs-8 cont lf">
+                                            <div class="glyphicon glyphicon-eye-open lf">
+                                            </div>&nbsp;<span id="news_#(newTemp.articleId)">#(newTemp.readerNum)</span>
+                                        </div>
+                                        <div class="rt-4">#(newTemp.showTime)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                #end
+                <div class="border_01"></div>
+            #end
+        <div id="more" data-status="1">加载更多</div>
+        <input type="hidden" id="page" value="2">
+        <div style="height:150px;"></div>
+    </div>
+</div>
+<!--页尾-->
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script src="#(ctx)/static/js/bootstrap.js"></script>
+<script src="#(ctx)/static/js/jquery.flexslider.js"></script>
+<script src="#(ctx)/static/js/index.js"></script>
+<script type="text/javascript" src="#(ctx)/static/js/iscroll.js"></script>
+<script type="text/javascript">
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            slideshowSpeed: 3000,
+            animationSpeed: 200,
+            touch: true
+        });
+    });
+    var myScroll;
+
+    function loaded() {
+        myScroll = new IScroll('#wrapper', {mouseWheel: true, click: true});
+        myScroll.on("scroll", function(){
+        	var height = this.y;
+        	var bottomHeight = this.maxScrollyY - height;
+        	alert(height+"--"+bottomHeight);
+        });
+    }
+
+    document.addEventListener('touchmove', function (e) {
+        //loadNewPage();
+        e.preventDefault();
+    }, true);
+    
+
+    $("#more").on("click", function () {
+        loadNewPage();
+    });
+
+    function loadNewPage(){
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/news/getNewsList/",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "source": 5,
+                "data": {
+                    "pageNumber": $("#page").val(),
+                    "tokenCode": '#(tokenCode)'
+                }
+            }) ,
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                $("#page").val(parseInt($("#page").val()) + 1);
+                if(data != null || data != ""){
+                    $("#more").prepend(data);
+                }else{
+                    alert("没有更多数据了!");
+                }
+                $("#more").html("加载更多");
+            },
+            error: function () {
+                alert("加载失败！");
+            }
+        });
+    }
+</script>
+</html>

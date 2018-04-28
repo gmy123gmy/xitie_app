@@ -1,0 +1,649 @@
+@CHARSET "utf-8";
+/*轮播*/
+.img_box img{
+    width:100%;
+    height:auto;
+}
+.nav{
+     margin-top: 20px;
+     text-align: center;
+ }
+.nav .row{
+    text-align: center;
+}
+.nav .row a p{
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    color: #000;
+    padding: 5px 0;
+}
+.nav .col-xs-3 {
+    padding-bottom: 16px;
+}
+.col-xs-3 img{
+    height: 50px;
+}
+/*分割线*/
+.border{
+    margin-top: 4px;
+    border-top: 10px solid #FAFAFA;
+}
+/*图文*/
+.text{
+    margin: 10px 0;
+    color: #000;
+    font-size: 1.26em;
+}
+.col-xs-4 img{
+    width:100%;
+}
+.data{
+    font-size: 12px;
+    line-height: 24px;
+    color: #bbb;
+}
+.data .cont div{
+    line-height: 1.85em;
+}
+.border_01{
+    margin-top: 2px;
+    border-top: 1px solid #EFEFEF;
+}
+.p_cont{
+    margin-top: 10px;
+}
+.text1{
+    color: #000;
+    font-size: 1.2em;
+}
+.border_01{
+	margin-top: 2px;
+    border-top: 1px solid #EFEFEF;
+}
+/*主力军*/
+.nav_01{
+    width: 100%;
+    padding: 0 15px;
+    background: #eee;
+    height: 36px;
+    line-height: 36px;
+}
+.nav_01 li{
+    float: left;
+    width: 50%;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+}
+.nav_01 li a{
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    text-decoration: none;
+    color: #000;
+}
+.t_text{
+    height: 27px;
+    padding: 0 15px;
+    background: #FAFAFA;
+}
+.t_text p{
+    font-size: 13px;
+    color: #E51C23;
+    height: 27px;
+    line-height: 27px;
+}
+.t_text a{
+    display: inline-block;
+    font-size: 12px;
+    color: #E51C23;
+    height: 27px;
+    line-height: 27px;
+}
+/*战区随手拍*/
+.btn{
+    margin-left: 15px;
+}
+.search_01{
+    margin-right: 15px;
+    font-size: 18px;
+    color: #6E6A6E;
+}
+.station{
+    height: 41px;
+    line-height: 41px;
+}
+.station .toponymy{
+    font-size: 18px;
+    color: #101010;
+}
+.toponymy span{
+    display: block;
+    color: #000;
+    font-size: 18px;
+}
+.station .add{
+    font-size: 12px;
+    color: #fff;
+}
+.station .add a{
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    background: #8BC34A;
+    text-align: center;
+    margin-right: 15px;
+}
+.station_t{
+    padding: 0 15px;
+    width: 100%;
+    height: 105px;
+}
+.station_t a{
+    width: 35%;
+    height: 105px;
+    line-height: 105px;
+}
+.station_t img{
+    width: 100%;
+    height: 105px;
+    line-height: 105px;
+}
+.station_t div{
+    width: 65%;
+    font-size: 12px;
+    padding-left: 10px;
+}
+.nav_02{
+    width:100%;
+    height:230px;
+    margin: 10px 15px;
+}
+.nav_02 li{
+    float: left;
+    width: 20%;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    background: #eee;
+    border: 1px solid #bbb;
+    border-radius: 50%;
+    margin:5px 5px 10px;
+    font-size:14px;
+    position:relative;
+    margin-right:2%;
+    margin-top: 20px;
+}
+.nav_02 li a{
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+}
+/*知识苑*/
+.knowledge0{
+    font-size: 24px;
+    color: #1783D1;
+}
+.knowledge1{
+    font-size: 24px;
+    color: #259B24;
+}
+.knowledge2{
+    font-size: 24px;
+    color: #FF7A00;
+}
+.new{
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.learn{
+    font-size: 17px;
+    color: #000;
+    margin-top: 10px;
+}
+/*视频课堂*/
+.img2 img{
+    display: block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+}
+/*专题活动*/
+.img_01{
+    width: 100%;
+    margin-top: 20px;
+}
+.activity_text{
+    font-size: 16px;
+}
+/*文化广场*/
+.title{
+    height: 48px;
+    padding: 0 15px;
+    background: #f8f8f8;
+}
+.title_01{
+    font-size: 16px;
+    height: 26px;
+    line-height: 26px;
+    padding-top: 10px;
+}
+.page{
+    padding-top: 10px;
+}
+.page a{
+    font-size: 14px;
+    color: #827882;
+    height: 23px;
+    line-height: 23px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.page_present{
+    border-bottom: 1px solid #E51C23;
+}
+.show{
+    margin-top: 10px;
+}
+.face img{
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+.view-title{
+    font-size: 16px;
+}
+.view-text{
+    font-size: 12px;
+    color: #bbb;
+}
+.browse{
+    color: #bbb;
+}
+.browse:hover{
+    color: orange;
+}
+.time{
+    font-size: 12px;
+    color: #bbb;
+}
+.time_text{
+    margin-top: 5px;
+}
+.time_cont{
+    font-size: 12px;
+    text-align: left;
+}
+.time_cont0{
+    color: darkorange;
+    border: 1px solid darkorange;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding:0 2px 2px 5px;
+}
+.time_cont1{
+    color: lawngreen;
+    border: 1px solid lawngreen;
+    margin-right: 5px;
+    padding:0 2px 2px 5px;
+}
+.time_cont2{
+    color: #337ab7;
+    border: 1px solid #337ab7;
+    text-align: center;
+    margin-right: 5px;
+    padding:0 2px 2px 5px;
+}
+/*视频课堂*/
+.nav_03{
+    width: 100%;
+    padding: 0 15px;
+    background: #eee;
+    height: 36px;
+    line-height: 36px;
+}
+.nav_03 li{
+    float: left;
+    width: 25%;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+}
+.nav_03 li a{
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    text-decoration: none;
+    color: #000;
+}
+/*在线题库*/
+.bank{
+    color: #000;
+    font-weight: 100;
+    margin: 10px 0 5px 15px;
+}
+.answer{
+    font-size: 12px;
+    color: #bbb;
+}
+.join{
+    color: #fff;
+    font-size: 12px;
+    background: #bbb;
+    text-align: center;
+    padding-top: 5px;
+}
+.join a{
+    color: #fff;
+}
+/*课程详情*/
+.c_nav{
+    margin: 10px 0;
+    width: 100%;
+    padding: 0 15px;
+    height: 36px;
+    line-height: 36px;
+}
+.c_nav li{
+    float: left;
+    width: 33%;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+}
+.c_nav li a{
+    color: #000;
+    font-size: 18px;
+}
+.c_nav li a:hover{
+    color: #000;
+}
+.introduce{
+    font-size: 18px;
+    padding-top: 8px;
+}
+.study{
+    margin-top: 10px;
+    font-size: 16px;
+}
+.score{
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 20px;
+}
+.star a{
+    font-size: 24px;
+    color: orange;
+}
+/*风采投稿*/
+.contribute{
+    font-size: 14px;
+    color: #000;
+    padding: 15px 100px;
+}
+.contribute span{
+    height: 23px;
+    margin-right: 15px;
+}
+.present{
+    border-bottom: 1px solid #E51C23;
+}
+input{
+    margin: 27px 0 10px;
+}
+.btn{
+    padding:8px 15px ;
+    margin: 5px 20px;
+}
+/*兴趣部落*/
+.nav span{
+    font-size: 24px;
+}
+.nav .title{
+    color: #FC7F8E;
+}
+.nav .title0{
+    color: #8ED59B;
+}
+.nav .title1{
+    color: #FDCA82;
+}
+.nav .title2{
+    color: #5AA0E9;
+}
+.creation img{
+    width: 100%;
+    height: 100px;
+    background: #bbb;
+}
+.interext_text{
+    background: #eee;
+    margin: 0 15px;
+}
+.interext_title{
+    font-size: 20px;
+    color: #000;
+}
+.interext_creat{
+    font-size: 14px;
+    color: #1783D1;
+}
+.interest_cont{
+    margin-top: 10px;
+}
+.img .img{
+    width: 60px;
+}
+.list{
+    text-align: center;
+    color: #000;
+    margin-left: 45%;
+}
+.talk{
+    display: block;
+    margin: 20px 15px;
+}
+.interest{
+    font-size: 20px;
+    color: #000;
+    height: 41px;
+    line-height: 41px;
+}
+/*部落主页*/
+.tribe{
+    padding-top: 30px;
+    background: #547CBD;
+}
+.print img{
+    display: block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    margin: 0 auto;
+	border-radius: 5px;
+	border:#fff 1px solid;
+}
+.tribe_title div{
+    font-size: 16px;
+    height: 23px;
+    line-height: 23px;
+    padding-left: 8px;
+    border-bottom: 1px solid #8BC34A;
+}
+.tribe_text1{
+    font-size: 16px;
+    color: #fff;
+    padding-bottom: 5px;
+    text-align: left;
+}
+.tribe_text{
+    font-size: 10px;
+    color: #fff;
+}
+.new{
+    margin-top: 20px;
+}
+.face1 img{
+    float: left;
+    display: block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+.tribe_title1{
+    width: 100%;
+    margin: 20px 0;
+}
+.comment{
+    color: #FF9800;
+    margin-right: 5px;
+}
+.tribe_text2{
+    color: #000;
+    font-size: 14px;
+}
+.title2{
+    font-size: 12px;
+    color: #000;
+}
+.title3{
+    font-size: 10px;
+    color: #bbb;
+}
+.img img{
+    display: block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: left;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+.img1 img{
+    display: block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    margin-left: 5px;
+}
+.chat{
+    margin: 10px 15px;
+    height: auto;
+}
+/*话题详情*/
+.topic{
+    font-size: 20px;
+    color: #000;
+    padding: 20px 15px;
+}
+.topic_01{
+    font-size: 14px;
+    color: #000;
+}
+.topic_01 p{
+    font-size: 12px;
+    color: #bbb;
+}
+.img_big{
+    margin: 10px 15px 30px;
+    background: #eee;
+    height: 200px;
+    line-height: 200px;
+}
+.reply{
+    margin: 30px 15px;
+}
+.reply div{
+    font-size: 14px;
+    color: #bbb;
+}
+.reply_cont{
+    font-size: 16px;
+    color: #000;
+    margin: 10px 0;
+}
+.reply .reply_cont p{
+    color: #bbb;
+}
+/*部落详情*/
+.ico{
+    padding: 10px 15px;
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    font-size: 16px;
+    color: #000;
+}
+.ico div span{
+    float: right;
+    font-size: 14px;
+    color: #bbb;
+}
+.ico_01{
+    padding: 10px 15px;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    color: #000;
+}
+.ico_01 div span{
+    float: right;
+    font-size: 14px;
+    color: #bbb;
+}
+.more{
+    text-align: center;
+    font-size: 14px;
+    color: #bbb;
+    margin: 30px 15px 0;
+}
+.face img{
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+.video{
+    margin-top: 10px;
+}
+.learn1{
+    margin-top: 20px;
+}
+.video{
+    margin-top: 10px;
+}
+a .grade_img{
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+}
+a .grade_img img{
+    display: block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: left;
+    margin-right: 10px;
+    margin-top: 10px;
+}

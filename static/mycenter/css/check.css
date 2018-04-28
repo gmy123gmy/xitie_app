@@ -1,0 +1,61 @@
+#header>.lf,#header>span{
+    color:#3279E0;
+}
+.my_content li{
+    padding:20px 20px 36px;
+}
+.my_content .hed{
+    width:60px;
+    height:60px;
+    border-radius: 50%;
+    float:left;
+    margin-right:25px;
+}
+.my_content .name{
+    font-size:18px;
+    margin-top:10px;
+}
+.my_content .add{
+    font-size:12px;
+    color:#3279E0;
+    margin-top:-5px;
+}
+.my_content .checked{
+    width:50%;
+    float:right;
+    font-size:14px;
+}
+.my_content .checked li{
+    float:left;
+    width:30%;
+    text-align: center;
+    color:#3279E0;
+    padding:0;
+}
+.contents>img{
+    width:33%;
+    height:125px;
+}
+.ope .time{
+    display:inline-block;
+    font-size: 12px;
+    color:#d7d8d9;
+    margin-top:12px;
+    float:left;
+}
+.contents{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.contents .item{
+    width:31%;
+    height:120px;
+    margin-bottom: 10px;
+}
+#wrapper{
+    bottom:0;
+}
+.title{
+    color:#999999;
+}

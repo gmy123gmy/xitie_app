@@ -1,0 +1,100 @@
+#for(style :styleList)
+    #if(style.showType == '3')
+        <li id="li_#(style.styleId)">
+        <p class="title">
+            文章《#(style.styleTitle)》
+            #if(style.auditState == '0')
+                <span class="wait_check">待审核</span>
+            #end
+        </p>
+        <p class="article">
+            #(style.styleContent)
+            #if(style.showAll == "true")
+        <div class="cont" id="hideContent_#(style.styleId)">
+            #(style.hidentContent)
+        </div>
+        #end
+        </p>
+        #if(style.showAll == "true")
+        <p class="all" onclick="showAll('#(style.styleId)')">全文</p>
+        #end
+        <p class="ope" >
+            <span class="glyphicon glyphicon-heart-empty">#(style.praiseCount)</span>&nbsp;&nbsp;&nbsp;&nbsp;#(style.showTime)
+            #if(user.memberId == currentUser.memberId)
+            <span class="delete" onclick="deleteStyle('#(style.styleId)')" >删除</span>
+            #end
+        </p>
+    </li>
+    #elseif(style.showType == '2')
+        <li id="li_#(style.styleId)">
+        <p class="title">
+            图片《#(style.styleTitle)》
+            #if(style.auditState == '0')
+            <span class="wait_check">待审核</span>
+            #end
+        </p>
+        <div class="contents">
+           <div class="con">
+            #(style.styleContent)
+            </div>
+
+            <!-- <p id="all"></p>
+            <script type="text/javascript">
+                var text='#(style.styleContent)';
+                console.log(text.length);
+                if(text.length >= 50){
+                    $('#all').html('<p class="all" style="color: #2363BE">全文</p>')
+                }
+            </script> -->
+            #for(impath : style.imagePaths)
+            <a href="#(fs)#(impath)" data-lightbox="'+style.styleId+'">
+            <img class="item" src="#(fs)#(impath)">
+            </a>
+            #end
+        </div>
+        <p class="ope" >
+            <span class="glyphicon glyphicon-heart-empty">#(style.praiseCount)</span>&nbsp;&nbsp;&nbsp;&nbsp;#(style.showTime)
+            #if(user.memberId == currentUser.memberId)
+            <span class="delete" onclick="deleteStyle('#(style.styleId)')" >删除</span>
+            #end
+        </p>
+    </li>
+    #elseif(style.showType == '1')
+        <li id="li_#(style.styleId)">
+        <p class="title">
+            视频《#(style.styleTitle)》
+            #if(style.auditState == '0')
+            <span class="wait_check">待审核</span>
+            #end
+        </p>
+        <div class="contents">
+            <img src="#(ctx)/static/img/play.jpg" width="30%" height="28%" style="border: 1px solid gray;" >
+        </div>
+        <p class="ope" >
+            <span class="glyphicon glyphicon-heart-empty">#(style.praiseCount)</span>&nbsp;&nbsp;&nbsp;&nbsp;#(style.showTime)
+            #if(user.memberId == currentUser.memberId)
+            <span class="delete" onclick="deleteStyle('#(style.styleId)')" >删除</span>
+            #end
+        </p>
+    </li>
+    #elseif(style.showType == '0')
+        <li id="li_#(style.styleId)">
+        <p class="title">
+            外链视频《#(style.styleTitle)》
+            #if(style.auditState == '0')
+            <span class="wait_check">待审核</span>
+            #end
+        </p>
+        <div class="contents">
+            <img src="#(ctx)/static/img/play.jpg" width="30%" height="28%" style="border: 1px solid gray;" >
+        </div>
+        <p class="ope" >
+            <span class="glyphicon glyphicon-heart-empty">#(style.praiseCount)</span>&nbsp;&nbsp;&nbsp;&nbsp;#(style.showTime)
+            #if(user.memberId == currentUser.memberId)
+            <span class="delete" onclick="deleteStyle('#(style.styleId)')" >删除</span>
+            #end
+        </p>
+    </li>
+    #end
+    <div class="border"></div>
+#end

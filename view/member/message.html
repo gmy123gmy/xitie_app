@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>消息</title>
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/message.css">
+    <style type="text/css">
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            width: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #pullDown,#pullUp,.pulldown-tips{
+            height:40px;
+            line-height:40px;
+            text-align:center;
+        }
+        .pulldown-tips{
+            position:absolute;
+            top:-40px;
+            left:0;
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+            <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+            <span>消息</span>
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            <div class="content">
+                <ul id="myTab" >
+                    <li class="active" id="sysAdvice"><a href="#home" data-toggle="tab">系统通知</a></li>
+                    <li id="leaveMsg"><a href="#mes" data-toggle="tab">留言</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade in active" id="home">
+
+                        </div>
+                        <div class="tab-pane fade" id="mes">
+                            <img src=#(ctx)/static/img/loading.gif style=width:20px><font color=#999>正在载入...</font>
+                        </div>
+                        <div id="pullUp" class="" style="padding-right: 30px;">
+                            <div class="pullUpLabel" id="more" data-status="1">加载更多</div>
+                        </div>
+                </div>
+            </div>
+            <input type="hidden" id="page" value="1">
+            <input type="hidden" id="size" value="5">
+        </div>
+    </div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/bootstrap.min.js"></script>
+<script src="#(ctx)/static/js/jroll.js"></script>
+<!--<script src="#(ctx)/static/js/common.js"></script>-->
+<script type="text/javascript">
+       $("#page").val(1); //初始加载第一页
+       var ctx = "#(ctx)";
+       var fs = "#(fs)";
+       var myScroll;
+       var pullUp = $("#pullUp"), pullUpLabel = $(".pullUpLabel"), container = $('#view'), loadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
+       function loaded () {
+           pullUp.hide();
+           //myScroll = new IScroll('#wrapper', { scrollbars: false, mouseWheel: true, probeType: 2, click:true});
+		   myScroll = new JRoll('#wrapper');
+           myScroll.on("scroll",function(){
+               if(loadingStep == 0 && !pullUp.attr("class").match('refresh')){
+                   if(this.y < (this.maxScrollY - 8)){//上拉加载更多
+                       pullUp.addClass("refresh").show();
+                       pullUpLabel.html("<img src=#(ctx)/static/img/loading.gif style=width:20px><font color=#999>正在载入...</font>");
+                       loadingStep = 1;
+                       pullUpAction();
+                   }
+               }
+           });
+           function pullUpAction(){
+               setTimeout(function(){
+                   loadNewPage(); //加载第一页
+                   myScroll.refresh();
+                   loadingStep = 0;
+               },1000);
+           }
+       }
+       document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+       $(document).ready(function (){
+           resetPage();
+           $("#sysAdvice").on("click", function(){ //切换页签重新分页
+               pullUp.removeClass("refresh").hide();
+               $("#leaveMsg").removeClass("active");
+               $("#sysAdvice").addClass("active");
+               $("#mes").removeClass("in").removeClass("active");
+               $("#home").addClass("in").addClass("active");
+               resetPage();
+               setTimeout(function () {
+                   loadNewPage();
+               }, 100);
+           });
+           $("#leaveMsg").on("click", function(){
+               pullUp.removeClass("refresh").hide();
+               $("#sysAdvice").removeClass("active");
+               $("#leaveMsg").addClass("active");
+               $("#home").removeClass("in").removeClass("active");
+               $("#mes").addClass("in").addClass("active");
+               resetPage();
+               setTimeout(function () {
+                   loadNewPage();
+               }, 100);
+           });
+           loadNewPage();
+           loaded();
+       });
+
+       function resetPage(){
+           $("#page").val(1);
+           $("#mes").empty();
+           $("#home").empty();
+       }
+
+       function loadNewPage(){
+           $.post("#(ctx)/app/member/myMessagePage/",{
+               "tokenCode": '#(tokenCode)',
+               "pageNumber": $("#page").val(),
+               "pageSize": $("#size").val(),
+               "showType" : $("li.active").attr("id")
+           },function (html) {
+               $("#page").val(Number($("#page").val())+1);
+            //    html = "<div><img src=#(ctx)/static/img/loading.gif style=width:20px><font color=#999>正在载入...</font>";
+               html = $.trim(html);
+               if(html.length > 0){
+                   var divName = $("li.active").attr("id");
+                   if("leaveMsg" == divName){
+                       $("#mes").append(html);
+                   }else{
+                       $("#home").append(html);
+                   }
+                   pullUp.removeClass("refresh").hide();
+               }else{
+                   pullUp.addClass("refresh").show(); //不在请求后台，页面显示全部加载完毕
+                   pullUpLabel.text("没有更多数据了");
+               }
+               myScroll.refresh();  //这个是用来重新刷新容器的
+           });
+       }
+
+       function deleteMessage(messId) {
+           if (confirm("确定删除?")) {
+               $.post("#(ctx)/app/member/doDelMessage", {
+                   messageId: messId,
+                   tokenCode: '#(tokenCode)'
+               }, function (data) {
+                   var res = eval("(" + data + ")");
+                   if (res.result_code == "success") { //关注成功，则修改页面样式
+                       $("#div_" + messId).fadeOut(1000);
+                   }
+               });
+           }
+       }
+       #(msgTips)
+</script>
+</body>
+</html>

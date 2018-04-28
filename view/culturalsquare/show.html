@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>文化广场</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/culture.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/font-awesome.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/css/styles.css" />
+    <!-- <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.css" /> -->
+    <link rel="stylesheet" href="#(ctx)/static/css/lightbox.css"/>
+    <style>
+        .parise{
+            font-size:20px;
+            color:#666;
+        }
+
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            width: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #pullDown,#pullUp,.pulldown-tips{
+            height:40px;
+            line-height:40px;
+            text-align:center;
+            margin-top: 15px;
+        }
+        .pulldown-tips{
+            position:absolute;
+            top:-40px;
+            left:0;
+            width:100%;
+        }
+        #orderTab .active{
+            border-bottom: 2px solid #E51C23;
+            color: #E51C23;
+        }
+        .lightbox .lb-image{
+            border:1px solid #fff;
+        }
+		.pics .col-xs-4{padding: 0 2px 0px 0}
+        .pics .showimageclass a {height: 5.2em;background-color: #eee;}
+        .con{height:36px;text-align: justify}
+        .article > .tit{
+            height:30px;
+            overflow: hidden
+        }
+        .glyphicon-globe,.glyphicon-send,.glyphicon-check,.glyphicon-star{
+            font-size:30px!important;
+        }
+        #view{position:relative;margin-top:30px;}
+        .tip{width:60%;height:100px;line-height:100px;text-align:center;position:absolute;top:200px;left:20%;z-index:-1;font-size:14px;color:#999}
+    </style>
+    <script>
+
+        function htmlFontSize(){
+            var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+            var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+            var width = w > h ? h : w;
+            width = width > 720 ? 720 : width
+            var fz = ~~(width*100000/36)/10000
+            document.getElementsByTagName("html")[0].style.cssText = 'font-size: ' + fz +"px";
+            var realfz = ~~(+window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize.replace('px','')*10000)/10000
+            if (fz !== realfz) {
+                document.getElementsByTagName("html")[0].style.cssText = 'font-size: ' + fz * (fz / realfz) +"px";
+            }
+}
+    </script>
+</head>
+<body onload="htmlFontSize()">
+    <div id="header">
+        <span style="font-size:20px">文化广场</span>
+        <span class="glyphicon glyphicon-search" onclick="javascript:self.location.href='#(ctx)/app/culturalsquare/toSearch?tokenCode=#(tokenCode)';"></span>
+        <!-- <input type="text" placeholder="搜索" onclick="javascript:self.location.href='#(ctx)/app/culturalsquare/toSearch?tokenCode=#(tokenCode)';"/> -->
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            <ul class="cul">
+                <a href="#(ctx)/app/bbs?tokenCode=#(tokenCode)&cmd=appShowMenu"><li style="color:#5BA0DF">
+                    <p class="glyphicon glyphicon-globe"></p>
+                    <p>兴趣部落</p>
+                </li>
+                </a>
+                <a href="#(ctx)/app/party?tokenCode=#(tokenCode)&cmd=appShowMenu"><li style="color:#FF6B00">
+                    <p class="glyphicon glyphicon-send"></p>
+                    <p>职工活动</p>
+                </li>
+                </a>
+                <a href="#(ctx)/publishInfo"><li style="color:#BB78C2">
+                    <p class="glyphicon glyphicon-check"></p>
+                    <p>风采投稿</p>
+                </li>
+                </a>
+                <a href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=follow&orderType=#(orderType)"><li style="color:#FF8A9F">
+                    <p class="glyphicon glyphicon-star"></p>
+                    <p>我的关注</p>
+                </li>
+                </a>
+            </ul>
+            
+            <div class="content">
+                <ul id="orderTab" style="float: left;padding-bottom: 10px;">
+                    <input name="orderType" id="orderType" value="#(orderType)" type="hidden" />
+                    <li><a href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=#(customShowType)" id="orderAll">全部</a></li>
+                    <li><a href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&orderType=1&type=#(customShowType)" id="orderOrg">本单位</a></li>
+                </ul>
+                <ul id="myTab" style="margin-bottom: 5px;">
+                    <li><a href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=all&orderType=#(orderType)" id="all">最新</a></li>
+                    <li><a href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=recommend&orderType=#(orderType)" id="recommend">最热</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active">
+                        <div class="info" >
+                            <div  class="tip"><img src=#(ctx)/static/img/loading.gif style="width:20px;vertical-align:middle"> 精彩内容正在载入...</div>
+                            <div id="view"></div>
+                        </div>
+                        <div id="pullUp" class="">
+                            <div class="pullUpLabel">上拉加载更多...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 50px;"></div>
+        </div>
+        <input type="hidden" id="page" value="1">
+        <input type="hidden" id="size" value="4">
+    </div>
+<script src="#(ctx)/static/js/jquery-1.11.3.min.js"></script>
+<script src="#(ctx)/static/js/bootstrap.min.js"></script>
+<script src="#(ctx)/static/js/lightbox.js"></script>
+<script src="#(ctx)/static/lib/layer/2.4/layer.js"></script>
+<!-- <script src="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.jquery.js"></script> -->
+<script src="#(ctx)/static/js/jroll.js"></script>
+<script src="#(ctx)/static/js/jroll-pulldown1.js"></script>
+<script src="#(ctx)/static/js/jroll-viewer.js"></script>
+
+<script>
+
+    lightbox.option({
+        'imageFadeDuration':100,
+        'resizeDuration': 100,
+        'wrapAround': true,
+        'albumLabel':'%1 / %2',
+        'positionFromTop':80,
+        'disableScrolling':true
+
+    })
+</script>
+<script type="text/javascript">
+    $("#page").val(1);
+    var ctx = "#(ctx)";
+    var fs = "#(fs)";
+    var type = '#(customShowType)';
+    var currentUserId = "#(currentUserId)";
+    var myScroll;
+    var pullUp = $("#pullUp"), pullUpLabel = $(".pullUpLabel"), container = $('#view'), loadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
+
+    function loaded () {
+        pullUp.hide();
+        //myScroll = new IScroll('#wrapper', { scrollbars: false, mouseWheel: true, probeType: 2, click:true});
+        myScroll = new JRoll('#wrapper');
+        myScroll.pulldown({
+            refresh: function(complete) {
+                //完成加载数据的操作后回调执行complete方法
+                complete();
+                location.reload();
+            }
+        });
+        myScroll.on("scroll",function(){
+            if(loadingStep == 0 && !pullUp.attr("class").match('refresh')){
+                if(this.y < (this.maxScrollY - 8)){//上拉加载更多
+                    pullUp.addClass("refresh").show();
+                    pullUpLabel.html("<img src=#(ctx)/static/img/loading.gif style=width:20px><font color=#999>正在载入...</font>");
+                    loadingStep = 1;
+                    pullUpAction();
+                }
+            }
+        });
+        function pullUpAction(){
+            setTimeout(function(){
+                getDataList(type);
+                myScroll.refresh();
+                loadingStep = 0;
+            },1000);
+        }
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    $(document).ready(function(){
+        $(".title").find("a").each(function (index, item) {
+            $(item).removeClass("active");
+        });
+        $("#" + '#(customShowType)').addClass("active");
+        //全部和本单位样式
+        if($('#orderType').val() != null && Number($('#orderType').val()) == 1){
+            $("#orderOrg").addClass("active");
+        }else{
+            $("#orderAll").addClass("active");
+        }
+        // $('.showimageclass a').touchTouch();
+        //加载一次数据
+        getDataList(type);
+        //调用一下load方法
+        loaded();
+    });
+
+    //页面下滑加载数据调用该方法就OK: getDataList(queryType);
+    function getDataList(type) {
+        $.post("#(ctx)/app/culturalsquare/indexJson/?tokenCode=#(tokenCode)",{
+            "tokenCode": '#(tokenCode)',
+            "pageNumber": $("#page").val(),
+            "pageSize": $("#size").val(),
+            "orderType": $("#orderType").val(),
+            "type": type
+        },function (jsonList) {
+            var html = "";
+            if(jsonList.length > 0){
+                $.each(jsonList,function (index,data) {
+                    if(data.showType == 0){
+                        html += Public.createStyleOutVidoHTML(data,'#(tokenCode)',true);
+                    }
+                    if(data.showType == 1){
+                        html += Public.createStyleVidoHTML(data,'#(tokenCode)',true);
+                    }
+                    if(data.showType == 2){
+                        html += Public.createStyleMoreImageHTML(data,'#(tokenCode)',true);
+                    }
+                    if(data.showType == 3){
+                        html += Public.createStyleArticHTML(data,'#(tokenCode)',true);
+                    }
+                });
+                $("#view").append(html);
+                // $('#view>div').fadeOut(0);
+                $('.tip').hide();
+                // $('#view>div').fadeIn('slow');
+                // $('.showimageclass a').touchTouch();
+                $("#page").val(Number($("#page").val())+1);
+                if(jsonList.length < Number($("#size").val())){
+                    pullUp.addClass("refresh").show(); //不在请求后台，页面显示全部加载完毕
+                    pullUpLabel.text("没有更多内容了");
+                    $('.tip').hide()
+                }else{
+                    pullUp.removeClass("refresh").hide();
+                }
+            }else{
+                pullUp.addClass("refresh").show(); //不在请求后台，页面显示全部加载完毕
+                pullUpLabel.text("没有更多内容了");
+                $('.tip').hide()
+            }
+            $(".all").click(function(){        
+                $(this).prev().css('height','auto'); 
+                $(this).hide();  
+			});
+
+            myScroll.refresh();  //这个是用来重新刷新容器的
+        });
+    }
+
+    function clickPraise(styleId, span) {
+        //点击之后就不能再点了
+        $(span).removeAttr('onclick');
+        //进行点赞请求后台
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/culturalsquare/clickPraise?styleId=" + styleId + "&tokenCode=#(tokenCode)" ,
+            contentType: "application/json",
+            data: {styleId: styleId},
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    $(span).html(Number($(span).html()) + 1);
+                    $(span).css("color", "#E20500"); //点赞成功后.添加样式
+                    $(span).addClass('fa-thumbs-up');
+                }
+            },
+            error: function () {
+                alert("点赞不成功，再试试吧！");
+            }
+        });
+    }
+    //解除关注
+    function clickUnFollow(userUnFollowId, div){
+        $(div).removeAttr('onclick');
+        $(div).removeClass("browse");
+        //进行点赞请求后台
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/culturalsquare/clickUnFollow?tokenCode=#(tokenCode)&userUnFollowId=" + userUnFollowId,
+            contentType: "application/json",
+            data: {},
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    $(".customFollowClass_" + userUnFollowId).each(function (index, item) {
+                        $(item).removeAttr("onclick");
+                        $(item).addClass("browse");
+                        $(item).addClass("customNotFollowClass_" + userUnFollowId);
+                        $(item).removeClass("customFollowClass_" + userUnFollowId);
+                        $(item).attr("onclick", "clickFollow(\"" + userUnFollowId + "\", this)");
+                    });
+                }
+            },
+            error: function () {
+                alert("操作不成功，再试试吧！！");
+            }
+        });
+    }
+
+    //关注
+    function clickFollow(userFollowId, div) {
+        //点击之后就不能再点了
+        $(div).removeAttr('onclick');
+        $(div).removeClass("browse");
+        //进行关注请求后台
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/culturalsquare/clickFollow?tokenCode=#(tokenCode)&userFollowId="+userFollowId,
+            contentType: "application/json",
+            data: {},
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    $(".customNotFollowClass_" + userFollowId).each(function (index, item) {
+                        $(item).removeAttr("onclick");
+                        $(item).removeClass("browse");
+                        $(item).removeClass("customNotFollowClass_"+userFollowId);
+                        $(item).addClass("customFollowClass_"+userFollowId);
+                        $(item).attr("onclick", "clickUnFollow(\"" + userFollowId + "\", this)");
+                    });
+                }
+            },
+            error: function () {
+                alert("关注不成功，再试试吧！！");
+            }
+        });
+    }
+    //显示视频
+    function showvideo(url, title){
+        var index = layer.open({
+            type: 1,
+            title: title,
+            area: ['100%', '100%'],
+            maxmin: false,
+            fix: false, //不固定
+            shade:0.4,
+            content : "<div width='100%' height='100%' style='margin-top: 35%'><video autoplay=\"autoplay\" src=\""+url+"\" controls=\"controls\" width=\"100%\" height=\"240\" /></div>"
+        });
+        layer.full(index);
+    }
+
+    //举报
+    function report(styleId) {
+        location.href = "#(ctx)/app/culturalsquare/toReort?tokenCode=#(tokenCode)&styleId=" + styleId;
+    }
+    #(msgTips)
+</script>
+<script src="#(ctx)/static/js/common.js"></script>
+</body>
+</html>

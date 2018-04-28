@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>系统通知详情</title>
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/message.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/flexslider.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/detail.css"/>
+</head>
+<body onload="loaded()">
+<div id="header" style="border-bottom:1px solid #f7f7f7;">
+    <a href="javascript:;" onClick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back_01 lf"></a>
+    <span>系统通知</span>
+</div>
+<div id="wrapper">
+    <div id="scroller" >
+        <div class="container">
+            <div class="detail clear">
+                #(announcement.title)
+            </div>
+            <div class="row address">
+                <div class="col-xs-12 time">#(announcement.pubUserName)&nbsp;&nbsp;于&nbsp;&nbsp;#(announcement.showRecordTime)&nbsp;&nbsp;发布</div>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="border"></div>
+        <div class="container content" style="margin-top: 5px;">
+            #(announcement.content)
+        </div>
+    </div>
+</div>
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script src="#(ctx)/static/js/bootstrap.js"></script>
+<script src="#(ctx)/static/js/jquery.flexslider.js"></script>
+<script src="#(ctx)/static/js/index.js"></script>
+<script type="text/javascript" src="#(ctx)/static/js/iscroll.js"></script>
+<script type="text/javascript">
+    var myScroll;
+    function loaded() {
+        myScroll = new IScroll('#wrapper', {mouseWheel: true, click: true});
+    }
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+    #(msgTips)
+</script>
+</html>

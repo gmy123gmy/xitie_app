@@ -1,0 +1,47 @@
+#header{
+    border-bottom:1px solid #BBBBBB;
+}
+#wrapper{
+    bottom:0;
+}
+.info li{
+    padding:0 20px;
+    height:40px;
+    line-height: 40px;
+    font-size:16px;
+}
+.info li img{
+    width:80px;
+    height:80px;
+    margin-top:10px;
+}
+.info li .right{
+    float:right;
+    color:#BBBBBB;
+    font-size:14px;
+}
+.info li .edit{
+    color:#827F98;
+}
+button{
+    width:60%;
+    height:35px;
+    line-height: 35px;
+    color:#fff;
+    background: #FF4081;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    border:none;
+    border-radius: 5px;
+    margin-top:30px;
+}
+.chache{
+    background: #fff;
+    color:#000;
+    margin-top:20px;
+    border:1px solid #BBBBBB;
+}
+.upd{
+    padding-bottom:50px;
+}

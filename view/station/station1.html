@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>站区随手拍</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/navigation_second.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/index.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/lightbox.css"/>
+    <style>
+        select{
+            margin-top:10px;
+            margin-left:17px;
+            border-radius:5px;
+        }
+        .top{
+            width:100%;
+            height: 45px;
+            line-height:45px;
+            background:#eee;
+        }
+        .top .button{
+            width:50px;
+            height:30px;
+            line-height:30px;
+            border-radius: 5px;
+            margin:10px 5% 0 5%;
+            border:none;
+            border:1px solid #999;
+        }
+        .class_1 {
+            background: rgba(227, 108, 110, 1.00)
+        }
+
+        .class_2 {
+            background: rgba(223, 146, 81, 1.00)
+        }
+
+        .class_3 {
+            background: rgba(216, 179, 33, 1.00)
+        }
+
+        .class_4 {
+            background: rgba(136, 195, 39, 1.00)
+        }
+
+        .class_5 {
+            background: rgba(35, 190, 101, 1.00)
+        }
+
+        .class_6 {
+            background: rgba(25, 166, 209, 1.00)
+        }
+        .container img{
+            height:80px;
+        }
+    </style>
+</head>
+<body onload="loaded()">
+<!--页头-->
+<div class="header" style="background:#F8F8F8">
+    <a href="javascript:;" onClick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+    <span style="position:absolute;left:50%;margin-left:-2.5em">站区随手拍</span>
+</div>
+<div id="wrapper">
+    <div id="scroller">
+        <div class="top">
+            <select name="lineManager" id="lineManager">
+                #for(line : allManagerLine)
+                <option value="#(line.dicId)">#(line.dicName)</option>
+                #end
+            </select>
+            <select name="station" id="station">
+                #for(stat : stationOfLine)
+                <option value="#(stat.dicId)">#(stat.dicName)</option>
+                #end
+            </select>
+            <!-- 站点 -->
+           <div class="add" style="float:right;margin-right:20px;">
+                <a href="#(ctx)/app/station/toAdd?columnId=#(columnId)&tokenCode=#(tokenCode)&lineId=#(station.parentId)&stationId=#(station.dicId)" class="glyphicon glyphicon-plus">投稿</a>
+            </div>
+            <div class="toponymy" style="float:right;margin-right:20px;">
+                <span>#(station.dicName)</span>
+            </div>
+        </div>
+        <!--站点-->
+        <!-- <div class="container">
+            <div class="row station clear">
+                <div class="col-xs-5 toponymy">
+                    <span>#(station.dicName)</span>
+                </div>
+                
+            </div>
+        </div> -->
+
+        <!-- #if(stationDesc != null)
+        <div class="station_t">
+            <img src="#(fs)#(stationDesc.titleImageUrl)" alt=""/>
+            <span style="text-align:justify">
+                #(stationDesc.context)
+            </span>
+        </div>
+        #end -->
+
+        <!-- <div class="border"></div> -->
+        <!--导航-->
+        <!-- <ul class="nav_02" style="margin: 0 auto; width: 100%">
+            #for(column :top6)
+            <li>
+                <a href="#(ctx)/app/station/businessDetail?tokenCode=#(tokenCode)&columnId=#(column.columnId)&columnName=#(column.name)&stationId=#(station.dicId)&stationName=#(station.dicName)" class="class_#(for.index + 1)">
+                    #(column.name)
+                </a>
+            </li>
+            #end
+        </ul> -->
+        <!--分割线-->
+        <!-- <div class="border"></div> -->
+        <div class="t_text">
+            <p class="lf">我的站区</p>
+            <a href="/view/station/my_station.html" class="rt">更多...</a>
+        </div>
+        <div class="container">
+            <!--图片-->
+            <div class="row">
+               <div class="col-xs-4">
+                        <a href="#">
+                            <img src="../../static/img/1.png" alt=""/>
+                        </a>
+                </div>
+                <div class="col-xs-4">
+                    <a href="#">
+                        <img src="../../static/img/1.png" alt=""/>
+                    </a>
+            </div>
+            <div class="col-xs-4">
+                <a href="#">
+                    <img src="../../static/img/1.png" alt=""/>
+                </a>
+        </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                             <a href="#">
+                                 <img src="../../static/img/1.png" alt=""/>
+                             </a>
+                     </div>
+                     <div class="col-xs-4">
+                         <a href="#">
+                             <img src="../../static/img/1.png" alt=""/>
+                         </a>
+                 </div>
+                 <div class="col-xs-4">
+                     <a href="#">
+                         <img src="../../static/img/1.png" alt=""/>
+                     </a>
+             </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-xs-4">
+                                 <a href="#">
+                                     <img src="../../static/img/1.png" alt=""/>
+                                 </a>
+                         </div>
+                         <div class="col-xs-4">
+                             <a href="#">
+                                 <img src="../../static/img/1.png" alt=""/>
+                             </a>
+                     </div>
+                     <div class="col-xs-4">
+                         <a href="#">
+                             <img src="../../static/img/1.png" alt=""/>
+                         </a>
+                 </div>
+                         </div>
+            </div>
+            <div class="t_text">
+                <p class="lf">人文风光</p>
+                <a href="#" class="rt">更多...</a>
+            </div>
+            <div class="container">
+                <!--图片-->
+                <div class="row">
+                   <div class="col-xs-4">
+                            <a href="#">
+                                <img src="../../static/img/1.png" alt=""/>
+                            </a>
+                    </div>
+                    <div class="col-xs-4">
+                        <a href="#">
+                            <img src="../../static/img/1.png" alt=""/>
+                        </a>
+                </div>
+                <div class="col-xs-4">
+                    <a href="#">
+                        <img src="../../static/img/1.png" alt=""/>
+                    </a>
+            </div>
+                    </div>
+                </div>
+        <!--分栏-->
+        #for(kv :allArticles)
+            <div class="t_text">
+                <p class="lf">#(kv.key.columnName)</p>
+                <a href="#(ctx)/app/station/businessDetail?tokenCode=#(tokenCode)&columnId=#(kv.key.columnId)&columnName=#(kv.key.columnName)&stationId=#(station.dicId)&stationName=#(station.dicName)" class="rt">更多...</a>
+            </div>
+            <div class="container">
+                <!--图片-->
+                <div class="row">
+                    #for(article :kv.value)
+                        #if(for.index % 3 == 0)
+                            </div>
+                            <div class="row">
+                        #end
+                        <div class="col-xs-4">
+                            <a href="#(ctx)/app/news/showDetail?newsId=#(article.articleId)&tokenCode=#(tokenCode)">
+                                <img src="#(fs)#(article.titleImage)" alt=""/>
+                            </a>
+                        </div>
+                    #end
+                    </div>
+                </div>
+            </div>
+        <div class="border_01"></div>
+        #end
+    </div>
+</div>
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.min.js"></script>
+<script src="#(ctx)/static/js/lightbox.js"></script>
+<script src="#(ctx)/static/js/bootstrap.min.js"></script>
+<script src="#(ctx)/static/js/iscroll.js"></script>
+<script src="#(ctx)/static/js/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script type="text/javascript">
+    var myScroll;
+    function loaded () {
+        myScroll = new IScroll('#wrapper', { mouseWheel: true, click:true });
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+    $(document).ready(function(){
+        //让管线选中当前站点所属管线
+        var lin = '#(station.parentId)';
+        var stat = '#(station.dicId)';
+        $("#lineManager option[value=" + lin + "]").prop("selected", 'selected');
+        $("#station option[value=" + stat + "]").prop("selected", 'selected');
+    });
+
+    /**站点选择**/
+    $("select#lineManager").change(function(){
+        $("#station").find("option").remove();
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/station/getStationsByLine/",
+            data: {
+                lineId: $(this).val(),
+                tokenCode : '#(tokenCode)'
+            },
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval(data);
+                $.each(res, function(index, item){
+                    if(index == 1){
+                        $("#station").append("<option value="+item.dicId+">"+item.dicName+"</option>");
+                    }else{
+                        $("#station").append("<option value="+item.dicId+">"+item.dicName+"</option>");
+                    }
+                });
+                //默认选中第一个
+                $("#station option:first").prop("selected", 'selected');
+                $("#station").trigger("change");
+            },
+            error: function () {
+                Public.notice("加载站点信息出错!");
+            }
+        });
+    });
+
+    $("select#station").change(function(){
+        //获取站点、管线 刷新页面
+        var lineId = $("select#lineManager").val();
+        var stationId = $("#station").val();
+        location.href = '#(ctx)/app/station/?columnId=28&tokenCode=#(tokenCode)&lineId=' + lineId + "&stationId=" + stationId;
+    });
+</script>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>消息</title>
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/message.css">
+</head>
+<body onload="loaded()">
+    <div id="header">
+            <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+            <span>消息</span>
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            <div class="content">
+                <ul id="myTab" >
+                    <li class="active"><a href="#home" data-toggle="tab">系统通知</a></li>
+                    <li><a href="#mes" data-toggle="tab">留言</a></li>
+                </ul> 
+                <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade in active" id="home">
+                            <p class="time">2017-4-20 12:30</p>
+                            <div class="text">
+                                <p>2017全局歌唱比赛开始报名了，快去报名参加一展你的个人风采吧！</p>
+                                <p class="dele"><span style="color:#82789F;font-size:12px;"><!--删除--></span><span style="color:#3279E0"><a href="#(ctx)/app/basic/?columnId=30&columnName=专题活动&tokenCode=#(tokenCode)">进入</a></span></p>
+                            </div>
+                            <p class="time">2017-4-20 12:30</p>
+                            <div class="text">
+                                <p>有新朋友关注你了！</p>
+                                <p class="dele"><span style="color:#82789F;font-size:12px;"><!--删除--></span><span style="color:#3279E0"><a href="#(ctx)/app/member/myFans?tokenCode=#(tokenCode)" style="color:#3279E0">进入</a></span></p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="mes">
+                            #for(msg :messages)
+                                <div id="div_#(msg.messageId)">
+                                    <p class="time">#(msg.showAllTime)</p>
+                                    <div class="text">
+                                        <p>#(msg.orgName)的#(msg.memberName)给你留言了，去看看吧！</p>
+                                        <p class="dele">
+                                            <span style="color:#82789F;font-size:12px;" onclick="deleteMessage('#(msg.messageId)')" >删除</span>
+                                            <span style="color:#3279E0"><a href="#(ctx)/app/member/toLeaveComments?userId=#(msg.userId)&tokenCode=#(tokenCode)" style="color:#3279E0">进入</a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            #end
+                        </div>
+                        
+                </div> 
+            </div>
+        </div>
+    </div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/bootstrap.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/iscroll.js"></script>
+<script type="text/javascript">
+       var myScroll;
+       function loaded () {
+           myScroll = new IScroll('#wrapper', { mouseWheel:true,click:true});
+       }
+       document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+       function deleteMessage(messId) {
+           if (confirm("确定删除?")) {
+               $.post("#(ctx)/app/member/doDelMessage", {
+                   messageId: messId,
+                   tokenCode: '#(tokenCode)'
+               }, function (data) {
+                   var res = eval("(" + data + ")");
+                   if (res.result_code == "success") { //关注成功，则修改页面样式
+                       $("#div_" + messId).fadeOut(1000);
+                   }
+               });
+           }
+       }
+</script>
+</body>
+</html>

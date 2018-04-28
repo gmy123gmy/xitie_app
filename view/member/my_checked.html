@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的审核</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/check.css">
+    <style type="text/css">
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            width: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #pullDown,#pullUp,.pulldown-tips{
+            height:40px;
+            line-height:40px;
+            text-align:center;
+        }
+        .pulldown-tips{
+            position:absolute;
+            top:-40px;
+            left:0;
+            width:100%;
+        }
+    </style>
+</head>
+<body onload="loaded()">
+    <div id="header">
+        <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+        <span>审核</span>
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            <ul class="my_content" id="view">
+
+            </ul>
+            <div id="pullUp" class="">
+                <div class="pullUpLabel" id="more" data-status="1">加载更多</div>
+            </div>
+        </div>
+        <input type="hidden" id="page" value="1">
+        <input type="hidden" id="size" value="5">
+    </div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/iscroll.js"></script>
+<script src="#(ctx)/static/js/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/js/jroll.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script type="text/javascript">
+    $("#page").val(1); //初始加载第一页
+    var ctx = "#(ctx)";
+    var fs = "#(fs)";
+    var myScroll;
+    var pullUp = $("#pullUp"), pullUpLabel = $(".pullUpLabel"), container = $('#view'), loadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
+    function loaded () {
+        pullUp.hide();
+        //myScroll = new IScroll('#wrapper', { scrollbars: false, mouseWheel: true, probeType: 2, click:true});
+		myScroll = new  JRoll('#wrapper');
+        myScroll.on("scroll",function(){
+            if(loadingStep == 0 && !pullUp.attr("class").match('refresh')){
+                if(this.y < (this.maxScrollY - 8)){//上拉加载更多
+                    pullUp.addClass("refresh").show();
+                    pullUpLabel.text("正在载入...");
+                    loadingStep = 1;
+                    pullUpAction();
+                }
+            }
+        });
+        function pullUpAction(){
+            setTimeout(function(){
+                loadNewPage(); //加载第一页
+                myScroll.refresh();
+                loadingStep = 0;
+            },1000);
+        }
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    $(document).ready(function(){
+        //加载一次数据
+        loadNewPage();
+        //调用一下load方法
+        loaded();
+    });
+    function loadNewPage(){
+        $.post("#(ctx)/app/member/myCheckPage/?tokenCode=#(tokenCode)",{
+            "pageNumber": $("#page").val(),
+            "pageSize": $("#size").val()
+        },function (html) {
+            $("#page").val(Number($("#page").val())+1);
+            html = $.trim(html);
+            if(html.length > 0){
+                $("#view").append(html);
+                pullUp.removeClass("refresh").hide();
+            }else{
+                pullUp.addClass("refresh").show(); //不再请求后台，页面显示全部加载完毕
+                pullUpLabel.text("没有更多数据了");
+            }
+            myScroll.refresh();  //这个是用来重新刷新容器的
+        });
+    }
+
+    //审批
+    function checkStatus(messageId, messageType, checkStatus) {
+        var temp = $("#ul_" + messageType + "_" + messageId).html();
+        $(this).removeAttr("onclick");
+        $("#ul_" + messageType + "_" + messageId).html("审批中...");
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/member/checkMessage/",
+            data: {
+                tokenCode : '#(tokenCode)',
+                messageId : messageId,
+                messageType : messageType,
+                checkStatus : checkStatus
+            },
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") {
+                    $("#ul_" + messageType + "_" + messageId).html("已审批");
+                    Public.notice("已审批");
+                    setTimeout(function () {
+                        $("#item_" + messageType + "_" + messageId).fadeOut(1000);
+                    }, 1000);
+                } else {
+                    Public.notice("审批失败");
+                    $("#ul_" + messageType + "_" + messageId).html(temp);
+                }
+            },
+            error: function () {
+                Public.notice("审批失败");
+            }
+        });
+    }
+    #(msgTips)
+</script>
+</body>
+</html>

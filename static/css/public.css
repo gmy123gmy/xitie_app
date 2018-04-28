@@ -1,0 +1,24 @@
+/*公共样式*/
+body{
+    font: 14px "microsoft yahei",Arial,Helvetica,sans-serif;
+}
+body,h1,h2,h3,h4,h5,h6,div,p,ul,ol,dl,dd{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.lf{float:left;}
+.rt{float:right;}
+.rt-4{float:right;margin-right: 4px;}
+.clear:after{
+    content:"";
+    display:block;
+    clear:both;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}

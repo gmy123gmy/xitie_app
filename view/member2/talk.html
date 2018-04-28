@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/talk.css">
+    <title>留言</title>
+
+</head>
+<body  onload="loaded()">
+        <div id="header">
+            <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+            <span>留言</span>
+        </div>
+        <div id="wrapper">
+            <div id="scroller">
+                #for(msg :messages)
+                    #if(msg.type == 'send')
+                        <!-- Left -->
+                        <div class="sender">
+                            <div>
+                                <img src="#(fs)#(msg.userLogo)">
+                            </div>
+                            <p>#(msg.showTime)</p>
+                            <div>
+                                <div class="left_triangle"></div>
+                                <span>#(msg.content)</span>
+                            </div>
+                        </div>
+                    #end
+                    #if(msg.type == 'receive')
+                        <!-- Right -->
+                        <div class="receiver">
+                            <div>
+                                <img src="#(fs)#(msg.userLogo)">
+                            </div>
+                            <p>#(msg.showTime)</p>
+                            <div>
+                                <div class="right_triangle"></div>
+                                <span>#(msg.content)</span>
+                            </div>
+                        </div>
+                    #end
+                #end
+            </div>
+        </div>
+        <div id="footer">
+            <form action="" >
+                <input type="text" id="messsageContent" placeholder="仅限文字留言" value="">
+                <input type="button" class="send" value="发送" onclick="sendLeaveMessage('#(userId)')"></button>
+            </form>
+        </div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/iscroll.js"></script>
+<script type="text/javascript">
+        var myScroll;
+        function loaded () {
+            myScroll = new IScroll('#wrapper', { mouseWheel:true,click:true});
+        }
+        document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+        /* 发送留言**/
+        function sendLeaveMessage(userId){
+            var content = $.trim($("#messsageContent").val());
+            var userLog = "#(fs)#(currentUser.logo)";
+            if(content == ""){
+                alert("不能发送空内容！");
+                return;
+            }
+            //进行关注请求后台
+            $.ajax({
+                type: "POST",
+                url: "#(ctx)/app/member/sendLeaveMessage?tokenCode=#(tokenCode)",
+                data: {
+                    userId : userId,
+                    content : content
+                },
+                datatype: "json",
+                //成功返回之后调用的函数
+                success: function (data) {
+                    var res = eval("(" + data + ")");
+                    if (res.result_code == "success") {
+                        //清空文本框,追加一条消息
+                        var html = "<div class=\"receiver\">" +
+                            "<div>" +
+                            "<img src="+userLog+">" +
+                            "</div>" +
+                            "<p>刚刚</p>" +
+                            "<div>" +
+                            "<div class=\"right_triangle\"></div>" +
+                            "<span>"+content+"</span>" +
+                            "</div>" +
+                            "</div>";
+                        $("#scroller").append(html);
+                        $("#messsageContent").val("")
+                        loaded ();
+                    }
+                },
+                error: function () {
+                }
+            });
+        }
+</script>
+</body>
+</html>

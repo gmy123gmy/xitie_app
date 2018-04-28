@@ -1,0 +1,14 @@
+#for(as :announcements)
+<p class="time">#(as.showRecordTime)</p>
+<div class="text">
+    <p>#(as.title)</p>
+    <p class="dele"><span style="color:#82789F;font-size:12px;"><!--删除--></span>
+    <span>
+        #if(as.click == null)
+            <a style="color:#3279E0" href="#(ctx)/app/member/showSystemMessage?acId=#(as.id)&tokenCode=#(tokenCode)">查看</a>
+        #else
+            <a href="#(ctx)/app/member/showSystemMessage?acId=#(as.id)&tokenCode=#(tokenCode)">查看</a>
+        #end
+    </span></p>
+</div>
+#end

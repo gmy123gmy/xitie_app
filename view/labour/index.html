@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/grid.css">
+    <title>工会矩阵</title>
+    <style>
+        .kind{
+            width:40%;
+            height:30px;
+            border-radius: 4px;
+            border:1px solid #eee;
+            margin-top:20px;
+            background:#F6C468;
+            color:#e51c23;
+            padding-left:3%;
+        }
+        .content{
+            width:80%;
+            margin:0 auto;
+            display:flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        body{ background: url(../../static/img/labour_bg.jpg) no-repeat; background-size: cover;}
+		.kinds a{height: 100%; width: 100%; display: block}
+    </style>
+</head>
+<body>
+<div id="header">
+    <span style="position:absolute;left:50%;margin-left:-2em">工会矩阵</span>
+</div>
+<div id="wrapper" style="padding-bottom:50px;">
+    <div id="scroller" >
+        <div class="my">
+            <span class="glyphicon glyphicon-circle-arrow-right"><a href="#(ctx)/app/main?columnId=50&columnName=#(orgName)工会&tokenCode=#(tokenCode)&orgId=#(orgId)">&nbsp;我的单位：#(orgName)工会</a></span>
+        </div>
+        <ul class="kinds">
+            <li><a href="#(ctx)/app/basic/getLabourList/车务?tokenCode=#(tokenCode)">车务系统</a></li>
+            <li><a href="#(ctx)/app/basic/getLabourList/机务?tokenCode=#(tokenCode)">机务系统</a></li>
+            <li><a href="#(ctx)/app/basic/getLabourList/工务?tokenCode=#(tokenCode)">工务系统</a></li>
+            <li><a href="#(ctx)/app/basic/getLabourList/电务?tokenCode=#(tokenCode)">电务系统</a></li>
+            <li><a href="#(ctx)/app/basic/getLabourList/车辆?tokenCode=#(tokenCode)">车辆系统</a></li>
+            <li><a href="#(ctx)/app/basic/getLabourList/其他?tokenCode=#(tokenCode)">其他</a></li>
+        </ul>
+    </div>
+</div>
+<script src="#(ctx)/static/js/jquery-1.11.3.min.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script>
+    $(function () {
+        $("select").change(function () {
+            var id = $(this).val();
+            if(Public.notEmptyVal(id)){
+                var columnName = $(this).find("option:selected").text();
+                location.href = "#(ctx)/app/main?columnId=47&columnName="+columnName+"&tokenCode=#(tokenCode)&orgId="+id;
+            }
+        });
+        $("select").val("");//页面返回时清空上次选中记录
+    });
+</script>
+</body>
+</html>
+
+<script>
+//    $(function () {
+//        $("select").change(function () {
+//            var id = $(this).val();
+//            if(Public.notEmptyVal(id)){
+//                var columnName = $(this).find("option:selected").text();
+//                location.href = "#(ctx)/app/main?columnId=47&columnName="+columnName+"&tokenCode=#(tokenCode)&orgId="+id;
+//            }
+//        });
+//        $("select").val("");//页面返回时清空上次选中记录
+//    });
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>举报处理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <style>
+        *{
+            margin:0;padding:0;
+        }
+        #header{
+            width:100%;
+            height: 45px;
+            line-height:45px;
+            text-align: center;
+            border-bottom:1px solid #eee;
+            position: fixed;
+            top:0;
+        }
+        #header .lf{
+            color:#333;
+            font-size:20px;
+            float:left;
+            margin:3px 15px;
+        }
+        button{
+            display:block;
+            width:96%;
+            height: 50px;
+           /* background:#E51C23;*/
+			 background:#ccc;
+            border-radius:5px;
+            margin:0 auto;
+            border:none;
+            color:#fff;
+            font-size:18px;
+        }
+        a{text-decoration: none;}
+        a:hover,a:active,a:visited{text-decoration: none;}
+        p{
+            width:90%;
+            margin:30px 5%;
+            color:#999;
+           
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+        <span style="position:absolute;left:50%;margin-left:-1em;font-size:18px">举报</span>
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            <input type="hidden" id="styleId" name="styleId" value="#(styleId)">
+            <textarea name="remark" id="remark" rows="10" style="display:block;width:92%;margin:70px auto 30px;padding:5px;" placeholder="举报理由"></textarea>
+            <p>提示：禁止冒用、盗用他人账户发表信息；禁止发表危害国家安全、公共安全、他人人身安全、公私财产安全及其他违反中华人民共和国法律之言论。
+            </p>
+            <button onclick="report()" style="background-color: #2b669a;">提交</button>
+        </div>
+    </div>
+    <script src="#(ctx)/static/js/jquery-1.11.3.min.js"></script>
+    <script src="#(ctx)/static/js/bootstrap.min.js"></script>
+    <script src="#(ctx)/static/js/iscroll-probe.js"></script>
+    <script src="#(ctx)/static/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript">
+        //举报
+        function report() {
+            var styleId = $("#styleId").val();
+            var remark = $("#remark").val();
+            //点击之后就不能再点了
+            $("#report_" + styleId).removeAttr('onclick');
+            //进行关注请求后台
+            $.ajax({
+                type: "POST",
+                url: "#(ctx)/app/culturalsquare/report/",
+                data: {
+                    tokenCode: '#(tokenCode)',
+                    styleId: styleId,
+                    remark: remark
+                },
+                datatype: "json",
+                success: function (data) {
+                    var res = eval("(" + data + ")");
+                    if (res.result_code == "success") { //举报成功，则修改页面样式
+                        Public.notice("举报成功");
+                        setTimeout(function(){
+                            //location.href = "#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&cmd=appShowMenu";
+                            history.back(-1);
+                        }, 1000);
+                    }
+                },
+                error: function () {
+                    Public.notice("请求失败");
+                }
+            });
+        }
+    </script>
+    <script src="#(ctx)/static/js/common.js"></script>
+</body>
+</html>

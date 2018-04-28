@@ -1,0 +1,64 @@
+.header .text{
+    font-size: 14px;
+    color: #6E6A6E;
+}
+#wrapper {
+    position: absolute;
+    z-index: 1;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    overflow: hidden;
+}
+.nav{
+    margin-top: 20px;
+    text-align: center;
+}
+.nav .row{
+    text-align: center;
+}
+.nav .row a p{
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    color: rgba(0,0,0,1);
+    padding: 5px 0;
+}
+.col-xs-3 img{
+    height: 50px;
+}
+.col-xs-4 img{
+    width:100%;
+}
+.nav .col-xs-3 {
+    padding-bottom: 16px;
+}
+.interext_text{
+    padding: 20px 15px;
+    background: #eee;
+    height: 100px;
+    line-height:100px;
+}
+.interext_title{
+    font-size: 20px;
+    color: #000;
+}
+.interext_creat{
+    font-size: 14px;
+    color: #1783D1;
+}
+.border{
+    border-top: 1px solid #bbb;
+}
+input{
+    margin: 10px 0;
+}
+.refer{
+    margin-top: 20px;
+}
+.next_text{
+    font-size: 14px;
+    color: #bbb;
+}

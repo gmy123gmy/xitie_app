@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="x-ua-compatible" content="IE=edge"/>
+    <title>资讯详情</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/flexslider.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/detail.css"/>
+    <style>
+        video{
+            display:block;
+            width:96%;
+            margin:0 auto;
+        }
+        .content{
+            text-align:justify;
+            font-size:18px;
+			margin-top: 14px;
+        }
+       
+        .pics img{
+            display:block;
+            margin-bottom:10px;
+            width:100%;
+        }
+		.col-xs-3{padding: 0}
+        /* .container img{
+            display:block;
+            width:100%;
+            margin:0;
+            padding:0;
+        } */
+            </style>
+</head>
+<body onload="loaded()">
+<!--页头-->
+<div class="header" style="border-bottom:1px solid #f7f7f7">
+    <a href="javascript:;" onClick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back_01 lf"></a>
+    <!-- <a href="#" class="glyphicon glyphicon-share-alt share rt" onClick="toshare()">分享</a> -->
+</div>
+<div id="wrapper">
+    <div id="scroller">
+        <div class="container">
+            <div class="row detail clear">
+                #(article.title)
+            </div>
+            <div class="row address">
+                <div class="col-xs-3 time">#(article.showTime)</div>
+                <div class="col-xs-6 site" style="color:#2D76E3;text-align:left"><!--#(article.author)&nbsp;&nbsp;#(article.orgName)--></div>
+                <div class="col-xs-3  time" style="text-align:center;">
+                    <div style="top:-5px" class="glyphicon glyphicon-eye-open ">
+                    <span class="time">#(article.readerNum)</span>
+
+</div>
+                    
+                </div>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="border"></div>
+        <div class="container content">
+            #(article.context)
+        </div>
+        #for(im :article.imList)
+            <div class="pics container">
+                <img src="#(fs)#(im)" alt="#(article.title)"/>
+            </div>
+        #end
+
+    </div>
+</div>
+<!-- <div class="am-share">
+        <h3 class="am-share-title">分享到</h3>
+        <ul class="am-share-sns">
+          <li><a href="#"> <i class="share-weixin" ></i> <span>微信</span> </a> </li>
+          <li><a href="#"> <i class="share-moments"></i> <span>朋友圈</span> </a> </li>
+          <li><a href="#"> <i class="share-weibo"></i> <span>新浪微博</span> </a> </li>
+        </ul>
+        <div class="am-share-footer"><button class="share_btn">取消</button></div>
+</div> -->
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script src="#(ctx)/static/js/bootstrap.js"></script>
+<script src="#(ctx)/static/js/jquery.flexslider.js"></script>
+<script src="#(ctx)/static/js/index.js"></script>
+<script type="text/javascript" src="#(ctx)/static/js/iscroll.js"></script>
+<script type="text/javascript">
+    var myScroll;
+    function loaded() {
+        myScroll = new IScroll('#wrapper', {mouseWheel: true, click: true, scrollbars: true,fadeScrollbars:true});
+    }
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+</script>
+<!-- <script type="text/javascript">
+	function toshare(){
+		$(".am-share").addClass("am-modal-active");	
+		if($(".sharebg").length>0){
+			$(".sharebg").addClass("sharebg-active");
+		}else{
+			$("body").append('<div class="sharebg"></div>');
+			$(".sharebg").addClass("sharebg-active");
+		}
+		$(".sharebg-active,.share_btn").click(function(){
+			$(".am-share").removeClass("am-modal-active");	
+			setTimeout(function(){
+				$(".sharebg-active").removeClass("sharebg-active");	
+				$(".sharebg").remove();	
+			},300);
+		})
+	}	
+</script> -->
+</html>

@@ -1,0 +1,117 @@
+#wrapper {
+	position: absolute;
+	z-index: 1;
+	top: 45px;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	background: #fff;
+	overflow: hidden;
+}
+#header {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 45px;
+	line-height: 45px;
+	background: #F8F8F8; 
+	padding: 0;
+	color: #E51C23;
+    text-align: center;
+    font-size:18px;
+    border-bottom: 1px solid #BBBBBB;
+}
+#header a:hover{
+    text-decoration: none;
+    color:#E51C23;
+}
+.lf,.menu{
+    display:inline-block;
+    float:left;
+    margin-left:20px;
+    line-height:45px;
+    color:#E51C23;
+}
+.menu{
+    float:right;
+    margin-right:10px;
+}
+.list{
+    padding:0px;
+    margin:0px;
+}
+.info{
+    color:#A0A0A0;
+}
+.border{
+    border-top:1px solid #DEDEDE;
+}
+.content{
+    width:100%;
+    padding:10px 20px;
+    list-style: none;
+}
+.img_view{
+    width:36%;
+    height:90px;
+    float:left;
+}
+.infor{
+    width:64%; 
+    float:left;
+}
+.infor ul{
+    list-style:none;
+    float:left;
+    width:100%;
+    padding-left:10px;
+    margin-bottom:0px;
+}
+.time{
+    color:lawngreen;
+}
+.user{
+    color:#3B9DFF;
+}
+.gelo{
+    color:#FD3539;
+}
+.title{
+    font-size:14px;
+}
+.infor .lis{
+    font-size:10px;
+}
+
+.small{
+    margin-top:6px;
+}
+.clear{
+    clear:both;
+}
+.bott{
+    width:100%;
+    height:40px;
+    margin-top:10px;
+}
+.load{
+    width:40%;
+    height:30px;
+    margin:0 auto;
+    color:#E51C23;
+    border:1px solid #E51C23;
+    font-size:16px;
+    line-height:30px;
+    text-align:center;
+    border-radius:3px;
+
+}
+a{
+    color:#000;
+}
+a:hover{
+    color:#000;
+    text-decoration: none;
+}

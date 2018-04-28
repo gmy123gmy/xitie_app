@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>在线答题</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/flexslider.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/navigation_first.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/know_index.css"/>
+    <style>
+        .join{
+            height: 25px;
+            line-height:25px;
+            padding:0;
+            text-align:center;
+            border-radius: 5px;
+            background:#e51c23;
+        }
+        h4{
+            font-weight: 400;
+        }
+
+        .header {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            color: #E51C23;
+            font-size: 20px;
+            text-align: center;
+            font-weight: 400;
+            padding: 0 15px;
+            background: #eee;
+            border-bottom: 1px solid #bbb;
+        }
+        .header img{
+            height: 24px;
+        }
+        .header .search_box{
+            display: inline-block;
+            color: #6E6A6E;
+            line-height: 45px;
+            height: 45px;
+            width: 50px;
+            font-size: 18px;
+            font-weight: normal;
+        }
+        #wrapper {
+            position: absolute;
+            z-index: 1;
+            top: 45px;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body onload="loaded()">
+<!--页头-->
+<div class="header">
+    <a href="#(ctx)/app/knowledge/?columnId=46&columnName=知识苑&tokenCode=#(tokenCode)" class="glyphicon glyphicon-menu-left back lf" style="color:#e51c23" >
+    </a>
+    <span style="position:absolute;left:50%;margin-left:-2em;">在线答题</span>
+</div>
+<div id="wrapper">
+    <div id="scroller">
+        <div class="info" id="view">
+
+        </div>
+        <div id="pullUp" class="">
+            <div class="pullUpLabel" id="more" data-status="1">加载更多</div>
+        </div>
+    </div>
+    <input type="hidden" id="page" value="#(pageNumber)">
+    <input type="hidden" id="size" value="#(pageSize)">
+</div>
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script src="#(ctx)/static/js/bootstrap.js"></script>
+<script src="#(ctx)/static/js/jquery.flexslider.js"></script>
+<script type="text/javascript" src="#(ctx)/static/js/iscroll.js"></script>
+<script src="#(ctx)/static/js/iscroll-probe.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script type="text/javascript">
+    $(window).load(function() {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            slideshowSpeed: 3000,
+            animationSpeed: 200,
+            touch: true
+        });
+    });
+    $("#page").val(1); //初始加载第一页
+    var ctx = "#(ctx)";
+    var fs = "#(fs)";
+    var myScroll;
+    var pullUp = $("#pullUp"), pullUpLabel = $(".pullUpLabel"), container = $('#view'), loadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
+    function loaded () {
+        pullUp.hide();
+        myScroll = new IScroll('#wrapper', { scrollbars: false, mouseWheel: true, probeType: 2, click:true});
+        myScroll.on("scroll",function(){
+            if(loadingStep == 0 && !pullUp.attr("class").match('refresh')){
+                if(this.y < (this.maxScrollY - 8)){//上拉加载更多
+                    pullUp.addClass("refresh").show();
+                    pullUpLabel.text("正在载入...");
+                    loadingStep = 1;
+                    pullUpAction();
+                }
+            }
+        });
+        function pullUpAction(){
+            setTimeout(function(){
+                loadNewPage(); //加载第一页
+                myScroll.refresh();
+                loadingStep = 0;
+            },1000);
+        }
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    $(document).ready(function(){
+        //加载一次数据
+        loadNewPage();
+        //调用一下load方法
+        loaded();
+    });
+    function loadNewPage(){
+        $.post("#(ctx)/app/knowledge/getQuestionPaperList/?tokenCode=#(tokenCode)",{
+            "tokenCode": '#(tokenCode)',
+            "pageNumber": $("#page").val(),
+            "pageSize": $("#size").val()
+        },function (html) {
+            $("#page").val(Number($("#page").val())+1);
+            html = $.trim(html);
+            if(html.length > 0){
+                $("#view").append(html);
+                pullUp.removeClass("refresh").hide();
+            }else{
+                pullUp.addClass("refresh").show(); //不在请求后台，页面显示全部加载完毕
+                pullUpLabel.text("没有更多数据了");
+            }
+            myScroll.refresh();  //这个是用来重新刷新容器的
+        });
+    }
+    #(msgTips)
+</script>
+</html>

@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>知识苑</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/flexslider.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/navigation_second.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/know_index.css"/>
+    <style>
+        .join{
+            height: 25px;
+            line-height:25px;
+            padding:0;
+            text-align:center;
+            border-radius: 5px;
+            background:#e51c23;
+        }
+        h4{
+            font-weight: 400;
+        }
+        a{color:#000;}
+        a:hover{
+            color:#000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body onload="loaded()">
+<!--页头-->
+<div class="header">
+    <a href="#(ctx)/app/news?tokenCode=#(tokenCode)" class="glyphicon glyphicon-menu-left back lf"></a>
+    知识苑
+    <a href="#(ctx)/app/knowledge/toIndexSearch?columnId=#(columnId)&tokenCode=#(tokenCode)" class="glyphicon glyphicon-search search_box rt"></a>
+</div>
+<div id="wrapper">
+    <div id="scroller">
+        <!--轮播-->
+        <div class="img_box clear">
+            <div class="flexslider">
+                <ul class="slides1">
+                    <li>
+                        <img src="#(ctx)/static/img/study.png" alt=""/>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--导航-->
+        <div class="row nav">
+            #for(column :sonColumns)
+                <div class="col-xs-4">
+                        #if(column.name == "学习园地")
+                            <a href="#(ctx)/app/basic/?columnId=#(column.columnId)&columnName=#(column.name)&pageSize=10&tokenCode=#(tokenCode)" style="color:#000">
+                                <span class="glyphicon glyphicon-education knowledge0"></span>
+                                <p style="color:#000">#(column.name)</p>
+                            </a>
+                        #end
+                        #if(column.name == "视频课堂")
+                            <a href="#(ctx)/app/basic/?columnId=#(column.columnId)&columnName=#(column.name)&pageSize=10&tokenCode=#(tokenCode)" style="color:#000">
+                                <span class="glyphicon glyphicon-facetime-video knowledge1"></span>
+                                <p style="color:#000">#(column.name)</p>
+                            </a>
+                        #end
+                        #if(column.name == "在线答题")
+                            <a href="#(ctx)/app/knowledge/toQuestionPaperList?columnId=#(column.columnId)&columnName=#(column.name)&pageSize=12&tokenCode=#(tokenCode)" style="color:#000">
+                                <span class="glyphicon glyphicon-bookmark knowledge2"></span>
+                                <p style="color:#000">#(column.name)</p>
+                            </a>
+                        #end
+                </div>
+            #end
+        </div>
+        #for(knowledge :knowledgeList)
+            #if(knowledge.recordType == "questionpaper")
+                <div class="media talk">
+                    <!--<div class="media-left">
+                        <a href="#" class="img1">
+                            <img class="media-object img" src="#(fs)#(knowledge.paperIoc)" alt="...">
+                        </a>
+                    </div>-->
+                    <div class="media-body">
+                        <h4 class="media-heading">#(knowledge.paperTitle)</h4>
+                        <div class="row">
+                            <div class="col-xs-4 answer">时长:#(knowledge.testTime)分钟</div>
+                            <div class="col-xs-6 answer">已有#(knowledge.answerNum)人作答</div>
+                            <div class="col-xs-2 join">
+                                <a href="#(ctx)/app/knowledge/questionPaperDetail?paperId=#(knowledge.paperId)&tokenCode=#(tokenCode)" style="display: block; width: 100%; height: 100%">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            #end
+            #if(knowledge.recordType == "article")
+                #if(knowledge.type == '0')
+                    <!-- 多图 -->
+                #end
+                #if(knowledge.type == '1')
+                    <!-- 单图 -->
+                    <div class="container p_cont">
+                    <div class="row">
+                        #if(knowledge.imList != null && knowledge.imList.size() > 0)
+                            <div class="col-xs-4">
+                                <a href="#">
+                                    #for(im :knowledge.imList)
+                                    <img src="#(nginxurl)#(im)" alt="" width="100%"/>
+                                    #end
+                                </a>
+                            </div>
+                            <div class="col-xs-8">
+                        #else
+                            <div class="col-xs-12">
+                        #end
+                            <div class="row">
+                                <p class="learn">
+                                    <a href="#(ctx)/app/news/showDetail?newsId=#(knowledge.articleId)&tokenCode=#(tokenCode)">#(knowledge.title)</a>
+                                </p>
+                            </div>
+                            <div class="row data">
+                                <div class="col-xs-8 cont lf">
+                                    <div class="glyphicon glyphicon-eye-open lf">
+                                    </div>&nbsp;#(knowledge.readerNum)
+                                </div>
+                                <div class="rt-4">#(knowledge.showTime)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                #end
+            #end
+        <div class="border_01"></div>
+        #end
+    </div>
+</div>
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script src="#(ctx)/static/js/bootstrap.js"></script>
+<script src="#(ctx)/static/js/jquery.flexslider.js"></script>
+<script type="text/javascript" src="#(ctx)/static/js/iscroll.js"></script>
+<script type="text/javascript">
+    $(window).load(function() {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            slideshowSpeed: 3000,
+            animationSpeed: 200,
+            touch: true
+        });
+    });
+    var myScroll;
+    function loaded () {
+        myScroll = new IScroll('#wrapper', { mouseWheel: true, click:true });
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    #(msgTips)
+</script>
+</html>

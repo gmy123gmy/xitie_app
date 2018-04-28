@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>文化广场</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/culture.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/font-awesome.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/css/styles.css" />
+    <link rel="stylesheet" href="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.css" />
+    <style>
+        .parise{
+            font-size:20px;
+            color:#666;
+        }
+    </style>
+</head>
+<body onload="loaded()">
+    <div id="header">
+        <span style="font-size:20px">文化广场</span>
+        <span class="glyphicon glyphicon-search"></span>
+        <input type="text" placeholder="搜索" onclick="javascript:self.location.href='#(ctx)/app/news/toSearch/?columnId=CULTURALSQUARE&tokenCode=#(tokenCode)';"/>
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            <ul class="cul">
+                <a href="#(ctx)/app/bbs?tokenCode=#(tokenCode)&cmd=appShowMenu"><li style="color:#5BA0DF">
+                    <p class="glyphicon glyphicon-globe"></p>
+                    <p>兴趣部落</p>
+                </li>
+                </a>
+                <a href="#(ctx)/app/party?tokenCode=#(tokenCode)&cmd=appHidenMenu"><li style="color:#FF6B00">
+                    <p class="glyphicon glyphicon-send"></p>
+                    <p>职工活动</p>
+                </li>
+                </a>
+                <a href="#(ctx)/publishInfo"><li style="color:#BB78C2">
+                    <p class="glyphicon glyphicon-check"></p>
+                    <p>风采投稿</p>
+                </li>
+                </a>
+                <a href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=follow"><li style="color:#FF8A9F">
+                    <p class="glyphicon glyphicon-star"></p>
+                    <p>我的关注</p>
+                </li>
+                </a>
+            </ul>
+            
+            <div class="content">
+                <p>最新风采</p>
+                <ul id="myTab">
+                    <li><a href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=all"   id="all">最新</a></li>
+                    <li><a href="#(ctx)/app/culturalsquare/?tokenCode=#(tokenCode)&type=recommend"   id="recommend">最热</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                 
+                   
+                    <div class="tab-pane fade in active">
+                       
+                    #for(style :styleList)
+                    
+               		 	#if(style.showType == '1')
+                       <!--视频-->
+                        <div class="article">
+                            <a href="#(ctx)/app/member/myShow?userId=#(style.memberId)&tokenCode=#(tokenCode)" class="face">
+                                <img src="#(fs)#(style.memberlogo)" class="logo">
+                            </a>
+                            <p class="name">#(style.memberName)</p>
+                            <p class="tit">发表作品《#(style.styleTitle)》</p>
+                            <div class="row" onclick="showvideo('#(fs)#(style.videourl)','#(style.memberName)发表作品《#(style.styleTitle)》')">
+                            	<img src="#(ctx)/static/img/play.jpg" alt="" class="video">
+                          	</div>
+                            <div class="show_time">
+                                <span class="time">#(style.showTime)</span>
+                                #if(style.isPraise == 'true')
+                                <span class="fa fa-thumbs-up parise" style="color:#E20500">#(style.praiseCount)</span>
+                        		#end
+                           		#if(style.isPraise == 'false')
+                                <span class="fa fa-thumbs-o-up parise" onClick="clickPraise('#(style.styleId)', this)">#(style.praiseCount)</span>
+                        		#end
+                           		
+                            </div>
+                            <div class="tag">
+                                <span>视频</span>
+                                <span style="color:#259B24;border:1px solid #259B24">文体</span>
+                            </div>
+                        </div>
+                       #end
+                         
+                       #if(style.showType == '2')  
+                         <!--多图-->
+                        <div class="article">
+							<a href="#(ctx)/app/member/myShow?userId=#(style.memberId)&tokenCode=#(tokenCode)" class="face">
+                                <img src="#(fs)#(style.memberlogo)" class="logo">
+                            </a>
+                            <p class="name">#(style.memberName)</p>
+                            <p class="tit">发表作品《#(style.styleTitle)》</p>
+                            <div class="pics">
+                                
+                                #for(impath : style.imagePaths)
+                                        <div class="col-xs-4 showimageclass" >
+                                            <a href="#(fs)#(impath)" group="#(style.styleId)" style="background-image:url(#(fs)#(impath))"></a>
+                                        </div>
+                                #end
+                            </div>
+                            <div class="show_time">
+                                <span class="time">#(style.showTime)</span>
+                                #if(style.isPraise == 'true')
+                                <span class="fa fa-thumbs-up parise" style="color:#E20500">#(style.praiseCount)</span>
+                        		#end
+                           		#if(style.isPraise == 'false')
+                                <span class="fa fa-thumbs-o-up parise" onClick="clickPraise('#(style.styleId)', this)">#(style.praiseCount)</span>
+                        		#end
+                            </div>
+                            <div class="tag">
+                                <span>多图</span>
+                                <span style="color:#259B24;border:1px solid #259B24">书画</span>
+                            </div>
+                        </div>
+                        
+                        #end
+                        
+                        #if(style.showType == '3')
+                        <!--文章-->
+                        <div class="article">
+                            <a href="#(ctx)/app/member/myShow?userId=#(style.memberId)&tokenCode=#(tokenCode)" class="face">
+                                <img src="#(fs)#(style.memberlogo)" class="logo">
+                            </a>
+                            <p class="name">#(style.memberName)</p>
+                            <p class="tit">发表作品《#(style.styleTitle)》</p>
+                            <div class="con">
+                                #(style.styleContent)
+                            </div>
+                            <p class="all" style="color: #2363BE">全文</p>
+                            
+                            <div class="show_time">
+                                <span class="time">#(style.showTime)</span>
+                                 #if(style.isPraise == 'true')
+                                <span class="fa fa-thumbs-up parise" style="color:#E20500">#(style.praiseCount)</span>
+                        		#end
+                           		#if(style.isPraise == 'false')
+                                <span class="fa fa-thumbs-o-up parise" onClick="clickPraise('#(style.styleId)', this)">#(style.praiseCount)</span>
+                        		#end
+                            </div>
+                            <div class="tag">
+                                <span>文章</span>
+                                <span style="color:#259B24;border:1px solid #259B24">运动</span>
+                            </div>
+							</div>
+						
+					   #end
+					
+                     #if(style.showType == '0')  
+                         
+                         <!--外部视频-->
+                        <div class="article">
+                            <a href="#(ctx)/app/member/myShow?userId=#(style.memberId)&tokenCode=#(tokenCode)" class="face">
+                                <img src="#(fs)#(style.memberlogo)" class="logo">
+                            </a>
+                            <p class="name">#(style.memberName)</p>
+                            <p class="tit">发表作品《#(style.styleTitle)》</p>
+
+                                <img src="#(ctx)/static/img/play.jpg" width="33%" height="28%" style="border: 1px solid #F8F8F8;" class="video" onclick="showvideo('#(style.fileUrl)','#(style.memberName)发表作品')">
+
+                            
+                            <div class="show_time">
+                                <span class="time">#(style.showTime)</span>
+                                #if(style.isPraise == 'true')
+                                <span class="fa fa-thumbs-up parise" style="color:#E20500">#(style.praiseCount)</span>
+                        		#end
+                           		#if(style.isPraise == 'false')
+                                <span class="fa fa-thumbs-o-up parise" onClick="clickPraise('#(style.styleId)', this)">#(style.praiseCount)</span>
+                        		#end
+                            </div>
+                            <div class="tag">
+                                <span>外部</span>
+                                <span style="color:#259B24;border:1px solid #259B24">运动</span>
+                            </div>
+                        </div>
+                        
+                        #end
+					
+                   #end
+                   </div>
+                    
+                </div>
+            </div>
+            
+            <div id="more" data-status="1" style="margin: 0 auto; width:100%; text-align: center">加载更多……</div>
+            <input type="hidden" id="page" value="2">
+        </div>
+    </div>
+<script src="#(ctx)/static/js/jquery-1.11.3.min.js"></script>
+<script src="#(ctx)/static/js/bootstrap.min.js"></script>
+<script src="#(ctx)/static/js/iscroll.js"></script>
+<script src="#(ctx)/static/lib/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/lib/touchimage/touchTouch/touchTouch.jquery.js"></script>
+<script type="text/javascript">
+       var myScroll;
+       function loaded () {
+           myScroll = new IScroll('#wrapper', { mouseWheel:true,click:true});
+       }
+       document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+        $(document).ready(function(){
+            $(".all").click(function(){        
+                $(this).prev().css('height','auto'); 
+                $(this).hide();  
+            }
+        )
+        })
+        /*$('.parise').click(function(){
+            $(this).css('color','#E51C23');
+        })*/
+		$(document).ready(function () {
+        $(".title").find("a").each(function (index, item) {
+            $(item).removeClass("active");
+        });
+        $("#" + '#(customShowType)').addClass("active");
+    });
+
+    function clickPraise(styleId, span) {
+        //点击之后就不能再点了
+        $(span).removeAttr('onclick');
+        //进行点赞请求后台
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/culturalsquare/clickPraise?styleId=" + styleId + "&tokenCode=#(tokenCode)" ,
+            contentType: "application/json",
+            data: {styleId: styleId},
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    $(span).html(Number($(span).html()) + 1);
+                    $(span).css("color", "#E20500"); //点赞成功后.添加样式
+                    $(span).addClass('fa-thumbs-up');
+                }
+            },
+            error: function () {
+                alert("请求服务器失败！");
+            }
+        });
+    }
+    //解除关注
+    function clickUnFollow(userUnFollowId, div){
+        $(div).removeAttr('onclick');
+        $(div).removeClass("browse");
+        //进行点赞请求后台
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/culturalsquare/clickUnFollow?tokenCode=#(tokenCode)&userUnFollowId=" + userUnFollowId,
+            contentType: "application/json",
+            data: {},
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    $(".customFollowClass_" + userUnFollowId).each(function (index, item) {
+                        $(item).removeAttr("onclick");
+                        $(item).addClass("browse");
+                        $(item).addClass("customNotFollowClass_" + userUnFollowId);
+                        $(item).removeClass("customFollowClass_" + userUnFollowId);
+                        $(item).attr("onclick", "clickFollow(\"" + userUnFollowId + "\", this)");
+                    });
+                }
+            },
+            error: function () {
+                alert("操作失败！");
+            }
+        });
+    }
+
+    //关注
+    function clickFollow(userFollowId, div) {
+        //点击之后就不能再点了
+        $(div).removeAttr('onclick');
+        $(div).removeClass("browse");
+        //进行关注请求后台
+        $.ajax({
+            type: "POST",
+            url: "#(ctx)/app/culturalsquare/clickFollow?tokenCode=#(tokenCode)&userFollowId="+userFollowId,
+            contentType: "application/json",
+            data: {},
+            datatype: "json",
+            //成功返回之后调用的函数
+            success: function (data) {
+                var res = eval("(" + data + ")");
+                if (res.result_code == "success") { //点在成功，则修改页面样式
+                    $(".customNotFollowClass_" + userFollowId).each(function (index, item) {
+                        $(item).removeAttr("onclick");
+                        $(item).removeClass("browse");
+                        $(item).removeClass("customNotFollowClass_"+userFollowId);
+                        $(item).addClass("customFollowClass_"+userFollowId);
+                        $(item).attr("onclick", "clickUnFollow(\"" + userFollowId + "\", this)");
+                    });
+                }
+            },
+            error: function () {
+                alert("加载失败！");
+            }
+        });
+    }
+    //显示视频
+    function showvideo(url, title){
+        var index = layer.open({
+            type: 1,
+            title: title,
+            area: ['100%', '100%'],
+            maxmin: false,
+            fix: false, //不固定
+            shade:0.4,
+            content : "<div width='100%' height='100%' style='margin-top: 35%'><video autoplay=\"autoplay\" src=\""+url+"\" controls=\"controls\" width=\"100%\" height=\"240\" /></div>"
+        });
+        layer.full(index);
+    }
+</script>
+<script>
+    $(function(){
+        $('.showimageclass a').touchTouch();
+    });
+</script>
+</body>
+</html>

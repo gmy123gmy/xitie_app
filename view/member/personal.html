@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/me.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/font-awesome.min.css">
+    
+    <style>
+        .women {
+            background: #FC4482;
+        }
+
+        .men {
+            background: #3FA7B5;
+        }
+.am-share { font-size: 14px; border-radius: 0; bottom: 0; left: 0; position: fixed; text-align: center; -webkit-transform: translateY(100%); -ms-transform: translateY(100%); transform: translateY(100%); -webkit-transition: -webkit-transform 300ms; transition: transform 300ms ; width: 100%; z-index: 1110; }
+.am-modal-active { transform: translateY(0px);  -webkit-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0) }
+.am-modal-out { z-index: 1109; -webkit-transform: translateY(100%); -ms-transform: translateY(100%); transform: translateY(100%) }
+
+.am-share-title { background-color: #f8f8f8; border-top-left-radius: 2px; border-top-right-radius: 2px; color: #555; font-weight: 400;   text-align: center; border-bottom:1px solid #eee;}
+.am-share-title::after { border-bottom: 1px solid #dfdfdf; content: ""; display: block; height: 0; margin-top: 10px; width: 100%; }
+.am-share-title span{font-size:18px;color:#1577D1;}
+.am-share-footer { margin: 10px; }
+.am-share-footer .share_btn { color: #555;  display: block; width: 100%; background-color: #e6e6e6; border: 1px solid #e6e6e6; border-radius: 0; cursor: pointer;  font-size: 16px; font-weight: 400; line-height: 1.2; padding: 0.625em 0; text-align: center; transition: background-color 300ms ease-out 0s, border-color 300ms ease-out 0s; vertical-align: middle; white-space: nowrap;font-family:"微软雅黑"; border-radius:5px; }
+
+.am-share-sns { background-color: #f8f8f8;  margin: 0 10px;  height:auto; zoom:1; overflow:hidden;border-radius:5px;}
+
+.am-share-sns li { height:46px;line-height:46px;display: block;  width: 100%; }
+
+.am-share-sns a { color: #555; display: block; text-decoration:none; }
+
+.sharebg { background-color: rgba(0, 0, 0, 0.6); bottom: 0; height: 100%; left: 0; opacity: 0; position: fixed; right: 0; top: 0; width: 100%; z-index: 1100; display:none; }
+.sharebg-active { opacity: 1; display:block; }
+    </style>
+</head>
+<body onload="loaded()">
+    #if(user.sex == 1)
+        <div id="header" style="background: #3FA7B5;">
+    #end
+    #if(user.sex == 0)
+        <div id="header" style="background: #FC4482;">
+    #end
+        <!--<span>个人中心</span>-->
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            #if(user.sex == 1)
+            <div class="info" style="background: #3FA7B5;">
+            #end
+            #if(user.sex == 0)
+            <div class="info" style="background: #FC4482;">
+            #end
+                <a href="#(ctx)/app/member/myInfo?tokenCode=#(tokenCode)"><img src="#(fs)#(user.logo)" alt=""></a>
+                <ul>
+                    <li style="font-size:20px;">#(user.memberName)</li>
+                    <li class="self" style="color:#fff"><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;#(user.showMemberAccount)</li>
+                    <li>#(user.orgName)</li>
+                    <li class="self"><i  class="fa fa-weixin"></i>&nbsp;&nbsp;#(user.weixin)</li>
+                </ul>
+                <div class="sign_in">
+                    #if(isCanCheck == "true")
+                        <span>已签到</span>
+                    #end
+                    #if(isCanCheck == "false")
+                        <span onclick="checkIn(this)">签到</span>
+                    #end
+                </div>
+            </div>
+            <ul class="content">
+                <a href="#(ctx)/app/member/myFollow?tokenCode=#(tokenCode)"><li><span class="glyphicon glyphicon-star-empty" style="color:#FF9800"></span>我的关注<span class="glyphicon glyphicon-menu-right detail" ></span></li></a>
+                <div class="border"></div>
+                <a href="#(ctx)/app/member/myFans?tokenCode=#(tokenCode)"><li><span class="glyphicon glyphicon-user" style="color:#25C5DB"></span>我的粉丝<span class="glyphicon glyphicon-menu-right detail" ></span></li></a>
+                <div class="border"></div>
+                <a href="#(ctx)/app/member/myMessage?tokenCode=#(tokenCode)">
+                    <li>
+                        <span class="glyphicon glyphicon-edit" style="color:#E84E40"></span>我的消息
+                        #if(flag == 4 || flag == 2 || flag == 1)
+                            <span class="red_cir"></span>
+                        #end
+                        <span class="glyphicon glyphicon-menu-right detail" ></span>
+                    </li>
+                </a>
+                <div class="border"></div>
+                <a href="#(ctx)/app/member/toFind?tokenCode=#(tokenCode)"><li><span class="glyphicon glyphicon-search" style="color:#1577D1"></span>找一找<span class="glyphicon glyphicon-menu-right detail" ></span></li></a>
+                <div class="border"></div>
+                <a href="#(ctx)/app/member/myShow?userId=#(user.memberId)&tokenCode=#(tokenCode)"><li><span class="glyphicon glyphicon-asterisk" style="color:#259B24"></span>我的展示<span class="glyphicon glyphicon-menu-right detail" ></span></li></a>
+                <div class="border"></div>
+                <a href="#(ctx)/app/member/toJinFen?tokenCode=#(tokenCode)"><li><span class="glyphicon glyphicon-cloud" style="color:#FF9800"></span>我的福豆<span class="glyphicon glyphicon-menu-right detail" ></span></li></a>
+                <div class="border"></div>
+                <a href="#(ctx)/app/member/toMyCheck?tokenCode=#(tokenCode)">
+                    <li>
+                        <span class="glyphicon glyphicon-check" style="color:#91B3E6"></span>审核举报
+                        #if(flag == 4 || flag == 3)
+                        <span class="red_cir"></span>
+                        #end
+                        <span class="glyphicon glyphicon-menu-right detail" ></span>
+                    </li>
+                </a>
+                <div class="border"></div>
+                <a href="#(ctx)/app/member/myInfo?tokenCode=#(tokenCode)"><li><span class="glyphicon glyphicon-list-alt" style="color:#FF4081"></span>资料设置<span class="glyphicon glyphicon-menu-right detail" ></span></li></a>
+                <div class="border"></div>
+                <!--<a href="#(ctx)/app/member/toSystemHelp?tokenCode=#(tokenCode)">-->
+                <a href="#(ctx)/app/member/toSystemHelp?tokenCode=#(tokenCode)">
+                <li><span class="glyphicon glyphicon-info-sign" style="color:#DD5254"></span>系统帮助<span class="glyphicon glyphicon-menu-right detail" ></span><span style="font-size: 12px; color: #D4D3D3;height: 21px;float:right">#(version)</span></li></a>
+                <div class="border"></div>
+            </ul>
+            <div class="loginout">
+               <!-- <div style="width: 100%; font-size: 12px; color: #D4D3D3; text-align: center; height: 21px;">v#(version)</div> -->
+                #if(user.sex == 1)
+                <div id="exitSystem" style="display:block;width:40%;height:35px;line-height:35px;margin:20px auto 20px;color:#fff;border:none;border-radius:5px;font-size:14px;text-align:center;background: #3FA7B5;">退出登录</div>
+                #end
+                #if(user.sex == 0)
+                <div id="exitSystem" style="display:block;width:40%;height:35px;line-height:35px;margin:20px auto;color:#fff;border:none;border-radius:5px;font-size:14px;text-align:center;background: #FC4482;">退出登录</div>
+                #end
+                <div style="height:50px"></div>
+            </div>
+        </div>
+    </div>
+    <div class="am-share">
+        <ul class="am-share-sns">
+          <li class="am-share-title" onClick= "exitSystem();"><a href="#"> <span>确认退出</span> </a> </li>
+        </ul>
+        <div class="am-share-footer"><div class="share_btn" >取消</div></div>
+    </div>
+    <div style="height:50px;"></div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/js/jroll.js"></script>
+<script src="#(ctx)/static/mycenter/js/bootstrap.min.js"></script>
+<script src="#(ctx)/static/js/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script type="text/javascript">
+       var myScroll;
+       function loaded () {
+           //myScroll = new IScroll('#wrapper', { mouseWheel:true,click:true});
+		   myScroll = new JRoll('#wrapper');
+       }
+       document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+       $(document).ready(function(){
+           /**退出确认*/
+           $("#exitSystem").click(function(){
+               $(".am-share").addClass("am-modal-active");
+               $("body").append('<div class="sharebg"></div>');
+               $(".sharebg").addClass("sharebg-active");
+               $(".sharebg-active,.share_btn").click(function(){
+                   $(".am-share").removeClass("am-modal-active");
+                   setTimeout(function(){
+                       $(".sharebg-active").removeClass("sharebg-active");
+                       $(".sharebg").remove();
+
+                   },300);
+               });
+           });
+       });
+
+       /*** 退出登录*/
+       function exitSystem() {
+        $('.am-share').hide();
+        $(".sharebg-active").hide();
+           location.href =  '#(ctx)/app/member/doExit';
+       }
+
+       /** 签到 */
+       function checkIn(comp){
+           //点击之后就不能再点了
+           $(comp).removeAttr('onclick');
+           $(comp).html("签到中...");
+           //进行点赞请求后台
+           $.ajax({
+               type: "POST",
+               url: "#(ctx)/app/member/checkIn/",
+               data: {
+                   tokenCode:'#(tokenCode)',
+                   type:1,
+                   score:2
+               },
+               datatype: "json",
+               //成功返回之后调用的函数
+               success: function (data) {
+                   var res = eval("(" + data + ")");
+                   if (res.result_code == "success") { //点在成功，则修改页面样式
+                       $(comp).html("已签到");
+                       location.reload();
+                   }
+               },
+               error: function () {
+                   Public.notice("签到失败");
+               }
+           });
+       }
+       #(msgTips)
+</script>
+</body>
+</html>

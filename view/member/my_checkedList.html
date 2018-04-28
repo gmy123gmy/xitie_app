@@ -1,0 +1,92 @@
+#if(hasVerifyAuthority == "1")
+    #for(verify :verifyList)
+        #if(verify.flagType == "style")
+            <li id="item_style_#(verify.styleId)">
+            <img src="#(fs)#(verify.memberlogo)"  class="hed">
+            <p class="name">#(verify.memberName)</p>
+            <p class="add">#(verify.orgName)</p>
+            <p class="title">
+                #(verify.styleTitle)
+            </p>
+            #if(verify.showType == "3")
+            <div class="contents">
+                #(verify.styleContent)
+            </div>
+            #end
+            #if(verify.showType == "2")
+            <div class="contents">
+                #for(impath : verify.imagePaths)
+                <img class="item" src="#(fs)#(impath)">
+                #end
+            </div>
+            #end
+            #if(verify.showType == "1")
+            <div class="contents">
+                <img src="#(ctx)/static/img/play.jpg" width="30%" height="28%" style="border: 1px solid gray;" >
+            </div>
+            #end
+            #if(verify.showType == "0")
+            <div class="contents">
+                <img src="#(ctx)/static/img/play.jpg" width="30%" height="28%" style="border: 1px solid gray;" >
+            </div>
+            #end
+            <p class="ope">
+                <span class="time">#(verify.showTime)</span>
+            <ul class="checked" id="ul_#(verify.flagType)_#(verify.styleId)">
+                <li onclick="checkStatus('#(verify.styleId)','#(verify.flagType)', '1');">同意</li>
+                <li onclick="checkStatus('#(verify.styleId)','#(verify.flagType)', '0');">拒绝</li>
+                <li onclick="checkStatus('#(verify.styleId)','#(verify.flagType)', '-1');">放弃</li>
+            </ul>
+            </p>
+        </li>
+        #end
+        #if(verify.flagType == "bbs")
+            <li id="item_bbs_#(verify.plateInfoId)">
+            <img src="#(fs)#(verify.logo)"  class="hed">
+            <p class="name">#(verify.ownerName)</p>
+            <p class="add">#(verify.ownerOrgName)</p>
+            <p class="title">
+                我在《#(verify.plateTypeName)》创建了一个板块叫:#(verify.plateName)
+            </p>
+            <div class="contents">
+                <img class="item" src="#(verify.logoUrl)">
+                <div style="margin-left: 3px;width: 60%;display: inline;">
+                    #(verify.plateDesc)
+                </div>
+            </div>
+            <p class="ope">
+                <span class="time">#(verify.showTime)</span>
+            <ul class="checked" id="ul_#(verify.flagType)_#(verify.plateInfoId)">
+                <li onclick="checkStatus('#(verify.plateInfoId)','#(verify.flagType)', '1');">同意</li>
+                <li onclick="checkStatus('#(verify.plateInfoId)','#(verify.flagType)', '0');">拒绝</li>
+                <li onclick="checkStatus('#(verify.plateInfoId)','#(verify.flagType)', '-1');">放弃</li>
+            </ul>
+            </p>
+        </li>
+        #end
+        #if(verify.flagType == "article")
+            <li id="item_article_#(verify.articleId)">
+                <img src="#(fs)#(verify.logo)"  class="hed">
+                <p class="name">#(verify.memberName)</p>
+                <p class="add">#(verify.orgName)</p>
+                <p class="title">
+                    我在家园美给#(verify.managerLineName)->#(verify.stationName)站投稿了
+                </p>
+                <div class="contents">
+                    #for(impath : verify.imList)
+                    <img class="item" src="#(fs)#(impath)">
+                    #end
+                </div>
+                <p class="ope">
+                    <span class="time">#(verify.showTime)</span>
+                <ul class="checked" id="ul_#(verify.flagType)_#(verify.articleId)">
+                    <li onclick="checkStatus('#(verify.articleId)','#(verify.flagType)', '1');">同意</li>
+                    <li onclick="checkStatus('#(verify.articleId)','#(verify.flagType)', '0');">拒绝</li>
+                    <li onclick="checkStatus('#(verify.articleId)','#(verify.flagType)', '-1');">放弃</li>
+                </ul>
+                </p>
+            </li>
+        #end
+        <div class="border"></div>
+    #end
+#end

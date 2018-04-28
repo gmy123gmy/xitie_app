@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>全部部落</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="#(ctx)/static/css/all_tribe.css">
+</head>
+<body onload="loaded()">
+<!--页头-->
+<div id="header">
+    <a href="javascript:void(0);" onClick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back"></a>
+    <span>兴趣部落</span>
+    <a href="#(ctx)/app/bbs/toSearch?tokenCode=#(tokenCode)&queryType=1" class="glyphicon glyphicon-search search_box rt" style="color:#fff"></a>
+</div>
+<div id="wrapper">
+    <div id="scroller">
+        <ul id="myTab" class="type">
+            #for(dic : dicInfoList)
+                <li class="#(for.first? 'active':'') a1">
+                    <a href="##(dic.dicId)" data-toggle="tab">#(dic.dicName)</a>
+                </li>
+            #end
+        </ul>
+        <span class="glyphicon glyphicon-triangle-left before" style="position:absolute;left:6px;top:3px;"></span>
+        <span class="glyphicon glyphicon-triangle-right next" style="position:absolute;right:6px;top:3px;"></span>
+        <div id="myTabContent" class="tab-content">
+            #for(record : recordList)
+            <div class="tab-pane fade #(for.first? 'in active':'')" id="#(record.plateInfType)">
+                <ul>
+                    #for(re : record.list)
+                    <a href="#(ctx)/app/bbs/showPlateInfo?plateInfoId=#(re.plateInfoId)&tokenCode=#(tokenCode)&cmd=appShowMenu">
+                    <li>
+                        <img src="#(re.logoUrl)" alt="">
+                        <p class="name">#(re.plateName)</p>
+                        <p class="num">#(re.bbsCount)贴</p>
+                    </li>
+                    </a>
+                    #end
+                </ul>
+            </div>
+            #end
+        </div>
+    </div>
+</div>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script src="#(ctx)/static/js/bootstrap.js"></script>
+<script src="#(ctx)/static/js/iscroll.js"></script>
+<script type="text/javascript">
+    var myScroll;
+    function loaded () {
+        myScroll = new IScroll('#wrapper', { mouseWheel: true, click:true });
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    $('.before').hide();
+    $('.next').click(function(){
+        $('.a1').hide();
+        $(this).addClass('again');
+        $('.again').click(function(){
+            $('.a2').hide();
+        })
+        $('.before').show();
+        $('.before').click(function(){
+            $('.a1').show();
+            $(this).hide();
+            $('.next').removeClass('again');
+            $('.next').click(function(){
+                $('.a1').hide();
+                $('.a2').show();
+            })
+        })
+    })
+
+
+</script>
+</body>
+</html>

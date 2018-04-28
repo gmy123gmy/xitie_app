@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <title>#(columnName)</title>
+    <link rel="stylesheet" href="#(ctx)/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/public.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/navigation_third.css"/>
+    <link rel="stylesheet" href="#(ctx)/static/css/index.css"/>
+    
+</head>
+<body onload="loaded()">
+<!--页头-->
+<div class="header">
+    <a href="javascript:;" onClick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf">
+    </a>
+    <span style="font-size:16px;position:absolute;left:50%;margin-left:-2em;">#(columnName)</span>
+    <!-- <a href="#(ctx)/app/news/toSearch/?columnId=#(columnId)&tokenCode=#(tokenCode)" class="glyphicon glyphicon-search search_box rt"></a> -->
+</div>
+<div id="wrapper">
+    <div id="scroller">
+        <div class="info" id="view">
+
+        </div>
+        <div id="pullUp" class="">
+            <div class="pullUpLabel" id="more" data-status="1">加载更多</div>
+        </div>
+        <div style="height:50px"></div>
+    </div>
+    <input type="hidden" id="page" value="1">
+    <input type="hidden" id="size" value="10">
+    <input type="hidden" name="columnId" id="columnId" value="#(columnId)">
+    <input type="hidden" name="columnName" id="columnName" value="#(columnName)">
+    <input type="hidden" name="orgId" id="orgId" value="#(orgId)">
+</div>
+</body>
+<script src="#(ctx)/static/js/jquery-1.11.3.js"></script>
+<script src="#(ctx)/static/js/bootstrap.js"></script>
+<script src="#(ctx)/static/js/jquery.flexslider.js"></script>
+<script type="text/javascript" src="#(ctx)/static/js/jroll.js"></script>
+<script src="#(ctx)/static/js/jroll-pulldown1.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script src="#(ctx)/static/js/index.js"></script>
+<script type="text/javascript">
+    $("#page").val(1); //初始加载第一页
+    var ctx = "#(ctx)";
+    var fs = "#(fs)";
+    var myScroll;
+    var pullUp = $("#pullUp"), pullUpLabel = $(".pullUpLabel"), container = $('#view'), loadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
+    function loaded () {
+        pullUp.hide();
+        // myScroll = new IScroll('#wrapper', { scrollbars: false, mouseWheel: true, probeType: 2, click:true});
+        myScroll = new JRoll('#wrapper');
+        myScroll.pulldown({
+            refresh: function(complete) {
+                //完成加载数据的操作后回调执行complete方法
+                complete();
+                location.reload();
+            }
+        });
+        myScroll.on("scroll",function(){
+            if(loadingStep == 0 && !pullUp.attr("class").match('refresh')){
+                if(this.y < (this.maxScrollY - 8)){//上拉加载更多
+                    pullUp.addClass("refresh").show();
+                    pullUpLabel.html("<img src=#(ctx)/static/img/loading.gif style=width:20px><font color=#999>正在载入...</font>");
+                    loadingStep = 1;
+                    pullUpAction();
+                }
+            }
+        });
+        function pullUpAction(){
+            setTimeout(function(){
+                loadNewPage(); //加载第一页
+                myScroll.refresh();
+                loadingStep = 0;
+            },1000);
+        }
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    $(document).ready(function(){
+        //加载一次数据
+        loadNewPage();
+        //调用一下load方法
+        loaded();
+    });
+
+    function loadNewPage(){
+        $.post("#(ctx)/app/main/getMainListInfoJson/?tokenCode=#(tokenCode)",{
+            "pageNumber": $("#page").val(),
+            "pageSize": $("#size").val(),
+            "columnName": $("#columnName").val(),
+            "orgId": $("#orgId").val(),
+            "columnId": $("#columnId").val()
+        },function (html) {
+            $("#page").val(Number($("#page").val())+1);
+            html = $.trim(html);
+            if(html.length > 0){
+                $("#view").append(html);
+                pullUp.removeClass("refresh").hide();
+            }else{
+                pullUp.addClass("refresh").show(); //不再请求后台，页面显示全部加载完毕
+                pullUpLabel.text("没有更多数据了");
+            }
+            myScroll.refresh();  //这个是用来重新刷新容器的
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人展示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/bootstrap.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/public.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/my_show.css">
+    <link rel="stylesheet" href="#(ctx)/static/mycenter/css/font-awesome.min.css">
+    <link rel="stylesheet" href="#(ctx)/static/css/lightbox.css"/>
+    
+    <style type="text/css">
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            width: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #pullDown,#pullUp,.pulldown-tips{
+            height:40px;
+            line-height:40px;
+            text-align:center;
+        }
+        .pulldown-tips{
+            position:absolute;
+            top:-40px;
+            left:0;
+            width:100%;
+        }
+        .contents a{
+            display:inline-block;
+            width:30%;
+            height:100px;
+           margin:10px 1.6%;
+        }
+        #myTabContent .item{
+            width:100%;
+            height: 100px;
+        }
+        .con{
+            width:100%;
+            text-align: justify;
+            /* height:36px;overflow: hidden */
+            }
+    </style>
+</head>
+<body>
+    #if(user.sex == 1)
+        <div id="header" style="background: #3FA7B5;">
+    #end
+    #if(user.sex == 0)
+        <div id="header" style="background: #FC4482;">
+    #end
+        <a href="javascript:;" onclick="javascript :history.back(-1);" class="glyphicon glyphicon-menu-left back lf"></a>
+        <span style="position:absolute;left:50%;margin-left:-2em">个人展示</span>
+        <input type="hidden" id="tips" value="#(tips)">
+        #if(showTips == '1')
+            <span class="cancel" onclick="clickUnFollow('#(user.memberId)', this)">取消关注</span>
+        #end
+        #if(showTips == '0')
+            <span class="cancel" onclick="clickFollow('#(user.memberId)', this)">加关注</span>
+        #end
+    </div>
+    <div id="wrapper">
+        <div id="scroller" >
+            #if(user.sex == 1)
+                <div class="info" style="background: #3FA7B5;">
+            #end
+            #if(user.sex == 0)
+                <div class="info" style="background: #FC4482;">
+            #end
+                #if(user.memberId == currentUser.memberId)
+                    <a href="#(ctx)/app/member/myInfo?tokenCode=#(tokenCode)"><img src="#(fs)#(user.logo)" alt=""></a>
+                #end
+                #if(user.memberId != currentUser.memberId)
+                    <img src="#(fs)#(user.logo)" alt="">
+                #end
+                <ul>
+                    <li style="font-size:20px;">#(user.memberName)</li>
+                    <li class="self"><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;
+                        #if(tips == "1" || user.memberId == currentUser.memberId)
+                            #(user.showMemberAccount)
+                        #end
+                    </li>
+                    <li>#(user.orgName)</li>
+                    <li class="self"><span class="fa fa-weixin"></span>&nbsp;&nbsp;
+                        #if(tips == "1" || user.memberId == currentUser.memberId )
+                            #(user.weixin)
+                        #end
+                    </li>
+                </ul>
+                <div class="sign_in">
+                    #if(user.memberId != currentUser.memberId)
+                        #if(user.refuseMessage != 0)
+                            <span><a href="#(ctx)/app/member/toLeaveComments?userId=#(user.memberId)&tokenCode=#(tokenCode)" style="color:#fff">留言</a></span>
+                        #end
+                    #end
+                    #if(user.memberId == currentUser.memberId)
+                        <span><a href="#(ctx)/app/member/myInfo?tokenCode=#(tokenCode)" style="color:#fff">我的资料</a></span>
+                    #end
+                    
+                </div>
+            </div>
+            <div class="show">
+                <ul id="myTab" class="mine">
+                    <li class="active" id="product_li"><a href="#product" data-toggle="tab"><span class="glyphicon glyphicon-certificate" style="color:#FF9800;font-size:22px;"></span><p style="margin-top:-30px;font-size:14px;color:#FF9800;height:40px;">作品</p></a></li>
+                    <li id="clan_li"><a href="#clan" data-toggle="tab"><span class="glyphicon glyphicon-globe" style="font-size:22px;color:#259B24;"></span><p style="margin-top:-30px;color:#259B24;height:40px;">部落</p></a></li>
+                    <li id="acts_li"><a href="#acts" data-toggle="tab"><span class="glyphicon glyphicon-fire" style="font-size:22px;color:#547CBD;"></span><p style="margin-top:-30px;color:#547CBD;height:40px;">活动</p></a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content" >
+                    <div class="tab-pane fade in active" id="product">
+                        <ul id="product_view">
+
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="clan" >
+                        <ul id="clan_view">
+
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="acts">
+                        <ul class="list" id="acts_view">
+
+                        </ul>
+                    </div>
+                    <div id="pullUp" class="">
+                        <div class="pullUpLabel" id="more" data-status="1">加载更多</div>
+                    </div>
+                </div>
+                <input type="hidden" id="page" value="1">
+                <input type="hidden" id="size" value="5">
+            </div>
+        </div>
+    </div>
+<script src="#(ctx)/static/mycenter/js/jquery.min.js"></script>
+<script src="#(ctx)/static/mycenter/js/bootstrap.min.js"></script>
+<script src="#(ctx)/static/js/jroll.js"></script>
+<script src="#(ctx)/static/js/lightbox.js"></script>
+<script src="#(ctx)/static/js/layer/2.4/layer.js"></script>
+<script src="#(ctx)/static/js/common.js"></script>
+<script type="text/javascript">
+    $("#page").val(1); //初始加载第一页
+    var ctx = "#(ctx)";
+    var fs = "#(fs)";
+    var myScroll;
+    var pullUp = $("#pullUp"), pullUpLabel = $(".pullUpLabel"), container = $('#view'), loadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
+    function loaded () {
+        pullUp.hide();
+        // myScroll = new IScroll('#wrapper', { scrollbars: false, mouseWheel: true, probeType: 2, click:true});
+        myScroll = new JRoll('#wrapper');
+        
+        myScroll.on("scroll",function(){
+            if(loadingStep == 0 && !pullUp.attr("class").match('refresh')){
+                if(this.y < (this.maxScrollY - 8)){//上拉加载更多
+                    pullUp.addClass("refresh").show();
+                    pullUpLabel.text("正在载入...");
+                    loadingStep = 1;
+                    pullUpAction();
+                }
+            }
+        });
+        function pullUpAction(){
+            setTimeout(function(){
+                loadNewPage(); //加载第一页
+                myScroll.refresh();
+                loadingStep = 0;
+            },1000);
+        }
+    }
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    $(document).ready(function(){
+        $("#product_li").on("click", function(){ //切换页签重新分页
+            pullUp.removeClass("refresh").hide();
+            $("#clan_li").removeClass("active");
+            $("#acts_li").removeClass("active");
+            $("#product_li").addClass("active");
+            $("#clan").removeClass("in").removeClass("active");
+            $("#acts").removeClass("in").removeClass("active");
+            $("#product").addClass("in").addClass("active");
+            resetPage();
+            setTimeout(function () {
+                loadNewPage();
+            }, 1000);
+        });
+        $("#clan_li").on("click", function(){
+            pullUp.removeClass("refresh").hide();
+            $("#product_li").removeClass("active");
+            $("#acts_li").removeClass("active");
+            $("#clan_li").addClass("active");
+            $("#product").removeClass("in").removeClass("active");
+            $("#acts").removeClass("in").removeClass("active");
+            $("#clan").addClass("in").addClass("active");
+            resetPage();
+            setTimeout(function () {
+                loadNewPage();
+            }, 1000);
+        });
+        $("#acts_li").on("click", function(){
+            pullUp.removeClass("refresh").hide();
+            $("#product_li").removeClass("active");
+            $("#clan_li").removeClass("active");
+            $("#acts_li").addClass("active");
+            $("#product").removeClass("in").removeClass("active");
+            $("#clan").removeClass("in").removeClass("active");
+            $("#acts").addClass("in").addClass("active");
+            resetPage();
+            setTimeout(function () {
+                loadNewPage();
+            }, 1000);
+        });
+        resetPage();
+        //加载一次数据
+        loadNewPage();
+        //调用一下load方法
+        loaded();
+    });
+
+    function resetPage(size){
+        $("#page").val(1);
+        if(size){
+            $("#size").val(size);
+        }else{
+            $("#size").val(5);
+        }
+        $("#acts_view").empty();
+        $("#product_view").empty();
+        $("#clan_view").empty();
+    }
+
+    function loadNewPage(){
+        var showTypeTmp = $("li.active").attr("id");
+        if("clan_li" == showTypeTmp){
+            showTypeTmp = "bbs";
+        }else if("acts_li" == showTypeTmp){
+            showTypeTmp = "party";
+        }else{
+            showTypeTmp = "style";
+        }
+        $.post("#(ctx)/app/member/myShowPage/?tokenCode=#(tokenCode)",{
+            "pageNumber": $("#page").val(),
+            "pageNumber": $("#page").val(),
+            "userId": '#(user.memberId)',
+            "showType": showTypeTmp
+        },function (html) {
+            $("#page").val(Number($("#page").val())+1);
+            html = $.trim(html);
+            if(html.length > 0){
+                var tTmp = $("li.active").attr("id");
+                if("acts_li" == tTmp){
+                    $("#acts_view").append(html);
+                }else if("clan_li" == tTmp){
+                    $("#clan_view").append(html);
+                }else {
+                    $("#product_view").append(html);
+                }
+                pullUp.removeClass("refresh").hide();
+            }else{
+                pullUp.addClass("refresh").show(); //不再请求后台，页面显示全部加载完毕
+                pullUpLabel.text("没有更多数据了");
+            }
+            myScroll.refresh();  //这个是用来重新刷新容器的
+        });
+    }
+
+   function deleteStyle(styleId){
+       if(confirm("确定删除个人作品?")){
+           $.post("#(ctx)/app/culturalsquare/deleteUserStyle",{styleId:styleId, tokenCode:'#(tokenCode)'},function (data) {
+               var res = eval("(" + data + ")");
+               if (res.result_code == "success") { //关注成功，则修改页面样式
+                   $("#li_" + styleId).fadeOut(1000);
+               }
+           });
+       }
+   }
+
+   function showAll(divId){
+       $(this).removeAttr('onclick');
+       $("hideContent_"+ divId).show();
+       $(this).html("收起");
+       $(this).attr("onclick", "hideAll(\"" + divId + "\")");
+   }
+
+   function hideAll(divId){
+       $(this).removeAttr('onclick');
+       $("hideContent_"+ divId).hide();
+       $(this).html("全文");
+       $(this).attr("onclick", "showAll(\"" + divId + "\")");
+   }
+
+   //关注
+   function clickFollow(userFollowId, div) {
+       //点击之后就不能再点了
+       $(div).removeAttr('onclick');
+       $(div).html("正在关注...");
+       //进行关注请求后台
+       $.ajax({
+           type: "POST",
+           url: "#(ctx)/app/culturalsquare/clickFollow?tokenCode=#(tokenCode)&userFollowId="+userFollowId,
+           contentType: "application/json",
+           data: {},
+           datatype: "json",
+           //成功返回之后调用的函数
+           success: function (data) {
+               var res = eval("(" + data + ")");
+               if (res.result_code == "success") {
+                   //变化为取消关注
+                   $(div).html("取消关注");
+                   //绑定取消关注事件
+                   $(div).attr("onclick", "clickUnFollow(\"" + userFollowId + "\", this)");
+               }
+           },
+           error: function () {
+           }
+       });
+   }
+
+   //关注
+   function clickUnFollow(userUnFollowId, div) {
+       //点击之后就不能再点了
+       $(div).removeAttr('onclick');
+       $(div).html("正在取消关注...");
+       //进行关注请求后台
+       $.ajax({
+           type: "POST",
+           url: "#(ctx)/app/culturalsquare/clickUnFollow?tokenCode=#(tokenCode)&userUnFollowId="+userUnFollowId,
+           contentType: "application/json",
+           data: {},
+           datatype: "json",
+           //成功返回之后调用的函数
+           success: function (data) {
+               var res = eval("(" + data + ")");
+               if (res.result_code == "success") {
+                   //变化为取消关注
+                   $(div).html("加关注");
+                   //绑定取消关注事件
+                   $(div).attr("onclick", "clickFollow(\"" + userUnFollowId + "\", this)");
+               }
+           },
+           error: function () {
+           }
+       });
+   }
+</script>
+<script>
+    lightbox.option({
+        'imageFadeDuration':100,
+        'resizeDuration': 100,
+        'wrapAround': true,
+        'albumLabel':'%1 / %2',
+        'positionFromTop':80,
+        'fitImagesInViewport':true,
+        'disableScrolling':true
+    })
+</script>
+</body>
+</html>
